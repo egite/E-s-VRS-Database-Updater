@@ -9,6 +9,7 @@
     <MyType>WindowsForms</MyType>
     <PackageIcon>database.jpg</PackageIcon>
     <ApplicationIcon>database.ico</ApplicationIcon>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
 
   <ItemGroup>
