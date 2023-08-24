@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html class="hasSidebar hasPageActions hasBreadcrumb conceptual has-default-focus theme-dark" dir="ltr" data-css-variable-support="true" data-authenticated="false" data-auth-status-determined="true" data-target="docs" x-ms-format-detection="none" lang="en-us"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta property="og:title" content="How to: Specify an application icon (Visual Basic, C#) - Visual Studio (Windows)">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://learn.microsoft.com/en-us/visualstudio/ide/how-to-specify-an-application-icon-visual-basic-csharp">
+			<meta property="og:description" content="Learn how to use the Icon property to specify the icon that File Explorer and the Windows taskbar displays for the compiled application.">
+
+	<meta property="og:image" content="https://learn.microsoft.com/en-us/media/logos/logo-ms-social.png">
+
+	<meta property="og:image:alt" content="Microsoft Logo">
+
+	<meta name="twitter:card" content="summary">
+
+	<meta name="twitter:site" content="@MicrosoftLearn">
+
+	<meta name="color-scheme" content="light dark">
+
+
+	<meta name="archive_url" content="/previous-versions/visualstudio">
+<meta name="audience" content="developer">
+<meta name="author" content="TerryGLee">
+<meta name="breadcrumb_path" content="/visualstudio/_breadcrumb/toc.json">
+<meta name="depot_name" content="VS.docs">
+<meta name="description" content="Learn how to use the Icon property to specify the icon that File Explorer and the Windows taskbar displays for the compiled application.">
+<meta name="document_id" content="826f6de3-083c-37a0-0bff-ff12b690f37d">
+<meta name="document_version_independent_id" content="7ee0aa95-5a27-d6de-0715-07a40eda2ac3">
+<meta name="exclude_monikers" content="vs-2017">
+<meta name="gitcommit" content="https://github.com/MicrosoftDocs/visualstudio-docs-pr/blob/6baddf0253731b61e5ac6a26be7a45c6fd5b2dff/docs/ide/how-to-specify-an-application-icon-visual-basic-csharp.md">
+<meta name="locale" content="en-us">
+<meta name="manager" content="jmartens">
+<meta name="monikers" content="vs-2019">
+<meta name="monikers" content="vs-2022">
+<meta name="ms.author" content="tglee">
+<meta name="ms.date" content="11/04/2016">
+<meta name="ms.prod" content="visual-studio-windows">
+<meta name="ms.technology" content="vs-ide-general">
+<meta name="ms.topic" content="how-to">
+<meta name="ms.workload" content="dotnet">
+<meta name="original_content_git_url" content="https://github.com/MicrosoftDocs/visualstudio-docs-pr/blob/live/docs/ide/how-to-specify-an-application-icon-visual-basic-csharp.md">
+<meta name="page_type" content="conceptual">
+<meta name="pdf_url_template" content="https://learn.microsoft.com/pdfstore/en-us/VS.docs/{branchName}{pdfName}">
+<meta name="recommendations" content="true">
+<meta name="schema" content="Conceptual">
+<meta name="site_name" content="Docs">
+<meta name="toc_preview" content="true">
+<meta name="toc_rel" content="../toc.json">
+<meta name="uhfHeaderId" content="MSDocsHeader-VisualStudio">
+<meta name="updated_at" content="2023-03-10 12:05 AM">
+<meta name="word_count" content="191">
+
+
+	<meta name="persistent_id" content="6095af34-341d-8fed-b2f4-5bb473ac47c8">
+	
+
+
+	<meta name="cmProducts" content="https://authoring-docs-microsoft.poolparty.biz/devrel/bcbcbad5-4208-4783-8035-8481272c98b8" data-source="generated">
+
+	<meta name="cmProducts" content="https://authoring-docs-microsoft.poolparty.biz/devrel/4628cbd9-6f47-4ae1-b371-d34636609eaf" data-source="generated">
+
+	<meta name="cmProducts" content="https://authoring-docs-microsoft.poolparty.biz/devrel/560a1cd0-e7e6-41f3-9013-aed9c03f421e" data-source="generated">
+
+	
+
+	<meta name="scope" content="VS IDE">
+	<meta name="github_feedback_content_git_url" content="https://github.com/MicrosoftDocs/visualstudio-docs/blob/main/docs/ide/how-to-specify-an-application-icon-visual-basic-csharp.md">
+<link href="https://learn.microsoft.com/en-us/visualstudio/ide/how-to-specify-an-application-icon-visual-basic-csharp" rel="canonical">
+	<title>How to: Specify an application icon (Visual Basic, C#) - Visual Studio (Windows) | Microsoft Learn</title>
+
+		<link rel="stylesheet" href="How%20to%20Specify%20an%20application%20icon%20(Visual%20Basic,%20C%23)%20-%20Visual%20Studio%20(Windows)%20Microsoft%20Learn_files/d9e19328.site-ltr.css">
+
+	
+
+	<script id="msdocs-script">
+	var msDocs = {
+		data: {
+			timeOrigin: Date.now(),
+			contentLocale: 'en-us',
+			contentDir: 'ltr',
+			userLocale: 'en-us',
+			userDir: 'ltr',
+			pageTemplate: 'Conceptual',
+			brand: '',
+			context: {
+			},
+			hasBinaryRating: true,
+			hasGithubIssues: true,
+			standardFeedback: false,
+			showFeedbackReport: false,
+			enableTutorialFeedback: false,
+			feedbackSystem: 'GitHub',
+			feedbackGitHubRepo: 'MicrosoftDocs/visualstudio-docs',
+			feedbackProductUrl: 'https://developercommunity2.visualstudio.com/search?space=8',
+			defaultDevLang: 'csharp',
+			extendBreadcrumb: true,
+			isEditDisplayable: true,
+			hideViewSource: false,
+			hasPageActions: true,
+			hasPrintButton: true,
+			hasBookmark: true,
+			hasShare: true,
+			isPermissioned: false,
+			hasRecommendations: true,
+			contributors: [
+						{ name: "TerryGLee", url: "https://github.com/TerryGLee" },
+						{ name: "ghogen", url: "https://github.com/ghogen" },
+						{ name: "john-par", url: "https://github.com/john-par" },
+						{ name: "mijacobs", url: "https://github.com/mijacobs" },
+						{ name: "gewarren", url: "https://github.com/gewarren" },
+						{ name: "ktoliver", url: "https://github.com/ktoliver" },
+						{ name: "Mikejo5000", url: "https://github.com/Mikejo5000" },
+						{ name: "Saisang", url: "https://github.com/Saisang" }
+],
+		},
+		functions:{}
+	};
+	</script>
+	<script src="How%20to%20Specify%20an%20application%20icon%20(Visual%20Basic,%20C%23)%20-%20Visual%20Studio%20(Windows)%20Microsoft%20Learn_files/wcp-consent.js"></script>
+	<script src="How%20to%20Specify%20an%20application%20icon%20(Visual%20Basic,%20C%23)%20-%20Visual%20Studio%20(Windows)%20Microsoft%20Learn_files/ms.jsll-3.min.js"></script>
+
+	<script src="How%20to%20Specify%20an%20application%20icon%20(Visual%20Basic,%20C%23)%20-%20Visual%20Studio%20(Windows)%20Microsoft%20Learn_files/67a45209.deprecation.js"></script>
+		<link rel="preconnect" href="https://mscom.demdex.net/" crossorigin="">
+		<link rel="dns-prefetch" href="https://target.microsoft.com/">
+		<link rel="dns-prefetch" href="https://microsoftmscompoc.tt.omtrdc.net/">
+		<script src="How%20to%20Specify%20an%20application%20icon%20(Visual%20Basic,%20C%23)%20-%20Visual%20Studio%20(Windows)%20Microsoft%20Learn_files/37ce9fe8.at-config.js"></script>
+		<script src="How%20to%20Specify%20an%20application%20icon%20(Visual%20Basic,%20C%23)%20-%20Visual%20Studio%20(Windows)%20Microsoft%20Learn_files/at.js" integrity="sha384-1/viVM50hgc33O2gOgkWz3EjiD/Fy/ld1dKYXJRUyjNYVEjSUGcSN+iPiQF7e4cu" crossorigin="anonymous"></script>
+		<script src="How%20to%20Specify%20an%20application%20icon%20(Visual%20Basic,%20C%23)%20-%20Visual%20Studio%20(Windows)%20Microsoft%20Learn_files/b27bdba.index-docs.js"></script><style>
+		[data-moniker]:not([data-moniker~='vs-2022']) {
+			display: none !important;
+		}
+	</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"name":"Learn","position":1,"@type":"ListItem","item":"https://learn.microsoft.com/en-us/?view=vs-2022"},{"name":"Visual Studio","position":2,"@type":"ListItem","item":"https://learn.microsoft.com/en-us/visualstudio/windows/?view=vs-2022"},{"name":"IDE","position":3,"@type":"ListItem","item":"https://learn.microsoft.com/en-us/visualstudio/ide/?view=vs-2022"},{"name":"Develop","position":4,"@type":"ListItem","item":"https://learn.microsoft.com/en-us/visualstudio/ide/index-writing-code?view=vs-2022"},{"name":"Solutions and projects","position":5,"@type":"ListItem","item":"https://learn.microsoft.com/en-us/visualstudio/ide/solutions-and-projects-in-visual-studio?view=vs-2022"},{"name":"Specify an application icon (Visual Basic, C#)","position":6,"@type":"ListItem"}]}</script></head>
+
+<body dir="ltr" lang="en-us">
+	<div class="header-holder has-default-focus">
+		<a href="#main" class="skip-to-main-link has-outline-color-text visually-hidden-until-focused position-fixed has-inner-focus focus-visible top-0 left-0 right-0 padding-xs has-text-centered has-body-background" tabindex="1">Skip to main content</a>
+
+		<div id="cookie-consent-holder" hidden=""></div><div id="banner-holder" class="has-default-focus has-overflow-hidden theme-light"><!----><section data-bi-name="tier1-event-banner" data-dismissable="disappearing" class="tier1-event-banner position-relative padding-top-md padding-bottom-md build-banner">
+		<div class="uhf-container display-flex-tablet align-items-center">
+			<div class="has-backdrop-filter-blur margin-right-xxl-tablet">
+				<h2 class="title is-2 margin-bottom-xs"><!---->Microsoft Build<!----></h2>
+				<p class="font-size-sm"><!---->May 23-25, 2023<!----></p>
+			</div>
+			<p class="container is-max-mobile display-none display-block-widescreen has-backdrop-filter-blur font-size-sm margin-left-none margin-right-xxl">
+				Discover new opportunities with AI and developer tools, advance your knowledge and skills, and explore interactive sessions.
+			</p>
+			<a data-bi-name="CTA" class="button margin-block-sm button-filled" href="https://aka.ms/DocsPreEvent">
+				<span><!---->Register now<!----></span>
+				<span class="icon" aria-hidden="true">
+					<span class="docon docon-chevron-right-light"></span>
+				</span>
+			</a>
+		</div>
+		<button type="button" data-dismiss="" data-bi-name="close" class="button delete delete-md position-absolute top-0 right-0 margin-xs margin-sm-tablet button-filled">
+			<span class="visually-hidden"><!---->Dismiss alert<!----></span>
+		</button>
+	</section><!----></div>
+
+		<div id="unsupported-browser" style="
+			background-color: white;
+			color: black;
+			padding: 16px;
+			border-bottom: 1px solid grey;" hidden="">
+			<div style="max-width: 800px; margin: 0 auto;">
+				<p style="font-size: 24px">This browser is no longer supported.</p>
+				<p style="font-size: 16px; margin-top: 16px;">Upgrade to Microsoft Edge to take advantage of the latest features, security updates, and technical support.</p>
+				<div style="margin-top: 12px;">
+					<a href="https://go.microsoft.com/fwlink/p/?LinkID=2092881" style="
+						background-color: #0078d4;
+						border: 1px solid #0078d4;
+						color: white;
+						padding: 6px 12px;
+						border-radius: 2px;
+						display: inline-block;
+						">
+Download Microsoft Edge					</a>
+					<a href="https://learn.microsoft.com/en-us/lifecycle/faq/internet-explorer-microsoft-edge" style="
+							background-color: white;
+							padding: 6px 12px;
+							border: 1px solid #505050;
+							color: #171717;
+							border-radius: 2px;
+							display: inline-block;
+							">
+More info about Internet Explorer and Microsoft Edge					</a>
+				</div>
+			</div>
+
+		</div>
+		<!-- liquid-tag banners global -->
+		<div id="headerAreaHolder" data-bi-name="header">
+<header role="banner" itemscope="itemscope" itemtype="http://schema.org/Organization"><!----> <div class="nav-bar" data-test-id="primary-nav-bar" data-bi-name="L1-header"><!----> <div class="nav-bar-brand display-flex align-items-center padding-none margin-left-xs margin-left-none-tablet margin-right-xxs">
+		
+					<a class="nav-bar-button padding-inline-none" itemprop="url" href="https://www.microsoft.com/" aria-label="Microsoft" data-bi-name="microsoft-logo-link">
+						 <div class="nav-bar-logo" role="presentation" aria-hidden="true" itemprop="logo" itemscope="itemscope">
+				
+		<svg xmlns="http://www.w3.org/2000/svg" width="108" height="23" viewBox="72 72 337 74" preserveAspectRatio="xMidYMin slice">
+			<g data-name="MS-symbol">
+				<clipPath>
+					<path transform="matrix(1 0 0 -1 0 216)" d="M0 216h482V0H0z"></path>
+				</clipPath>
+				<g clip-path="url(#a)">
+					<path d="M394.942 104.59h-10.858v25.003h-7.38V104.59h-5.182v-5.965h5.182v-4.308c0-3.254 1.06-5.92 3.178-7.998 2.12-2.079 4.835-3.118 8.15-3.118.882 0 1.666.045 2.35.135a9.37 9.37 0 011.806.407v6.296c-.24-.14-.663-.31-1.265-.512-.603-.2-1.296-.3-2.078-.3-1.528 0-2.702.476-3.526 1.43-.824.954-1.235 2.365-1.235 4.232v3.736h10.858v-6.959l7.321-2.229v9.188h7.381v5.965h-7.38v14.49c0 1.91.345 3.254 1.038 4.037.693.783 1.782 1.175 3.27 1.175.42 0 .927-.1 1.52-.3a7.178 7.178 0 001.552-.724v6.025c-.463.261-1.23.502-2.305.723a15.742 15.742 0 01-3.178.331c-3.073 0-5.378-.817-6.914-2.455-1.537-1.637-2.305-4.102-2.305-7.396zm-48.407 9.73c0 3.233.733 5.703 2.2 7.411 1.465 1.707 3.564 2.56 6.295 2.56 2.652 0 4.67-.853 6.055-2.56 1.386-1.708 2.08-4.238 2.08-7.592 0-3.334-.719-5.849-2.155-7.547-1.436-1.697-3.45-2.545-6.04-2.545-2.67 0-4.745.888-6.22 2.666-1.477 1.777-2.215 4.313-2.215 7.607m-7.592.24c0-5.12 1.446-9.177 4.338-12.17 2.892-2.993 6.91-4.489 12.05-4.489 4.841 0 8.621 1.441 11.343 4.323 2.721 2.883 4.082 6.774 4.082 11.674 0 5.021-1.447 9.018-4.338 11.99-2.892 2.973-6.829 4.458-11.81 4.458-4.8 0-8.61-1.41-11.432-4.232-2.822-2.82-4.233-6.673-4.233-11.554m-16.417-7.802c0 1.045.331 1.863.994 2.456.662.592 2.128 1.34 4.398 2.243 2.912 1.166 4.956 2.476 6.131 3.932 1.175 1.456 1.762 3.22 1.762 5.287 0 2.912-1.12 5.252-3.359 7.02-2.24 1.767-5.267 2.65-9.083 2.65-1.285 0-2.706-.155-4.263-.467-1.556-.31-2.877-.707-3.96-1.19v-7.169a17.945 17.945 0 004.277 2.198c1.526.543 2.911.814 4.157.814 1.647 0 2.862-.23 3.645-.693.784-.46 1.175-1.235 1.175-2.319 0-1.005-.406-1.853-1.22-2.546-.813-.693-2.355-1.492-4.624-2.395-2.69-1.125-4.599-2.39-5.724-3.796-1.125-1.406-1.687-3.193-1.687-5.362 0-2.792 1.11-5.086 3.33-6.884 2.217-1.797 5.095-2.696 8.63-2.696 1.084 0 2.3.12 3.645.361 1.346.242 2.47.553 3.374.934v6.93c-.964-.644-2.089-1.195-3.374-1.658-1.286-.462-2.56-.693-3.826-.693-1.386 0-2.465.271-3.238.813-.774.543-1.16 1.286-1.16 2.23m-35.066 7.562c0 3.233.733 5.703 2.2 7.411 1.465 1.707 3.564 2.56 6.295 2.56 2.652 0 4.67-.853 6.055-2.56 1.386-1.708 2.08-4.238 2.08-7.592 0-3.334-.719-5.849-2.155-7.547-1.436-1.697-3.449-2.545-6.039-2.545-2.672 0-4.745.888-6.222 2.666-1.476 1.777-2.214 4.313-2.214 7.607m-7.592.24c0-5.12 1.446-9.177 4.338-12.17 2.893-2.993 6.91-4.489 12.051-4.489 4.84 0 8.621 1.441 11.342 4.323 2.721 2.883 4.082 6.774 4.082 11.674 0 5.021-1.446 9.018-4.338 11.99-2.892 2.973-6.828 4.458-11.809 4.458-4.8 0-8.61-1.41-11.433-4.232-2.822-2.82-4.233-6.673-4.233-11.554m-3.136-16.448c.582 0 1.105.041 1.567.121.462.08.853.18 1.175.301v7.38c-.382-.28-.939-.546-1.672-.798-.733-.25-1.622-.376-2.666-.376-1.788 0-3.299.753-4.534 2.26-1.235 1.505-1.853 3.825-1.853 6.958v15.635h-7.29V98.624h7.29v4.88h.12c.663-1.687 1.667-3.007 3.013-3.96 1.346-.954 2.962-1.432 4.85-1.432m-27.956 26.18c1.084 0 2.28-.25 3.585-.754a15.06 15.06 0 003.615-1.988v6.778c-1.165.663-2.485 1.165-3.962 1.506-1.475.342-3.098.512-4.865.512-4.559 0-8.265-1.44-11.116-4.323-2.852-2.88-4.278-6.562-4.278-11.04 0-4.98 1.456-9.083 4.37-12.307 2.91-3.224 7.037-4.835 12.38-4.835 1.366 0 2.746.176 4.143.527 1.395.352 2.504.758 3.328 1.22v6.99c-1.125-.824-2.274-1.462-3.45-1.914a9.966 9.966 0 00-3.599-.678c-2.872 0-5.192.934-6.959 2.802-1.768 1.868-2.652 4.388-2.652 7.562 0 3.132.85 5.573 2.546 7.32 1.697 1.748 4.002 2.621 6.914 2.621m-22.112 5.302h-7.29V98.624h7.29zm-8.044-39.916c0-1.205.437-2.214 1.311-3.028.874-.813 1.913-1.22 3.118-1.22 1.285 0 2.35.417 3.193 1.25.844.834 1.266 1.833 1.266 2.998 0 1.185-.432 2.18-1.296 2.982-.864.804-1.918 1.205-3.163 1.205-1.246 0-2.295-.406-3.148-1.219-.854-.815-1.28-1.803-1.28-2.968m-6.274-3.284v43.2h-7.5v-33.86h-.12l-13.408 33.86h-4.97l-13.738-33.86h-.09v33.86h-6.929v-43.2h10.755l12.412 32.024h.18l13.105-32.024z" class="fill-current-color fill-link-text-forced-colors color-text-subtle"></path>
+					<path d="M106.214 106.214H71.996V71.996h34.218z" fill="#f25022"></path>
+					<path d="M143.993 106.214h-34.218V71.996h34.218z" fill="#7fba00"></path>
+					<path d="M106.214 143.993H71.996v-34.218h34.218z" fill="#00a4ef"></path>
+					<path d="M143.993 143.993h-34.218v-34.218h34.218z" fill="#ffb900"></path>
+				</g>
+			</g>
+		</svg>
+	
+		  </div>
+					</a>
+			  
+	</div> 
+				
+		<div class="nav-bar-item is-hidden-tablet">
+			<div class="nav-bar-menu">
+				<button class="nav-bar-button is-title" data-test-id="mobile-nav-expander" title="Global navigation" aria-expanded="false">
+					<span class="nav-bar-menu-title"><!---->Documentation<!----></span>
+					<div class="nav-bar-burger">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span class="nav-bar-burger-label"><!---->Global navigation<!----></span>
+					</div>
+				</button>
+			</div>
+		</div>
+	
+				
+		<nav class="nav-bar-nav" role="navigation" aria-label="Global">
+			<ul class="nav-bar-nav-list">
+				
+		<li class="nav-bar-item is-category">
+			<a data-test-id="header-link-category" class="nav-bar-button is-title has-hover-underline" itemprop="url" data-bi-name="L1-category-link" href="https://learn.microsoft.com/en-us/">
+				<span><!---->Learn<!----></span>
+			</a>
+		</li>
+	
+				<!---->
+				<li class="nav-bar-item">
+					<a data-test-id="header-link-documentation" class=" nav-bar-button has-hover-underline is-active" href="https://learn.microsoft.com/en-us/docs/" aria-current="true" data-bi-name="L1-navigation-link">
+						<span><!---->Documentation<!----></span>
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a data-test-id="header-link-training" class=" nav-bar-button has-hover-underline " href="https://learn.microsoft.com/en-us/training/" data-bi-name="L1-navigation-link">
+						<span><!---->Training<!----></span>
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a data-test-id="header-link-certifications" class=" nav-bar-button has-hover-underline " href="https://learn.microsoft.com/en-us/certifications/" data-bi-name="L1-navigation-link">
+						<span><!---->Certifications<!----></span>
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a data-test-id="header-link-q&amp;a" class=" nav-bar-button has-hover-underline " href="https://learn.microsoft.com/en-us/answers/" data-bi-name="L1-navigation-link">
+						<span><!---->Q&amp;A<!----></span>
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a data-test-id="header-link-code-samples" class=" nav-bar-button has-hover-underline " href="https://learn.microsoft.com/en-us/samples/browse/" data-bi-name="L1-navigation-link">
+						<span><!---->Code Samples<!----></span>
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a data-test-id="header-link-assessments" class=" nav-bar-button has-hover-underline " href="https://learn.microsoft.com/en-us/assessments/" data-bi-name="L1-navigation-link">
+						<span><!---->Assessments<!----></span>
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a data-test-id="header-link-shows" class=" nav-bar-button has-hover-underline " href="https://learn.microsoft.com/en-us/shows/" data-bi-name="L1-navigation-link">
+						<span><!---->Shows<!----></span>
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a data-test-id="header-link-events" class=" nav-bar-button has-hover-underline " href="https://learn.microsoft.com/en-us/events/" data-bi-name="L1-navigation-link">
+						<span><!---->Events<!----></span>
+					</a>
+				</li>
+		  <!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-139" data-bi-name="L1-navigation-menu" value="undefined">
+			<span><!---->More<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-139" aria-label="More">
+			<!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button is-active" href="https://learn.microsoft.com/en-us/docs/" aria-current="true" data-bi-name="L1-navigation-link">
+						Documentation
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button " href="https://learn.microsoft.com/en-us/training/" data-bi-name="L1-navigation-link">
+						Training
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button " href="https://learn.microsoft.com/en-us/certifications/" data-bi-name="L1-navigation-link">
+						Certifications
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button " href="https://learn.microsoft.com/en-us/answers/" data-bi-name="L1-navigation-link">
+						Q&amp;A
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button " href="https://learn.microsoft.com/en-us/samples/browse/" data-bi-name="L1-navigation-link">
+						Code Samples
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button " href="https://learn.microsoft.com/en-us/assessments/" data-bi-name="L1-navigation-link">
+						Assessments
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button " href="https://learn.microsoft.com/en-us/shows/" data-bi-name="L1-navigation-link">
+						Shows
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button " href="https://learn.microsoft.com/en-us/events/" data-bi-name="L1-navigation-link">
+						Events
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+			</ul>
+		</nav>
+	
+				<span class="nav-bar-spacer"></span>
+				
+		<div class="nav-bar-search " id="ax-140" hidden="">
+			
+		<form class="nav-bar-search-form" method="GET" name="nav-bar-search-form" role="search" id="nav-bar-search-form" aria-label="Search" action="/en-us/search/">
+			<div class="autocomplete" data-bi-name="autocomplete"><!---->
+			<div class="field-body control ">
+				<input role="combobox" maxlength="100" aria-autocomplete="list" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" id="site-search-input" data-test-id="site-search-input" class="autocomplete-input input input-sm
+						
+						" type="search" name="terms" aria-expanded="false" aria-owns="ax-141-listbox" aria-controls="ax-141-listbox" aria-activedescendant="" aria-label="Search" aria-describedby="ms--site-search-input-description" placeholder="Search" pattern=".*">
+
+				<span aria-hidden="true" class="icon is-small is-left" hidden="">
+					<span class="has-text-primary docon docon-undefined"></span>
+				</span>
+
+				<span aria-hidden="true" class="autocomplete-loader loader has-text-primary " hidden=""></span>
+
+				<span id="ms--site-search-input-description" hidden="">
+					Suggestions will filter as you type
+				</span>
+			</div>
+
+			<ul role="listbox" id="ax-141-listbox" data-test-id="site-search-input-listbox" class="autocomplete-suggestions is-vertically-scrollable padding-xs " aria-label="Suggestions" hidden="">
+				
+				
+			</ul>
+		<!----></div>
+			<!-- mobile safari will not dispatch submit event unless there's a submit button that is not display:none -->
+			<button type="submit" class="visually-hidden" tabindex="-1" aria-hidden="true"></button>
+			<input name="category" hidden="">
+			<input name="scope" value="VS IDE" hidden="">
+			
+			
+			<input name="fromNavSearch" value="true" hidden="">
+		</form>
+	
+		</div>
+		
+					<div class="nav-bar-search">
+						<!-- hidden when the width drops to tablet -->
+						
+		<form class="nav-bar-search-form" method="GET" name="nav-bar-search-form" role="search" id="nav-bar-search-form-desktop" aria-label="Search" action="/en-us/search/">
+			<div class="autocomplete" data-bi-name="autocomplete"><!---->
+			<div class="field-body control has-icons-left">
+				<input role="combobox" maxlength="100" aria-autocomplete="list" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" id="site-search-input-desktop" data-test-id="site-search-input-desktop" class="autocomplete-input input input-sm
+						control has-icons-left
+						" type="search" name="terms" aria-expanded="false" aria-owns="ax-142-listbox" aria-controls="ax-142-listbox" aria-activedescendant="" aria-label="Search" aria-describedby="ms--site-search-input-desktop-description" placeholder="Search" pattern=".*">
+
+				<span aria-hidden="true" class="icon is-small is-left">
+					<span class="has-text-primary docon docon-search"></span>
+				</span>
+
+				<span aria-hidden="true" class="autocomplete-loader loader has-text-primary " hidden=""></span>
+
+				<span id="ms--site-search-input-desktop-description" hidden="">
+					Suggestions will filter as you type
+				</span>
+			</div>
+
+			<ul role="listbox" id="ax-142-listbox" data-test-id="site-search-input-desktop-listbox" class="autocomplete-suggestions is-vertically-scrollable padding-xs " aria-label="Suggestions" hidden="">
+				
+				
+			</ul>
+		<!----></div>
+			<!-- mobile safari will not dispatch submit event unless there's a submit button that is not display:none -->
+			<button type="submit" class="visually-hidden" tabindex="-1" aria-hidden="true"></button>
+			<input name="category" hidden="">
+			<input name="scope" value="VS IDE" hidden="">
+			
+			
+			<input name="fromNavSearch" value="true" hidden="">
+		</form>
+	
+					</div>
+			  
+		<div class="nav-bar-search " hidden="">
+			<div class="nav-bar-search-form-expander">
+				<button id="form-expander" data-test-id="form-expander" class="nav-bar-button has-hover-underline " title="Search" aria-expanded="false" aria-controls="ax-140">
+					
+		<span class="is-visually-hidden-mobile"><!---->Search<!----></span>
+		<span class="icon margin-left-xxs" aria-hidden="true">
+			<span class="docon docon-search"></span>
+		</span>
+	
+				</button>
+			</div>
+		</div>
+	
+				
+		<div class="nav-bar-profile">
+			
+		<a class="docs-sign-in auth-status-determined not-authenticated" href="#"> Sign in </a>
+	 
+		<div class="dropdown has-caret auth-status-determined authenticated">
+			<button class="dropdown-trigger button-reset" aria-controls="user-menu" aria-expanded="false" data-bi-name="L1-user-menu" aria-label="Your Account">
+				<figure class="image is-36x36">
+					<img class="has-body-background-medium border-radius-rounded" alt="" data-profile-property="avatarUrl">
+				</figure>
+			</button>
+			<div class="dropdown-menu box justify-content-flex-start has-body-background" id="user-menu" data-bi-name="user-menu" role="menu">
+				<div class="media is-user-dir">
+					<div class="media-left">
+						<figure class="image is-48x48" aria-hidden="true">
+							<img class="has-body-background-medium border-radius-rounded" aria-labelledby="displayName" alt="" data-profile-property="avatarUrl">
+						</figure>
+					</div>
+					<div class="media-content">
+						<h2 class="title font-size-lg">
+							<span id="displayName" class="is-inline-truncated has-max-width-200" data-profile-property="displayName"></span>
+						</h2>
+						<p class="subtitle font-size-sm margin-bottom-none">
+							<span class="is-inline-truncated has-max-width-200" data-profile-property="upn"></span>
+						</p>
+					</div>
+				</div>
+				<ul class="padding-top-xs padding-bottom-xs">
+					<li class="padding-bottom-xs">
+						<a data-profile-property="profileUrl" href="https://learn.microsoft.com/en-us/users/me/activity/"><!---->Profile<!----></a>
+					</li>
+					<li>
+						<a data-profile-property="settingsUrl" href="https://learn.microsoft.com/en-us/users/me/settings/"><!---->Settings<!----></a>
+					</li>
+				</ul>
+				<div class="border-top padding-top-xs">
+					<a class="docs-sign-out" href="#"><!---->Sign out<!----></a>
+				</div>
+			</div>
+		</div>
+	
+		</div>
+	
+			 <!----></div> <div class="nav-bar border-top is-hidden-mobile" data-test-id="secondary-nav-bar" data-bi-name="L2-header"><!----> 
+		<a class="nav-bar-button is-title has-hover-underline" itemprop="url" data-bi-name="L2-category-link" href="https://learn.microsoft.com/en-us/visualstudio">
+			<span>
+				Visual Studio
+				
+			</span>
+		</a>
+	 
+		
+		<nav class="nav-bar-nav" role="navigation" aria-label="Site">
+			<ul class="nav-bar-nav-list">
+				
+				<!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-143" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Tasks<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-143" aria-label="Tasks">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/ide/index-writing-code" data-bi-name="L2-navigation-link">
+						Develop
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/ide/compiling-and-building-in-visual-studio" data-bi-name="L2-navigation-link">
+						Build
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/debugger" data-bi-name="L2-navigation-link">
+						Debug
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/test" data-bi-name="L2-navigation-link">
+						Test
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/deployment" data-bi-name="L2-navigation-link">
+						Deploy
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/profiling" data-bi-name="L2-navigation-link">
+						Improve Performance
+					</a>
+				</li>
+		  <!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-144" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Other Tasks<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-144" aria-label="Other Tasks">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/data-tools/" data-bi-name="L2-navigation-link">
+						Access Data
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/designers/designing-user-interfaces" data-bi-name="L2-navigation-link">
+						Design User Interfaces
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/azure/devops" data-bi-name="L2-navigation-link">
+						DevOps
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/extensibility" data-bi-name="L2-navigation-link">
+						Extend Visual Studio
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/version-control/" data-bi-name="L2-navigation-link">
+						Version control
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-145" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Languages<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-145" aria-label="Languages">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/dotnet/csharp/" data-bi-name="L2-navigation-link">
+						C#
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/cpp" data-bi-name="L2-navigation-link">
+						C++
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/dotnet/fsharp/" data-bi-name="L2-navigation-link">
+						F#
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/scripting" data-bi-name="L2-navigation-link">
+						JavaScript
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/python/overview-of-python-tools-for-visual-studio" data-bi-name="L2-navigation-link">
+						Python
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/rtvs" data-bi-name="L2-navigation-link">
+						R
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://www.typescriptlang.org/docs/handbook/release-notes/overview.html" data-bi-name="L2-navigation-link">
+						TypeScript
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/dotnet/visual-basic/" data-bi-name="L2-navigation-link">
+						Visual Basic
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-146" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->App platform<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-146" aria-label="App platform">
+			<!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-147" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Web &amp; Cloud<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-147" aria-label="Web &amp; Cloud">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0" data-bi-name="L2-navigation-link">
+						ASP.NET and Web
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/azure" data-bi-name="L2-navigation-link">
+						Azure
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/python/data-science-and-analytical-applications-workload" data-bi-name="L2-navigation-link">
+						Data science and analytical applications
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/data-tools/" data-bi-name="L2-navigation-link">
+						Data storage and processing
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/office/docs" data-bi-name="L2-navigation-link">
+						Office/SharePoint
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/javascript/" data-bi-name="L2-navigation-link">
+						Node.js
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/python/" data-bi-name="L2-navigation-link">
+						Python
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-148" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Windows<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-148" aria-label="Windows">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/dotnet/framework/develop-client-apps" data-bi-name="L2-navigation-link">
+						.NET Desktop
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/cpp/windows/desktop-applications-visual-cpp" data-bi-name="L2-navigation-link">
+						Desktop with C++
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/cross-platform/develop-apps-for-the-universal-windows-platform-uwp" data-bi-name="L2-navigation-link">
+						Universal Windows Platform (UWP)
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-149" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Mobile &amp; Games<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-149" aria-label="Mobile &amp; Games">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/windows/uwp/gaming/e2e" data-bi-name="L2-navigation-link">
+						Games with C++
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/cpp/cross-platform/" data-bi-name="L2-navigation-link">
+						Mobile with C++
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/gamedev/unity/get-started/visual-studio-tools-for-unity" data-bi-name="L2-navigation-link">
+						Unity
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/xamarin" data-bi-name="L2-navigation-link">
+						Xamarin (.NET)
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-150" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Other<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-150" aria-label="Other">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/cpp/linux" data-bi-name="L2-navigation-link">
+						Linux with C++
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/dotnet/fundamentals/" data-bi-name="L2-navigation-link">
+						.NET Core
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/extensibility" data-bi-name="L2-navigation-link">
+						Visual Studio extension development
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-151" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Resources<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-151" aria-label="Resources">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://visualstudio.microsoft.com/" data-bi-name="L2-navigation-link">
+						visualstudio.microsoft.com
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://devblogs.microsoft.com/visualstudio/" data-bi-name="L2-navigation-link">
+						Visual Studio blog
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://www.visualstudio.com/downloads/" data-bi-name="L2-navigation-link">
+						Downloads
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/releases/2022/release-notes" data-bi-name="L2-navigation-link">
+						Release notes
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://www.visualstudio.com/vs/support/" data-bi-name="L2-navigation-link">
+						Support
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://www.visualstudio.com/subscriptions/" data-bi-name="L2-navigation-link">
+						Subscriptions
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://marketplace.visualstudio.com/vs" data-bi-name="L2-navigation-link">
+						Marketplace
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-152" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->More<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-152" aria-label="More">
+			<!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-153" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Tasks<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-153" aria-label="Tasks">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/ide/index-writing-code" data-bi-name="L2-navigation-link">
+						Develop
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/ide/compiling-and-building-in-visual-studio" data-bi-name="L2-navigation-link">
+						Build
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/debugger" data-bi-name="L2-navigation-link">
+						Debug
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/test" data-bi-name="L2-navigation-link">
+						Test
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/deployment" data-bi-name="L2-navigation-link">
+						Deploy
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/profiling" data-bi-name="L2-navigation-link">
+						Improve Performance
+					</a>
+				</li>
+		  <!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-154" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Other Tasks<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-154" aria-label="Other Tasks">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/data-tools/" data-bi-name="L2-navigation-link">
+						Access Data
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/designers/designing-user-interfaces" data-bi-name="L2-navigation-link">
+						Design User Interfaces
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/azure/devops" data-bi-name="L2-navigation-link">
+						DevOps
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/extensibility" data-bi-name="L2-navigation-link">
+						Extend Visual Studio
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/version-control/" data-bi-name="L2-navigation-link">
+						Version control
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-155" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Languages<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-155" aria-label="Languages">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/dotnet/csharp/" data-bi-name="L2-navigation-link">
+						C#
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/cpp" data-bi-name="L2-navigation-link">
+						C++
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/dotnet/fsharp/" data-bi-name="L2-navigation-link">
+						F#
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/scripting" data-bi-name="L2-navigation-link">
+						JavaScript
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/python/overview-of-python-tools-for-visual-studio" data-bi-name="L2-navigation-link">
+						Python
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/rtvs" data-bi-name="L2-navigation-link">
+						R
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://www.typescriptlang.org/docs/handbook/release-notes/overview.html" data-bi-name="L2-navigation-link">
+						TypeScript
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/dotnet/visual-basic/" data-bi-name="L2-navigation-link">
+						Visual Basic
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-156" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->App platform<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-156" aria-label="App platform">
+			<!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-157" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Web &amp; Cloud<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-157" aria-label="Web &amp; Cloud">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0" data-bi-name="L2-navigation-link">
+						ASP.NET and Web
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/azure" data-bi-name="L2-navigation-link">
+						Azure
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/python/data-science-and-analytical-applications-workload" data-bi-name="L2-navigation-link">
+						Data science and analytical applications
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/data-tools/" data-bi-name="L2-navigation-link">
+						Data storage and processing
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/office/docs" data-bi-name="L2-navigation-link">
+						Office/SharePoint
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/javascript/" data-bi-name="L2-navigation-link">
+						Node.js
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/python/" data-bi-name="L2-navigation-link">
+						Python
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-158" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Windows<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-158" aria-label="Windows">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/dotnet/framework/develop-client-apps" data-bi-name="L2-navigation-link">
+						.NET Desktop
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/cpp/windows/desktop-applications-visual-cpp" data-bi-name="L2-navigation-link">
+						Desktop with C++
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/cross-platform/develop-apps-for-the-universal-windows-platform-uwp" data-bi-name="L2-navigation-link">
+						Universal Windows Platform (UWP)
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-159" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Mobile &amp; Games<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-159" aria-label="Mobile &amp; Games">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/windows/uwp/gaming/e2e" data-bi-name="L2-navigation-link">
+						Games with C++
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/cpp/cross-platform/" data-bi-name="L2-navigation-link">
+						Mobile with C++
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/gamedev/unity/get-started/visual-studio-tools-for-unity" data-bi-name="L2-navigation-link">
+						Unity
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/xamarin" data-bi-name="L2-navigation-link">
+						Xamarin (.NET)
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-160" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Other<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-160" aria-label="Other">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/cpp/linux" data-bi-name="L2-navigation-link">
+						Linux with C++
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/dotnet/fundamentals/" data-bi-name="L2-navigation-link">
+						.NET Core
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/extensibility" data-bi-name="L2-navigation-link">
+						Visual Studio extension development
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-161" data-bi-name="L2-navigation-menu" value="undefined">
+			<span><!---->Resources<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-161" aria-label="Resources">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://visualstudio.microsoft.com/" data-bi-name="L2-navigation-link">
+						visualstudio.microsoft.com
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://devblogs.microsoft.com/visualstudio/" data-bi-name="L2-navigation-link">
+						Visual Studio blog
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://www.visualstudio.com/downloads/" data-bi-name="L2-navigation-link">
+						Downloads
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://learn.microsoft.com/en-us/visualstudio/releases/2022/release-notes" data-bi-name="L2-navigation-link">
+						Release notes
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://www.visualstudio.com/vs/support/" data-bi-name="L2-navigation-link">
+						Support
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://www.visualstudio.com/subscriptions/" data-bi-name="L2-navigation-link">
+						Subscriptions
+					</a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://marketplace.visualstudio.com/vs" data-bi-name="L2-navigation-link">
+						Marketplace
+					</a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+		</ul>
+	</li><!---->
+			</ul>
+		</nav>
+	
+		<span class="nav-bar-spacer"></span>
+		
+		<ol class="nav-bar-list">
+			 
+		<li class="nav-bar-item ">
+			<a data-test-id="navbar-primary-cta" class="button button-sm button-primary button-filled" href="https://visualstudio.microsoft.com/downloads/" data-bi-name="L2-primary-cta">
+				Download Visual Studio
+			</a>
+		</li>
+	
+		</ol>
+	 
+	 <!----></div> <!----></header>		</div>
+
+
+			<div id="content-header" class="content-header uhf-container has-padding has-default-focus border-bottom-none" data-bi-name="content-header">
+				<div class="content-header-controls margin-xxs margin-inline-sm-tablet">
+					<button type="button" class="contents-button button button-sm margin-right-xxs" data-bi-name="contents-expand" aria-haspopup="true" data-contents-button="">
+						<span class="icon"><span class="docon docon-menu" aria-hidden="true"></span></span>
+						<span class="contents-expand-title">
+Table of contents						</span>
+					</button>
+					<button type="button" class="ap-collapse-behavior ap-expanded button button-sm" data-bi-name="ap-collapse" aria-controls="action-panel">
+						<span class="icon"><span class="docon docon-exit-mode" aria-hidden="true"></span></span>
+						<span>Exit focus mode</span>
+					</button>
+				</div>
+			</div>
+
+		<div id="disclaimer-holder" class="has-overflow-hidden has-default-focus">
+			<!-- liquid-tag banners sectional -->
+		</div>
+	</div>
+
+	<div class="mainContainer  uhf-container has-default-focus" data-bi-name="body">
+
+		<div class="columns has-large-gaps is-gapless-mobile ">
+
+			<div id="left-container" class="left-container is-hidden-mobile column is-one-third-tablet is-one-quarter-desktop">
+				<nav id="affixed-left-container" class="margin-top-sm-tablet position-fixed display-flex flex-direction-column" role="navigation" aria-label="Primary" style="width: 285.25px; top: 24px; bottom: 24px;" data-bi-name="left toc"><div class="moniker-picker2" data-bi-name="moniker-picker"><!---->
+		<span class="label margin-bottom-xxs"><!---->Version<!----></span>
+		<div class="dropdown margin-bottom-xxs" role="navigation" aria-label="Version">
+			<button class="dropdown-trigger justify-content-flex-start button-block button button-sm inner-focus" aria-expanded="false" data-autofocus="" aria-controls="ax-162">
+				<span class="has-text-overflow-ellipsis"><!---->Visual Studio 2022<!----></span>
+				<span class="dropdown-button-chevron color-text" aria-hidden="true">
+					<span class="icon">
+						<span class="docon docon-chevron-down-light expanded-indicator"></span>
+					</span>
+				</span>
+			</button>
+			<ul class="dropdown-menu is-full-width is-vertically-scrollable" id="ax-162" aria-label="Visual Studio">
+						<!----><!---->
+		<li>
+			<a class="preserve-view button button-sm button-clear button-block text-decoration-none inner-focus justify-content-flex-start has-text-wrap is-text-left" href="https://learn.microsoft.com/en-us/visualstudio/ide/how-to-specify-an-application-icon-visual-basic-csharp?view=vs-2022"><!---->2022<!----></a>
+		</li>
+	<!----><!----><!---->
+		<li>
+			<a class="preserve-view button button-sm button-clear button-block text-decoration-none inner-focus justify-content-flex-start has-text-wrap is-text-left" href="https://learn.microsoft.com/en-us/visualstudio/ide/how-to-specify-an-application-icon-visual-basic-csharp?view=vs-2019"><!---->2019<!----></a>
+		</li>
+	<!----><!---->
+						<li>
+									<a class="button button-sm button-clear button-block text-decoration-none border-top inner-focus justify-content-flex-start" href="https://learn.microsoft.com/previous-versions/visualstudio"><!---->Previous versions<!----></a>
+							  </li>
+				  </ul>
+		</div>
+	<!----></div><form action="javascript:" role="search" aria-label="Search" class="margin-bottom-xxs"><label class="visually-hidden" for="ax-40">Search</label><div class="autocomplete display-block" data-bi-name="autocomplete"><!---->
+			<div class="field-body control has-icons-left">
+				<input role="combobox" maxlength="100" aria-autocomplete="list" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" id="ax-40" data-test-id="ax-40" class="autocomplete-input input input-sm
+						control has-icons-left
+						width-full" type="text" aria-expanded="false" aria-owns="ax-41-listbox" aria-controls="ax-41-listbox" aria-activedescendant="" aria-describedby="ms--ax-40-description" placeholder="Filter by title" pattern=".*">
+
+				<span aria-hidden="true" class="icon is-small is-left">
+					<span class="has-text-primary docon docon-filter-settings"></span>
+				</span>
+
+				<span aria-hidden="true" class="autocomplete-loader loader has-text-primary " hidden=""></span>
+
+				<span id="ms--ax-40-description" hidden="">
+					Suggestions will filter as you type
+				</span>
+			</div>
+
+			<ul role="listbox" id="ax-41-listbox" data-test-id="ax-40-listbox" class="autocomplete-suggestions is-vertically-scrollable padding-xs " aria-label="Suggestions" hidden="">
+				
+				
+			</ul>
+		<!----></div></form><ul class="tree table-of-contents is-vertically-scrollable flex-grow-1 flex-shrink-1" role="tree" aria-label="Table of contents" data-bi-name="tree" data-is-collapsible="true"><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="19" aria-level="1" aria-posinset="1" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/?view=vs-2022">Visual Studio IDE documentation</a></li><li data-moniker="vs-2019 vs-2022" class="tree-item is-expanded" aria-setsize="19" aria-level="1" aria-posinset="2" role="treeitem" tabindex="-1" id="title-2-1" aria-expanded="true"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Overview</span><ul class="tree-group" role="group"><li role="none"><a aria-setsize="5" aria-level="2" aria-posinset="1" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/get-started/visual-studio-ide?view=vs-2022">About Visual Studio</a></li><li role="none"><a aria-setsize="5" aria-level="2" aria-posinset="2" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/get-started/tutorial-editor?view=vs-2022">About the code editor</a></li><li role="none"><a aria-setsize="5" aria-level="2" aria-posinset="3" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/get-started/tutorial-projects-solutions?view=vs-2022">About projects and solutions</a></li><li role="none"><a aria-setsize="5" aria-level="2" aria-posinset="4" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/quickstart-ide-orientation?view=vs-2022">Tour the Visual Studio IDE</a></li><li role="none"><a aria-setsize="5" aria-level="2" aria-posinset="5" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/advanced-feature-overview?view=vs-2022">More Visual Studio features</a></li></ul></li><li class="tree-item" aria-setsize="19" aria-level="1" aria-posinset="3" role="treeitem" tabindex="-1" id="title-3-1" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Installation</span></li><li class="tree-item is-expanded" aria-setsize="19" aria-level="1" aria-posinset="4" role="treeitem" tabindex="-1" id="title-4-1" aria-expanded="true"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Tutorials</span><ul class="tree-group" role="group"><li role="none"><a aria-setsize="6" aria-level="2" aria-posinset="1" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/cpp/get-started/tutorial-console-cpp?view=vs-2022">C++ &gt;&gt;</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="6" aria-level="2" aria-posinset="2" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/get-started/csharp/?view=vs-2022">C#  &gt;&gt;</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="6" aria-level="2" aria-posinset="3" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/get-started/visual-basic/?view=vs-2022">Visual Basic  &gt;&gt;</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="6" aria-level="2" aria-posinset="4" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/javascript/?view=vs-2022">Node.<wbr>js  &gt;&gt;</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="6" aria-level="2" aria-posinset="5" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/python/?view=vs-2022">Python  &gt;&gt;</a></li><li role="none"><a aria-setsize="6" aria-level="2" aria-posinset="6" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/dotnet/fsharp/?view=vs-2022">F#  &gt;&gt;</a></li></ul></li><li class="tree-item is-expanded" aria-setsize="19" aria-level="1" aria-posinset="5" role="treeitem" tabindex="-1" id="title-5-1" aria-expanded="true"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Develop</span><ul class="tree-group" role="group"><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="15" aria-level="2" aria-posinset="1" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/index-writing-code?view=vs-2022">Organize and edit code</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="15" aria-level="2" aria-posinset="2" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/how-to-move-around-in-the-visual-studio-ide?view=vs-2022">Move around in the IDE</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="15" aria-level="2" aria-posinset="3" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/visual-studio-search?view=vs-2022">Use Visual Studio Search</a></li><li class="tree-item is-expanded" aria-setsize="15" aria-level="2" aria-posinset="4" role="treeitem" tabindex="-1" id="title-5-1_4-2" aria-expanded="true"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Solutions and projects</span><ul class="tree-group" role="group"><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="18" aria-level="3" aria-posinset="1" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/solutions-and-projects-in-visual-studio?view=vs-2022">Learn about solutions and projects</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="18" aria-level="3" aria-posinset="2" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/create-new-project?view=vs-2022">Create a new project</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="18" aria-level="3" aria-posinset="3" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/creating-solutions-and-projects?view=vs-2022">Work with solutions and projects</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="18" aria-level="3" aria-posinset="4" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/get-started/tutorial-open-project-from-repo?view=vs-2022">Open a project from a repo</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="18" aria-level="3" aria-posinset="5" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/porting/port-migrate-and-upgrade-visual-studio-projects?view=vs-2022">Port, migrate, and upgrade projects</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="18" aria-level="3" aria-posinset="6" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/use-solution-explorer?view=vs-2022">Learn about Solution Explorer</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="18" aria-level="3" aria-posinset="7" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/managing-project-and-solution-properties?view=vs-2022">Manage project and solution properties</a></li><li class="tree-item" aria-setsize="18" aria-level="3" aria-posinset="8" role="treeitem" tabindex="-1" id="title-5-1_4-2_8-3" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Project references</span></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="18" aria-level="3" aria-posinset="9" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/managing-application-resources-dotnet?view=vs-2022">Manage application resources (.NET)</a></li><li role="none"><a aria-setsize="18" aria-level="3" aria-posinset="10" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/troubleshoot/developer/visualstudio/project-build/troubleshoot-resource-editor-errors?toc=%2Fvisualstudio%2Ftoc.json&amp;view=vs-2022">Troubleshoot Resource Editor errors</a></li><li data-moniker="vs-2019 vs-2022" class="tree-item" aria-setsize="18" aria-level="3" aria-posinset="11" role="treeitem" tabindex="-1" id="title-5-1_4-2_11-3" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Application settings (.NET)</span></li><li data-moniker="vs-2019 vs-2022" class="tree-item" aria-setsize="18" aria-level="3" aria-posinset="12" role="treeitem" tabindex="-1" id="title-5-1_4-2_12-3" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Sign manifests</span></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="18" aria-level="3" aria-posinset="13" role="treeitem" tabindex="0" class="tree-item is-leaf has-external-link-indicator is-selected" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/how-to-specify-an-application-icon-visual-basic-csharp?view=vs-2022" aria-current="page">Specify an application icon (Visual Basic, C#)</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="18" aria-level="3" aria-posinset="14" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/visual-studio-multi-targeting-overview?view=vs-2022">Target a framework</a></li><li class="tree-item" aria-setsize="18" aria-level="3" aria-posinset="15" role="treeitem" tabindex="-1" id="title-5-1_4-2_15-3" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Create templates</span></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="18" aria-level="3" aria-posinset="16" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/how-to-locate-and-organize-project-and-item-templates?view=vs-2022">Locate project and item templates</a></li><li data-moniker="vs-2019 vs-2022" class="tree-item" aria-setsize="18" aria-level="3" aria-posinset="17" role="treeitem" tabindex="-1" id="title-5-1_4-2_17-3" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Customize templates</span></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="18" aria-level="3" aria-posinset="18" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/visual-studio-ide-64-bit-support?view=vs-2022">64-bit support</a></li></ul></li><li data-moniker="vs-2019 vs-2022" class="tree-item" aria-setsize="15" aria-level="2" aria-posinset="5" role="treeitem" tabindex="-1" id="title-5-1_5-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Develop without projects or solutions</span></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="15" aria-level="2" aria-posinset="6" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/connect-team-project?view=vs-2022">Connect to projects in Team Explorer</a></li><li class="tree-item" aria-setsize="15" aria-level="2" aria-posinset="7" role="treeitem" tabindex="-1" id="title-5-1_7-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Editor</span></li><li data-moniker="vs-2019 vs-2022" class="tree-item" aria-setsize="15" aria-level="2" aria-posinset="8" role="treeitem" tabindex="-1" id="title-5-1_8-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Code views</span></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="15" aria-level="2" aria-posinset="9" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/using-the-task-list?view=vs-2022">Use the Task List</a></li><li class="tree-item" aria-setsize="15" aria-level="2" aria-posinset="10" role="treeitem" tabindex="-1" id="title-5-1_10-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Class Designer</span></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="15" aria-level="2" aria-posinset="11" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/find-and-fix-code-errors?view=vs-2022">Improve your code</a></li><li data-moniker="vs-2019 vs-2022" class="tree-item" aria-setsize="15" aria-level="2" aria-posinset="12" role="treeitem" tabindex="-1" id="title-5-1_12-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Tips and tricks</span></li><li class="tree-item" aria-setsize="15" aria-level="2" aria-posinset="13" role="treeitem" tabindex="-1" id="title-5-1_13-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Work with...</span></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="15" aria-level="2" aria-posinset="14" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/data-tools/accessing-data-in-visual-studio?view=vs-2022">Access data &gt;&gt;</a></li><li data-moniker="vs-2019 vs-2022" class="tree-item" aria-setsize="15" aria-level="2" aria-posinset="15" role="treeitem" tabindex="-1" id="title-5-1_15-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Develop inclusive apps</span></li></ul></li><li class="tree-item" aria-setsize="19" aria-level="1" aria-posinset="6" role="treeitem" tabindex="-1" id="title-6-1" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Build</span></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="19" aria-level="1" aria-posinset="7" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/debugger/?view=vs-2022">Debug &gt;&gt;</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="19" aria-level="1" aria-posinset="8" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/version-control/?view=vs-2022">Version control &gt;&gt;</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="19" aria-level="1" aria-posinset="9" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/test/?view=vs-2022">Test &gt;&gt;</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="19" aria-level="1" aria-posinset="10" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/profiling/?view=vs-2022">Measure performance &gt;&gt;</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="19" aria-level="1" aria-posinset="11" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/code-quality/?view=vs-2022">Analyze code quality &gt;&gt;</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="19" aria-level="1" aria-posinset="12" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/deployment/?view=vs-2022">Deploy &gt;&gt;</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="19" aria-level="1" aria-posinset="13" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/extensibility/?view=vs-2022">Extend Visual Studio &gt;&gt;</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="19" aria-level="1" aria-posinset="14" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/modeling/analyze-and-model-your-architecture?view=vs-2022">Analyze and Model Architecture &gt;&gt;</a></li><li data-moniker="vs-2019 vs-2022" class="tree-item" aria-setsize="19" aria-level="1" aria-posinset="15" role="treeitem" tabindex="-1" id="title-15-1" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Personalize Visual Studio</span></li><li data-moniker="vs-2019 vs-2022" class="tree-item" aria-setsize="19" aria-level="1" aria-posinset="16" role="treeitem" tabindex="-1" id="title-16-1" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Accessibility</span></li><li data-moniker="vs-2019 vs-2022" class="tree-item" aria-setsize="19" aria-level="1" aria-posinset="17" role="treeitem" tabindex="-1" id="title-17-1" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Reference</span></li><li class="tree-item is-expanded" aria-setsize="19" aria-level="1" aria-posinset="18" role="treeitem" tabindex="-1" id="title-18-1" aria-expanded="true"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Resources</span><ul class="tree-group" role="group"><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="8" aria-level="2" aria-posinset="1" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/whats-new-visual-studio-2022?view=vs-2022">Visual Studio 2022: What's new</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="8" aria-level="2" aria-posinset="2" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/whats-new-visual-studio-2019?view=vs-2022">Visual Studio 2019: What's new</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="8" aria-level="2" aria-posinset="3" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/whats-new-visual-studio-docs?view=vs-2022">What's new in Docs</a></li><li role="none"><a aria-setsize="8" aria-level="2" aria-posinset="4" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/releases/?view=vs-2022">Release notes</a></li><li role="none"><a aria-setsize="8" aria-level="2" aria-posinset="5" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/productinfo/release-rhythm/?view=vs-2022">Release rhythm</a></li><li role="none"><a aria-setsize="8" aria-level="2" aria-posinset="6" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://visualstudio.microsoft.com/license-terms/">License terms</a></li><li role="none"><a aria-setsize="8" aria-level="2" aria-posinset="7" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/productinfo/vs-servicing-vs/?view=vs-2022">Support lifecycle and servicing</a></li><li data-moniker="vs-2019 vs-2022" role="none"><a aria-setsize="8" aria-level="2" aria-posinset="8" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://learn.microsoft.com/en-us/visualstudio/ide/visual-studio-experience-improvement-program?view=vs-2022">Customer Experience Improvement</a></li></ul></li><li data-moniker="vs-2019 vs-2022" class="tree-item" aria-setsize="19" aria-level="1" aria-posinset="19" role="treeitem" tabindex="-1" id="title-19-1" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Send feedback</span></li></ul><div class="padding-xxs padding-none-tablet border-top border-bottom-tablet"><button class="button button-sm button-clear button-block inner-focus justify-content-flex-start-tablet" data-bi-name="download-pdf" rel="nofollow"><!---->
+			<span class="icon" aria-hidden="true">
+				<span class="docon docon-dictionary-download"></span>
+			</span>
+			<span><!---->Download PDF<!----></span>
+		<!----></button></div></nav>
+			</div>
+
+			<!-- .primary-holder -->
+			<section class="primary-holder column is-two-thirds-tablet is-three-quarters-desktop">
+				<!--div.columns -->
+				<div class="columns is-gapless-mobile has-large-gaps ">
+
+
+					<div id="main-column" class="column  is-full is-8-desktop">
+
+						<main id="main" class="" role="main" data-bi-name="content" dir="ltr" lang="en-us">
+							<!-- article-header -->
+							<div id="article-header" class="background-color-body margin-top-sm-tablet margin-bottom-xs display-none-print">
+								<div class="display-flex align-items-center ">
+									<details id="article-header-breadcrumbs-overflow-popover" class="popover" data-for="article-header-breadcrumbs" hidden="">
+										<summary class="button button-clear button-primary button-sm inner-focus" aria-label="All breadcrumbs">
+											<span class="icon">
+												<span class="docon docon-more"></span>
+											</span>
+										</summary>
+										<div id="article-header-breadcrumbs-overflow" class="popover-content padding-none"><!---->
+			<nav>
+				<ol class="list-style-none">
+					<!---->
+								<li class="line-clamp-1">
+									<a class="display-block has-inner-focus padding-inline-xs padding-block-xxs border-radius font-size-sm" href="https://learn.microsoft.com/en-us/?view=vs-2022">
+										Learn
+									</a>
+								</li>
+							<!----><!---->
+								<li class="line-clamp-1">
+									<a class="display-block has-inner-focus padding-inline-xs padding-block-xxs border-radius font-size-sm" href="https://learn.microsoft.com/en-us/visualstudio/windows/?view=vs-2022">
+										Visual Studio
+									</a>
+								</li>
+							<!----><!---->
+								<li class="line-clamp-1">
+									<a class="display-block has-inner-focus padding-inline-xs padding-block-xxs border-radius font-size-sm" href="https://learn.microsoft.com/en-us/visualstudio/ide/?view=vs-2022">
+										IDE
+									</a>
+								</li>
+							<!----><!---->
+								<li class="line-clamp-1">
+									<a class="display-block has-inner-focus padding-inline-xs padding-block-xxs border-radius font-size-sm" href="https://learn.microsoft.com/en-us/visualstudio/ide/index-writing-code?view=vs-2022">
+										Develop
+									</a>
+								</li>
+							<!----><!---->
+								<li class="line-clamp-1">
+									<a class="display-block has-inner-focus padding-inline-xs padding-block-xxs border-radius font-size-sm" href="https://learn.microsoft.com/en-us/visualstudio/ide/solutions-and-projects-in-visual-studio?view=vs-2022">
+										Solutions and projects
+									</a>
+								</li>
+							<!----><!----><!---->
+				</ol>
+			</nav>
+			
+		<!----></div>
+									</details>
+									<bread-crumbs id="article-header-breadcrumbs" class="overflow-hidden flex-grow-1 margin-right-sm margin-right-md-tablet margin-right-lg-desktop margin-left-negative-xxs padding-left-xxs" style="display: block; white-space: nowrap; overflow: hidden;"><!---->
+			<nav>
+				<ol class="breadcrumbs">
+					<!---->
+								<li class="breadcrumbs-item" data-bread-crumbs-collapse-target="">
+									<a href="https://learn.microsoft.com/en-us/?view=vs-2022"><!---->Learn<!----></a>
+								</li>
+							<!----><!---->
+								<li class="breadcrumbs-item" data-bread-crumbs-collapse-target="">
+									<a href="https://learn.microsoft.com/en-us/visualstudio/windows/?view=vs-2022"><!---->Visual Studio<!----></a>
+								</li>
+							<!----><!---->
+								<li class="breadcrumbs-item" data-bread-crumbs-collapse-target="">
+									<a href="https://learn.microsoft.com/en-us/visualstudio/ide/?view=vs-2022"><!---->IDE<!----></a>
+								</li>
+							<!----><!---->
+								<li class="breadcrumbs-item" data-bread-crumbs-collapse-target="">
+									<a href="https://learn.microsoft.com/en-us/visualstudio/ide/index-writing-code?view=vs-2022"><!---->Develop<!----></a>
+								</li>
+							<!----><!---->
+								<li class="breadcrumbs-item" data-bread-crumbs-collapse-target="" style="">
+									<a href="https://learn.microsoft.com/en-us/visualstudio/ide/solutions-and-projects-in-visual-studio?view=vs-2022" style=""><!---->Solutions and projects<!----></a>
+								</li>
+							<!----><!----><!---->
+				</ol>
+			</nav>
+		<!----></bread-crumbs>
+
+									<div id="article-header-page-actions" class="margin-left-auto display-flex flex-wrap-no-wrap align-items-stretch">
+
+										<a id="lang-link-tablet" class="button button-primary button-clear button-sm display-none display-inline-flex-tablet" title="Read in English" data-bi-name="language-toggle" data-read-in-link="" href="https://learn.microsoft.com/en-us/visualstudio/ide/how-to-specify-an-application-icon-visual-basic-csharp?view=vs-2022" data-bi="{&quot;cN&quot;:&quot;language-toggle&quot;,&quot;value&quot;:&quot;off&quot;}" hidden="">
+											<span class="icon margin-none" aria-hidden="true" data-read-in-link-icon="">
+												<span class="docon docon-locale-globe"></span>
+											</span>
+											<span class="is-visually-hidden" data-read-in-link-text="">Read in English</span>
+										</a>
+
+											<button type="button" class="collection button button-clear button-sm button-primary display-none display-inline-flex-tablet" data-list-type="collection" data-bi-name="collection" title="Add How to: Specify an application icon (Visual Basic, C#) - Visual Studio (Windows) | Microsoft Learn to a collection" data-pressed="false">
+												<span class="icon margin-none" aria-hidden="true">
+													<span class="docon docon-circle-addition"></span>
+												</span>
+												<span class="collection-status is-visually-hidden">Add</span>
+											</button>
+										
+
+											<a data-contenteditbtn="" class="button button-clear button-sm text-decoration-none button-primary display-none display-inline-flex-tablet" aria-label="Edit" title="Edit This Document" data-bi-name="edit" href="https://github.com/MicrosoftDocs/visualstudio-docs/blob/main/docs/ide/how-to-specify-an-application-icon-visual-basic-csharp.md" data-original_content_git_url="https://github.com/MicrosoftDocs/visualstudio-docs-pr/blob/live/docs/ide/how-to-specify-an-application-icon-visual-basic-csharp.md" data-original_content_git_url_template="{repo}/blob/{branch}/docs/ide/how-to-specify-an-application-icon-visual-basic-csharp.md" data-pr_repo="" data-pr_branch="">
+												<span class="icon margin-none" aria-hidden="true">
+													<span class="docon docon-edit-outline"></span>
+												</span>
+											</a>
+										
+
+
+										
+										<details class="popover popover-right" id="article-header-page-actions-overflow">
+											<summary class="justify-content-flex-start button button-clear button-sm button-primary" aria-label="More actions">
+												<span class="icon" aria-hidden="true">
+													<span class="docon docon-more-vertical"></span>
+												</span>
+											</summary>
+											<div class="popover-content padding-none">
+													<button data-page-action-item="overflow-mobile" type="button" class="justify-content-flex-start button-block button-sm has-inner-focus button button-clear display-none-tablet" data-bi-name="contents-expand" data-contents-button="" data-popover-close="">
+														<span class="icon">
+															<span class="docon docon-editor-list-bullet" aria-hidden="true"></span>
+														</span>
+															<span class="contents-expand-title">Table of contents</span>
+													</button>
+
+												<a id="lang-link-overflow" class="justify-content-flex-start button-sm has-inner-focus button button-clear button-block display-none-tablet" title="Read in English" data-bi-name="language-toggle" data-page-action-item="overflow-mobile" data-check-hidden="true" data-read-in-link="" href="https://learn.microsoft.com/en-us/visualstudio/ide/how-to-specify-an-application-icon-visual-basic-csharp?view=vs-2022" data-bi="{&quot;cN&quot;:&quot;language-toggle&quot;,&quot;value&quot;:&quot;off&quot;}" hidden="">
+													<span class="icon" aria-hidden="true" data-read-in-link-icon="">
+														<span class="docon docon-locale-globe"></span>
+													</span>
+													<span data-read-in-link-text="">Read in English</span>
+												</a>
+
+													<button type="button" class="collection justify-content-flex-start button button-clear button-sm has-inner-focus button-block display-none-tablet" data-list-type="collection" data-bi-name="collection" title="Add How to: Specify an application icon (Visual Basic, C#) - Visual Studio (Windows) | Microsoft Learn to a collection" data-page-action-item="overflow-mobile" data-check-hidden="true" data-popover-close="" data-pressed="false">
+														<span class="icon" aria-hidden="true">
+															<span class="docon docon-circle-addition"></span>
+														</span>
+														<span class="collection-status">Add</span>
+													</button>
+
+													<a data-contenteditbtn="" class="button button-clear button-block button-sm has-inner-focus justify-content-flex-start text-decoration-none display-none-tablet" aria-label="Edit" title="Edit This Document" data-bi-name="edit" href="https://github.com/MicrosoftDocs/visualstudio-docs/blob/main/docs/ide/how-to-specify-an-application-icon-visual-basic-csharp.md" data-original_content_git_url="https://github.com/MicrosoftDocs/visualstudio-docs-pr/blob/live/docs/ide/how-to-specify-an-application-icon-visual-basic-csharp.md" data-original_content_git_url_template="{repo}/blob/{branch}/docs/ide/how-to-specify-an-application-icon-visual-basic-csharp.md" data-pr_repo="" data-pr_branch="">
+														<span class="icon" aria-hidden="true">
+															<span class="docon docon-edit-outline"></span>
+														</span>
+														<span>Edit</span>
+													</a>
+
+													<button class="button button-block button-clear button-sm justify-content-flex-start has-inner-focus" title="Print" type="button" aria-label="Print" data-bi-name="print" data-page-action-item="overflow-all" data-popover-close="" data-print-page="" data-check-hidden="true">
+														<span class="icon" aria-hidden="true">
+															<span class="docon docon-print"></span>
+														</span>
+														<span>Print</span>
+													</button>
+
+													<div aria-hidden="true" class="margin-none
+														border-top" data-page-action-item="overflow-all"></div>
+
+													
+														<a class="button button-clear button-sm has-inner-focus button-block text-decoration-none justify-content-flex-start share-twitter" data-bi-name="twitter" data-page-action-item="overflow-all" href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fvisualstudio%2Fide%2Fhow-to-specify-an-application-icon-visual-basic-csharp%3Fview%3Dvs-2022%26WT.mc_id%3Dtwitter&amp;text=How%20to%3A%20Specify%20an%20application%20icon%20(Visual%20Basic%2C%20C%23)%20-%20Visual%20Studio%20(Windows)%20%7C%20Microsoft%20Learn&amp;tw_p=tweetbutton&amp;url=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fvisualstudio%2Fide%2Fhow-to-specify-an-application-icon-visual-basic-csharp%3Fview%3Dvs-2022%26WT.mc_id%3Dtwitter">
+															<span class="icon" aria-hidden="true">
+																<span class="docon docon-brand-twitter"></span>
+															</span>
+															<span>Twitter</span>
+														</a>
+														<a class="button button-clear button-sm has-inner-focus button-block text-decoration-none justify-content-flex-start share-linkedin" data-bi-name="linkedin" data-page-action-item="overflow-all" href="https://www.linkedin.com/cws/share?url=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fvisualstudio%2Fide%2Fhow-to-specify-an-application-icon-visual-basic-csharp%3Fview%3Dvs-2022%26WT.mc_id%3Dlinkedin">
+															<span class="icon" aria-hidden="true">
+																<span class="docon docon-brand-linkedin"></span>
+															</span>
+															<span>LinkedIn</span>
+														</a>
+														<a class="button button-clear button-sm button-block has-inner-focus text-decoration-none justify-content-flex-start share-facebook" data-bi-name="facebook" data-page-action-item="overflow-all" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fvisualstudio%2Fide%2Fhow-to-specify-an-application-icon-visual-basic-csharp%3Fview%3Dvs-2022%26WT.mc_id%3Dfacebook">
+															<span class="icon" aria-hidden="true">
+																<span class="docon docon-brand-facebook"></span>
+															</span>
+															<span>Facebook</span>
+														</a>
+														<a class="button button-clear button-sm button-block has-inner-focus text-decoration-none justify-content-flex-start share-email" data-bi-name="email" data-page-action-item="overflow-all" href="mailto:?subject=%5BShared%20Article%5D%20How%20to%3A%20Specify%20an%20application%20icon%20(Visual%20Basic%2C%20C%23)%20-%20Visual%20Studio%20(Windows)%20%7C%20Microsoft%20Learn&amp;body=How%20to%3A%20Specify%20an%20application%20icon%20(Visual%20Basic%2C%20C%23)%20-%20Visual%20Studio%20(Windows)%20%7C%20Microsoft%20Learn%0A%0Ahttps%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fvisualstudio%2Fide%2Fhow-to-specify-an-application-icon-visual-basic-csharp%3Fview%3Dvs-2022%26WT.mc_id%3Demail">
+															<span class="icon" aria-hidden="true">
+																<span class="docon docon-mail-message-fill"></span>
+															</span>
+															<span>Email</span>
+														</a>
+												
+											</div>
+										</details>
+										
+									</div>
+								</div>
+							</div>
+							<!-- end article-header -->
+
+
+							<div>
+								<button type="button" class="border contents-button button button-clear button-sm is-hidden-tablet has-inner-focus" data-bi-name="contents-expand" data-contents-button="" hidden="">
+									<span class="icon">
+										<span class="docon docon-editor-list-bullet" aria-hidden="true"></span>
+									</span>
+										<span class="contents-expand-title">Table of contents</span>
+								</button>
+							</div>
+
+							<!-- end mobile-contents button  -->
+
+							<div class="content ">
+
+
+								<h1 id="how-to-specify-an-application-icon-visual-basic-c">How to: Specify an application icon (Visual Basic, C#)</h1>
+
+
+									<div class="display-flex justify-content-space-between align-items-center flex-wrap-wrap page-metadata-container">
+										<div class="margin-right-xxs">
+											<ul class="metadata page-metadata" data-bi-name="page info" dir="ltr" lang="en-us">
+													<li>
+Article													</li>
+
+													<li class="visibility-hidden-visual-diff">
+														<time class="" data-article-date="" aria-label="Article review date" datetime="2023-03-10T00:00:00.000Z" data-article-date-source="calculated">03/09/2023</time>
+													</li>
+														<li class="contributors-holder display-none-print">
+															<button aria-label="View all contributors" class="contributors-button link-button" data-bi-name="contributors" title="View all contributors">
+																	8 contributors
+															</button>
+														</li>
+											</ul>
+										</div>
+
+<div id="user-feedback" class="margin-block-xxs display-none-print" data-hide-on-archived="">
+	<button id="user-feedback-button" data-test-id="conceptual-feedback-button" class="button button-sm button-clear button-primary" type="button" data-bi-name="user-feedback-button" data-user-feedback-button="">
+		<span class="icon" aria-hidden="true">
+			<span class="docon docon-like"></span>
+		</span>
+		<span>Feedback</span>
+	</button>
+</div>
+									</div>
+
+										<nav id="center-doc-outline" class="doc-outline is-hidden-desktop display-none-print margin-bottom-sm" data-bi-name="intopic toc" role="navigation" aria-label="In this article"><!---->
+		<h2 id="ms--in-this-article" class="title is-6 margin-block-xs"><!---->In this article<!----></h2>
+		<ol>
+			<!---->
+					<li>
+						<a href="#to-specify-an-application-icon"><!---->To specify an application icon<!----></a>
+					</li>
+				<!---->
+					<li>
+						<a href="#see-also"><!---->See also<!----></a>
+					</li>
+				<!---->
+		</ol>
+	<!----></nav>
+
+								<!-- <content> -->
+									<p><strong>Applies to:</strong> <img src="How%20to%20Specify%20an%20application%20icon%20(Visual%20Basic,%20C%23)%20-%20Visual%20Studio%20(Windows)%20Microsoft%20Learn_files/yes-icon.png" alt="yes" data-linktype="relative-path">Visual Studio <img src="How%20to%20Specify%20an%20application%20icon%20(Visual%20Basic,%20C%23)%20-%20Visual%20Studio%20(Windows)%20Microsoft%20Learn_files/no-icon.png" alt="no" data-linktype="relative-path">Visual Studio for Mac <img src="How%20to%20Specify%20an%20application%20icon%20(Visual%20Basic,%20C%23)%20-%20Visual%20Studio%20(Windows)%20Microsoft%20Learn_files/no-icon.png" alt="no" data-linktype="relative-path">Visual Studio Code</p>
+<p>The <code>Icon</code> property for a project specifies the icon file (<em>.ico</em>) that will be displayed for the compiled application in <strong>File Explorer</strong> and in the Windows taskbar.</p>
+<p>The <code>Icon</code> property can be accessed in the <strong>Application</strong> pane of the <strong>Project Designer</strong>; it contains a list of icons that have been added to a project either as resources or as content files.</p>
+<div class="alert is-info">
+<p class="alert-title"><span class="docon docon-status-error-outline" aria-hidden="true"></span> Note</p>
+<p>After you set the icon property for an application, you might also set the <code>Icon</code> property of each <strong>Window</strong> or <strong>Form</strong> in the application. For information about window icons for Windows Presentation Foundation (WPF) standalone applications, see <a href="https://learn.microsoft.com/en-us/dotnet/api/system.windows.window.icon" class="no-loc" data-linktype="absolute-path">Icon</a> property.</p>
+</div>
+<div class="heading-wrapper" data-heading-level="h2"><a class="anchor-link docon docon-link" href="#to-specify-an-application-icon" aria-label="Section titled: To specify an application icon"></a><h2 id="to-specify-an-application-icon" class="heading-anchor">To specify an application icon</h2></div>
+<ol>
+<li><p>In <strong>Solution Explorer</strong>, choose a project node (not the <strong>Solution</strong> node).</p>
+</li>
+<li><p>On the menu bar, choose <strong>Project</strong> &gt; <strong>Properties</strong>.</p>
+</li>
+<li><p>When the <strong>Project Designer</strong> appears, choose the <strong>Application</strong> tab.</p>
+</li>
+<li><p><strong>(Visual Basic)</strong>—In the <strong>Icon</strong> list, choose an icon (<em>.ico</em>) file.</p>
+<p><strong>C#</strong>—Near the <strong>Icon</strong> list, choose the <strong>&lt;Browse...&gt;</strong> button, and then browse to the location of the icon file that you want.</p>
+</li>
+</ol>
+<div class="heading-wrapper" data-heading-level="h2"><a class="anchor-link docon docon-link" href="#see-also" aria-label="Section titled: See also"></a><h2 id="see-also" class="heading-anchor">See also</h2></div>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/visualstudio/ide/reference/application-page-project-designer-visual-basic?view=vs-2022" data-linktype="relative-path">Application page, Project Designer (Visual Basic)</a></li>
+<li><a href="https://learn.microsoft.com/en-us/visualstudio/ide/reference/application-page-project-designer-csharp?view=vs-2022" data-linktype="relative-path">Application page, Project Designer (C#)</a></li>
+</ul>
+
+							</div>
+
+							<div id="assertive-live-region" role="alert" aria-live="assertive" class="visually-hidden" aria-relevant="additions" aria-atomic="true"></div>
+							<div id="polite-live-region" role="status" aria-live="polite" class="visually-hidden" aria-relevant="additions" aria-atomic="true"></div>
+							<!-- </content> -->
+
+						</main>
+
+
+
+
+						<!-- recommendations section -->
+							<section id="recommendations-section" data-bi-name="recommendations" class="display-none-print margin-bottom-md margin-bottom-none-desktop"><!---->
+			<hr class="hr">
+			<h2 class="title is-3 margin-top-sm" id="recommended-content"><!---->Recommended content<!----></h2>
+			
+		<ul id="recommendations-list" aria-live="polite" aria-relevant="additions" aria-labelledby="recommended-content" class="margin-bottom-sm">
+			<!---->
+					<li class="margin-top-xs ">
+						<article class="card">
+							<div class="card-content">
+								<a class="card-content-title stretched-link" href="https://learn.microsoft.com/en-us/visualstudio/ide/reference/settings-page-project-designer?source=recommendations" data-bi-name="recommendation-item-0">
+									<h3><!---->Settings Page, Project Designer - Visual Studio (Windows)<!----></h3>
+								</a>
+								<p class="card-content-description line-clamp-3"><!---->Learn how to use the Settings page of the Project Designer to specify a project's application settings.<!----></p>
+							</div>
+						</article>
+					</li>
+				<!---->
+					<li class="margin-top-xs ">
+						<article class="card">
+							<div class="card-content">
+								<a class="card-content-title stretched-link" href="https://learn.microsoft.com/en-us/visualstudio/designers/disable-dpi-awareness?source=recommendations" data-bi-name="recommendation-item-1">
+									<h3><!---->Fix DPI display issues in Windows Form Designer - Visual Studio (Windows)<!----></h3>
+								</a>
+								<p class="card-content-description line-clamp-3"><!---->Disable DPI awareness to fix scaling issues with Windows Forms Designer on HDPI monitors.<!----></p>
+							</div>
+						</article>
+					</li>
+				<!---->
+					<li class="margin-top-xs ">
+						<article class="card">
+							<div class="card-content">
+								<a class="card-content-title stretched-link" href="https://learn.microsoft.com/en-us/dotnet/desktop/winforms/controls/how-to-open-files-using-the-openfiledialog-component?source=recommendations" data-bi-name="recommendation-item-2">
+									<h3><!---->How to: Open files with the OpenFileDialog component - Windows Forms .NET Framework<!----></h3>
+								</a>
+								<p class="card-content-description line-clamp-3"><!---->Learn how to use the OpenFileDialog component to open the Windows dialog box for browsing and selecting files.<!----></p>
+							</div>
+						</article>
+					</li>
+				<!---->
+					<li class="margin-top-xs ">
+						<article class="card">
+							<div class="card-content">
+								<a class="card-content-title stretched-link" href="https://learn.microsoft.com/en-us/troubleshoot/developer/visualstudio/csharp/language-compilers/create-smooth-progress-bar?source=recommendations" data-bi-name="recommendation-item-3">
+									<h3><!---->Create a smooth progress bar by using C# - C#<!----></h3>
+								</a>
+								<p class="card-content-description line-clamp-3"><!---->Describes how to create a simple, custom UserControl to create a smooth, scrolling ProgressBar control.<!----></p>
+							</div>
+						</article>
+					</li>
+				<!---->
+					<li class="margin-top-xs expandable">
+						<article class="card">
+							<div class="card-content">
+								<a class="card-content-title stretched-link" href="https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.application.run?source=recommendations" data-bi-name="recommendation-item-4">
+									<h3><!---->Application.Run Method (System.Windows.Forms)<!----></h3>
+								</a>
+								<p class="card-content-description line-clamp-3"><!---->Begins running a standard application message loop on the current thread. <!----></p>
+							</div>
+						</article>
+					</li>
+				<!---->
+					<li class="margin-top-xs expandable">
+						<article class="card">
+							<div class="card-content">
+								<a class="card-content-title stretched-link" href="https://learn.microsoft.com/en-us/visualstudio/debugger/walkthrough-debugging-a-windows-form?source=recommendations" data-bi-name="recommendation-item-5">
+									<h3><!---->Debugging a Windows Form - Visual Studio (Windows)<!----></h3>
+								</a>
+								<p class="card-content-description line-clamp-3"><!---->Follow a
+ walkthrough to see how to create and debug a Windows Form, a common 
+managed application. You can use C#, Visual Basic, or C++.<!----></p>
+							</div>
+						</article>
+					</li>
+				<!---->
+					<li class="margin-top-xs expandable">
+						<article class="card">
+							<div class="card-content">
+								<a class="card-content-title stretched-link" href="https://learn.microsoft.com/en-us/dotnet/desktop/winforms/whats-new/net60?source=recommendations" data-bi-name="recommendation-item-6">
+									<h3><!---->What's new in Windows Forms .NET 6 - Windows Forms .NET<!----></h3>
+								</a>
+								<p class="card-content-description line-clamp-3"><!---->Learn 
+about what's new in Windows Forms for .NET 6. Windows Forms. .NET 
+provides new features and enhancements over .NET Framework.<!----></p>
+							</div>
+						</article>
+					</li>
+				<!---->
+					<li class="margin-top-xs expandable">
+						<article class="card">
+							<div class="card-content">
+								<a class="card-content-title stretched-link" href="https://learn.microsoft.com/en-us/dotnet/desktop/winforms/controls/how-to-load-a-picture-using-the-designer-windows-forms?source=recommendations" data-bi-name="recommendation-item-7">
+									<h3><!---->How to: Load a Picture Using the Designer - Windows Forms .NET Framework<!----></h3>
+								</a>
+								<p class="card-content-description line-clamp-3"><!---->Learn how to use the Windows Forms PictureBox control to load and display a picture on a form at design time.<!----></p>
+							</div>
+						</article>
+					</li>
+				<!---->
+		</ul>
+		
+				<div class="buttons buttons-centered has-background-linethrough">
+					
+		<button type="button" aria-expanded="false" data-show-more="" class="button button-sm margin-bottom-none show-more-button" aria-controls="recommendations-list" data-title="Show more" data-bi-name="show-more-btn">
+			<span class="show-more-text"><!---->Show more<!----></span>
+			
+						<span class="icon align-items-baseline" aria-hidden="true">
+							<span class="expanded-indicator docon docon-chevron-down-light"></span>
+						</span>
+				  
+		</button>
+	
+				</div>
+		  
+	
+		<!----></section>
+						<!-- end recommendations section -->
+
+						<!-- feedback section -->
+<section class="feedback-section position-relative" data-bi-name="feedback-section">
+    <h2 id="feedback" class="title is-3 margin-top-sm">Feedback</h2>
+
+    <div class="alert choose-feedback-type padding-bottom-sm">
+        <p id="send-feedback-about">Submit and view feedback for</p>
+
+        <div class="choose-feedback-buttons buttons margin-top-xs">
+                <a class="button has-external-link-indicator feedback-type-product" aria-label="Send feedback about this product" href="https://developercommunity2.visualstudio.com/search?space=8" data-bi-name="product-feedback">
+                    <span>This product</span>
+                </a>
+			<a class="button feedback-type-product github-link" aria-label="Send feedback about this page" data-bi-name="create-issue-on-github" href="https://github.com/MicrosoftDocs/visualstudio-docs/issues/new?title=&amp;body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23%23%23%23%20Document%20Details%0A%0A%E2%9A%A0%20*Do%20not%20edit%20this%20section.%20It%20is%20required%20for%20learn.microsoft.com%20%E2%9E%9F%20GitHub%20issue%20linking.*%0A%0A*%20ID%3A%20826f6de3-083c-37a0-0bff-ff12b690f37d%0A*%20Version%20Independent%20ID%3A%207ee0aa95-5a27-d6de-0715-07a40eda2ac3%0A*%20Content%3A%20%5BHow%20to%3A%20Specify%20an%20application%20icon%20(Visual%20Basic%2C%20C%23)%20-%20Visual%20Studio%20(Windows)%5D(https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fvisualstudio%2Fide%2Fhow-to-specify-an-application-icon-visual-basic-csharp%3Fview%3Dvs-2022)%0A*%20Content%20Source%3A%20%5Bdocs%2Fide%2Fhow-to-specify-an-application-icon-visual-basic-csharp.md%5D(https%3A%2F%2Fgithub.com%2FMicrosoftDocs%2Fvisualstudio-docs%2Fblob%2Fmain%2Fdocs%2Fide%2Fhow-to-specify-an-application-icon-visual-basic-csharp.md)%0A*%20Product%3A%20**visual-studio-windows**%0A*%20Technology%3A%20**vs-ide-general**%0A*%20GitHub%20Login%3A%20%40TerryGLee%0A*%20Microsoft%20Alias%3A%20**tglee**">
+				<span class="icon" aria-hidden="true">
+					<span class="docon docon-brand-github"></span>
+				</span>
+				<span>This page</span>
+			</a>
+        </div>
+    </div>
+
+    <div class="action-container display-flex justify-content-flex-end margin-block-xxs">
+        <a class="view-on-github has-external-link-indicator" data-bi-name="view-on-github" href="https://github.com/MicrosoftDocs/visualstudio-docs/issues?utf8=%E2%9C%93&amp;q=%227ee0aa95-5a27-d6de-0715-07a40eda2ac3%22&amp;in=body">
+            <span aria-hidden="true" class="docon docon-brand-github"></span>
+            <span>View all page feedback</span>
+        </a>
+    </div>
+</section>
+						<!-- end feedback section -->
+
+						<!-- feedback report section -->
+						<!-- end feedback report section -->
+
+							<div id="ms--additional-resources-mobile" role="complementary" aria-label="Additional resources" class="display-none-desktop display-none-print">
+								<hr class="hr" hidden="">
+								<h2 id="ms--additional-resources-mobile-heading" class="title is-3" hidden="">Additional resources</h2>
+									<section id="right-rail-recommendations-mobile" data-bi-name="recommendations" hidden=""></section>
+								<section id="right-rail-training-mobile" data-bi-name="learning-resources-card" hidden=""></section>
+								<section id="right-rail-events-mobile" data-bi-name="events-card" hidden=""></section>
+								<section id="right-rail-qna-mobile" data-bi-name="qna-link-card" hidden=""></section>
+							</div>
+
+						<div class="border-top is-visible-interactive has-default-focus margin-top-sm ">
+
+
+
+	<footer id="footer-interactive" data-bi-name="footer" class="footer-layout">
+	<div class="display-flex is-full-height padding-right-lg-desktop">
+			<a data-mscc-ic="false" class="locale-selector-link button button-sm button-clear flex-shrink-0" href="https://learn.microsoft.com/en-us/locale?target=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fvisualstudio%2Fide%2Fhow-to-specify-an-application-icon-visual-basic-csharp%3Fview%3Dvs-2022" data-bi-name="select-locale" aria-label="Content language selector. Currently set to English (United States).">
+					<span class="icon" aria-hidden="true">
+						<span class="docon docon-world"></span>
+					</span>
+					<span class="local-selector-link-text">English (United States)</span></a>
+		<div class="margin-inline-xs flex-shrink-0">
+<div class="dropdown has-caret-up">
+	<button class="dropdown-trigger button button-clear button-sm has-inner-focus theme-dropdown-trigger" aria-controls="theme-menu-interactive" aria-expanded="false" title="Theme" data-bi-name="theme">
+		<span class="icon">
+			<span class="docon docon-sun" aria-hidden="true"></span>
+		</span>
+		<span>Theme</span>
+		<span class="icon expanded-indicator" aria-hidden="true">
+			<span class="docon docon-chevron-down-light"></span>
+		</span>
+	</button>
+	<div class="dropdown-menu" id="theme-menu-interactive" role="menu">
+		<ul class="theme-selector padding-xxs" role="none">
+			<li class="theme display-block" role="menuitem">
+				<button class="button button-clear button-sm theme-control button-block justify-content-flex-start" data-theme-to="light" aria-pressed="false">
+					<span class="theme-light margin-right-xxs">
+						<span class="theme-selector-icon css-variable-support border display-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span>
+Light					</span>
+				</button>
+			</li>
+			<li class="theme display-block" role="menuitem">
+				<button class="button button-clear button-sm theme-control button-block justify-content-flex-start is-selected" data-theme-to="dark" aria-pressed="true">
+					<span class="theme-dark margin-right-xxs">
+						<span class="border theme-selector-icon css-variable-support display-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span>
+Dark					</span>
+				</button>
+			</li>
+			<li class="theme display-block" role="menuitem">
+				<button class="button button-clear button-sm theme-control button-block justify-content-flex-start" data-theme-to="high-contrast" aria-pressed="false">
+					<span class="theme-high-contrast margin-right-xxs">
+						<span class="border theme-selector-icon css-variable-support display-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span>
+High contrast					</span>
+				</button>
+			</li>
+		</ul>
+	</div>
+</div>
+		</div>
+	</div>
+	<ul class="links" data-bi-name="footerlinks">
+		<li class="manage-cookies-holder" hidden=""></li>
+				<li><a data-mscc-ic="false" href="https://learn.microsoft.com/en-us/previous-versions/" data-bi-name="archivelink">Previous Versions</a></li>
+				<li><a data-mscc-ic="false" href="https://techcommunity.microsoft.com/t5/microsoft-learn-blog/bg-p/MicrosoftLearnBlog" data-bi-name="bloglink">Blog</a></li>
+				<li><a data-mscc-ic="false" href="https://learn.microsoft.com/en-us/contribute/" data-bi-name="contributorGuide">Contribute</a></li>
+					<li><a data-mscc-ic="false" href="https://go.microsoft.com/fwlink/?LinkId=521839" data-bi-name="privacy">Privacy</a></li>
+				<li><a data-mscc-ic="false" href="https://learn.microsoft.com/en-us/legal/termsofuse" data-bi-name="termsofuse">Terms of Use</a></li>
+				<li><a data-mscc-ic="false" href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx" data-bi-name="trademarks">Trademarks</a></li>
+		<li>© Microsoft 2023</li>
+	</ul>
+</footer>
+						</div>
+
+					</div>
+
+						<div id="ms--additional-resources" class="right-container column is-4-desktop display-none display-block-desktop" data-bi-name="pageactions" role="complementary" aria-label="Additional resources">
+							<div id="affixed-right-container" class="margin-top-sm-tablet" data-bi-name="right-column">
+								<h2 id="ms--additional-resources-heading" class="title is-6 margin-top-md" hidden="">Additional resources</h2>
+								<section id="right-rail-events" data-bi-name="events-card" hidden=""></section>
+								<section id="right-rail-training" data-bi-name="learning-resources-card" hidden=""></section>
+								<section id="right-rail-recommendations" data-bi-name="recommendations" hidden=""></section>
+								<nav id="side-doc-outline" class="doc-outline" data-bi-name="intopic toc" role="navigation" aria-label="In this article"><!---->
+		<article class="border border-radius-lg overflow-hidden">
+			
+		<div class="padding-block-xxs padding-inline-xs border-bottom background-color-body-medium">
+			<p class="font-weight-semibold font-size-md display-flex align-items-center">
+				<span class="icon margin-right-xxs" aria-hidden="true">
+					<span class="docon docon-bulleted-list-three-items"></span>
+				</span>
+				In this article
+			</p>
+		</div>
+	 
+		<ul id="right-rail-in-this-article-list" aria-live="polite" aria-relevant="additions" class="padding-xxs">
+			<!---->
+					<li class="">
+						<a href="#to-specify-an-application-icon"><!---->To specify an application icon<!----></a>
+					</li>
+				<!---->
+					<li class="">
+						<a href="#see-also"><!---->See also<!----></a>
+					</li>
+				<!---->
+		</ul>
+	
+			
+		</article>
+	<!----></nav>
+								<section id="right-rail-qna" class="margin-top-xxs" data-bi-name="qna-link-card" hidden=""></section>
+							</div>
+						</div>
+
+				</div>
+				<!--end of div.columns -->
+
+			</section>
+			<!--end of .primary-holder -->
+
+			<!-- interactive container -->
+			<aside id="interactive-container" class="interactive-container is-visible-interactive column has-body-background-dark ">
+			</aside>
+			<!-- end of interactive container -->
+		</div>
+
+	</div>
+	<!--end of .mainContainer -->
+
+	<section class="border-top has-default-focus is-hidden-interactive margin-top-sm ">
+
+
+
+	<footer id="footer" data-bi-name="footer" class="footer-layout uhf-container has-padding" role="contentinfo">
+	<div class="display-flex is-full-height padding-right-lg-desktop">
+			<a data-mscc-ic="false" class="locale-selector-link button button-sm button-clear flex-shrink-0" href="https://learn.microsoft.com/en-us/locale?target=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fvisualstudio%2Fide%2Fhow-to-specify-an-application-icon-visual-basic-csharp%3Fview%3Dvs-2022" data-bi-name="select-locale" aria-label="Content language selector. Currently set to English (United States).">
+					<span class="icon" aria-hidden="true">
+						<span class="docon docon-world"></span>
+					</span>
+					<span class="local-selector-link-text">English (United States)</span></a>
+		<div class="margin-inline-xs flex-shrink-0">
+<div class="dropdown has-caret-up">
+	<button class="dropdown-trigger button button-clear button-sm has-inner-focus theme-dropdown-trigger" aria-controls="theme-menu" aria-expanded="false" title="Theme" data-bi-name="theme">
+		<span class="icon">
+			<span class="docon docon-sun" aria-hidden="true"></span>
+		</span>
+		<span>Theme</span>
+		<span class="icon expanded-indicator" aria-hidden="true">
+			<span class="docon docon-chevron-down-light"></span>
+		</span>
+	</button>
+	<div class="dropdown-menu" id="theme-menu" role="menu">
+		<ul class="theme-selector padding-xxs" role="none">
+			<li class="theme display-block" role="menuitem">
+				<button class="button button-clear button-sm theme-control button-block justify-content-flex-start" data-theme-to="light" aria-pressed="false">
+					<span class="theme-light margin-right-xxs">
+						<span class="theme-selector-icon css-variable-support border display-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span>
+Light					</span>
+				</button>
+			</li>
+			<li class="theme display-block" role="menuitem">
+				<button class="button button-clear button-sm theme-control button-block justify-content-flex-start is-selected" data-theme-to="dark" aria-pressed="true">
+					<span class="theme-dark margin-right-xxs">
+						<span class="border theme-selector-icon css-variable-support display-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span>
+Dark					</span>
+				</button>
+			</li>
+			<li class="theme display-block" role="menuitem">
+				<button class="button button-clear button-sm theme-control button-block justify-content-flex-start" data-theme-to="high-contrast" aria-pressed="false">
+					<span class="theme-high-contrast margin-right-xxs">
+						<span class="border theme-selector-icon css-variable-support display-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span>
+High contrast					</span>
+				</button>
+			</li>
+		</ul>
+	</div>
+</div>
+		</div>
+	</div>
+	<ul class="links" data-bi-name="footerlinks">
+		<li class="manage-cookies-holder" hidden=""></li>
+				<li><a data-mscc-ic="false" href="https://learn.microsoft.com/en-us/previous-versions/" data-bi-name="archivelink">Previous Versions</a></li>
+				<li><a data-mscc-ic="false" href="https://techcommunity.microsoft.com/t5/microsoft-learn-blog/bg-p/MicrosoftLearnBlog" data-bi-name="bloglink">Blog</a></li>
+				<li><a data-mscc-ic="false" href="https://learn.microsoft.com/en-us/contribute/" data-bi-name="contributorGuide">Contribute</a></li>
+					<li><a data-mscc-ic="false" href="https://go.microsoft.com/fwlink/?LinkId=521839" data-bi-name="privacy">Privacy</a></li>
+				<li><a data-mscc-ic="false" href="https://learn.microsoft.com/en-us/legal/termsofuse" data-bi-name="termsofuse">Terms of Use</a></li>
+				<li><a data-mscc-ic="false" href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx" data-bi-name="trademarks">Trademarks</a></li>
+		<li>© Microsoft 2023</li>
+	</ul>
+</footer>
+	</section>
+
+	<div id="action-panel" role="region" aria-label="Action Panel" class="action-panel has-default-focus" tabindex="-1"></div>
+
+
+</body></html>
