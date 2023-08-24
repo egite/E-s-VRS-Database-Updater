@@ -1,4 +1,4 @@
-# VRS Database Update
+# E's VRS Database Updater
 
 I wrote this program since I didn't like seeing "Private" for so many aircaft when using Virtual Radar Server.  This program will comprehensively update Virtual Radar Server's aircraft database.  The database will be updated with the most recent U.S. FAA registration database and, if provided, the most recent Canadian CCAR registration database.  The updates to the VRS database include the legally recognized owner ("operator"), manufacturer, model, type and ICAO model code of each aircraft.  You will no longer see "Private" for any registered US or Canadian registered aircraft and the details for all aircraft will be complete.
 
