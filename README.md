@@ -34,16 +34,15 @@ Examples of how I use rules:
 - Assign operator codes to entire fleets to ensure VRS is accurate (<ins>e.g.</ins>, all Southwest planes that aren't defined as SWA should be have the SWA operator code).  Shown in rules 17 and 41 in the included [Rules.csv](Rules.csv) file.
 - Assign proper operator codes to aircraft whose registrations don't indicate their operators (<ins>e.g.</ins>, "Cbg LLC" is Key Lime Air so the operator code should be LYM).  Shown in rules 54 and 62 in the included [Rules.csv](Rules.csv) file.
 
-View the included [Rules.csv](Rules.csv) file to see examples of the above.
 
 <ins>**Sils.csv file format explanation**</ins>
 
-This file is not necessary since its contents are hard-coded into the program.  However, you can modify or add to the file to override the hard-coded silhouette mapping data.  When this file is provided, the hard-coded data are not used.  
+This file is not necessary since its contents are hard-coded into the program.  However, you can modify or add to the file to override the hard-coded silhouette mapping data.  When this file is provided to the program in the working folder, the hard-coded data are not used.  
 
 There are four columns.  The first column defines the manufacturer(s), the second defines the model(s), the third column defines the ICAO model code to use based on matching the manufacture and model.  The fourth column is the model code used by the ICAO.  This is what defines the silhouette that VRS will use.  The fourth and third columns are almost always the same, however if there's need to remap an aircraft differently than the ICAO-defined one, having the third column supports using a different code.
 
-For each aircraft in the VRS database, the program goes through each row of the Sils.csv file and looks to match the aircraft's manufacturer with the entries in the first column.  If it finds a match, it then looks to match the model of the aircraft with the model(s) listed on that row.  If it finds a match, it uses the the "Remap" entry on that row to assign the ICAO model code.
+For each aircraft in the VRS database, the program goes through each row of the [Sils.csv](Sils.csv) file and looks to match the aircraft's manufacturer with the entries in the first column.  If it finds a match, it then looks to match the model of the aircraft with the model(s) listed on that row.  If it finds a match, it uses the the "Remap" entry in that row to assign the ICAO model code in VRS's database.
  
-The manufacturer and model entries can be comma-delimited lists.  A wildcard (*) in the manufacturer field can be used to tell the program to test each aicraft against that row regardless of the manufacuturer (this is especially useful for kit aircraft where the manufacturer is not standardized).  Similarly, a wildcard in the model field would tell the program, once the manufacturer was matched, to match all aircraft and assign the ICAO code given regardless of the model.
+The manufacturer and model entries can be comma-delimited lists.  A wildcard (*) in the manufacturer field can be used to tell the program to test each aicraft against that row regardless of the manufacuturer (this is especially useful for kit aircraft where the manufacturer is not standardized).  Similarly, a wildcard in the model field would tell the program, once the manufacturer was matched, to match all aircraft and assign the ICAO code given regardless of the model.  Thus do not use a wildcard for both the manufacturer <ins>and</ins> model on the same row, lest every aircraft be matched to that row and all aircraft in VRS's database would have the same ICAO model code.
 
 
