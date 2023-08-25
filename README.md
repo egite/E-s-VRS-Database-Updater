@@ -14,7 +14,7 @@ In many cases, the ICAO model codes for aircraft aren't assigned in the VRS data
 
 I don't know if this program will run within mono.  If you run Virtual Radar Server on a Linux box, you can copy your "AircraftOnlineLookupCache.sqb" file to a Windows box and run this program on that Windows box.  After the program is done processing the database, you can copy the database file back to your Linux box.
 
-I'm not a programmer. I wrote this for myself, figuring it out as I went along.  The code isn't very robust.  I didn't intend to share it however I believe it might be welcomed by the community.  
+I'm not a programmer. I wrote this for myself, figuring it out as I went along.  The code isn't very robust.  I didn't intend to share it however I believe it might have some value to the community.  
 
 <ins>**Rules.csv file format explanation**</ins>
 
