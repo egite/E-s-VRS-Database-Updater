@@ -20,7 +20,7 @@ I don't know if this program will run within mono.  If you run Virtual Radar Ser
 
 I'm not a programmer. I wrote this for myself, figuring it out as I went along.  The code isn't very robust.  I didn't intend to share it however I believe it might have some value to the community.  
 
-Finally, there's no reason to run the program more than once-a-week in my experience.  Even though I live within sight of one of the busiest airports in the world, the number of new aircraft that enter my VRS's database each week is relatively low.  If you need to run it frequently, perhaps use the option not to download the FAA database each time so as not to unnecessarily burden the FAA's server.
+Finally, there's no reason to run the program more than once-a-week in my experience.  Even though I live within sight of one of the busiest airports in the world, the number of new aircraft that enter my VRS's database each week is relatively low.  If you need to run the program frequently, perhaps use the option not to download the FAA database each time so as not to unnecessarily burden the FAA's server.
 
 <ins>**Rules.csv file format explanation**</ins>
 
