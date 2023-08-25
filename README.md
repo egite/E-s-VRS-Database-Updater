@@ -14,7 +14,7 @@ In many cases, the ICAO model codes for aircraft aren't assigned in the VRS data
 
 I'm not a programmer. I wrote this for myself, figuring it out as I went along.  The code isn't very robust.  I didn't intend to share it however I believe it might be welcomed by the community.  
 
-**Rules.csv file format explanation**
+<ins>**Rules.csv file format explanation**</ins>
 
 This file is not necessary but will help you modify VRS's database as you like.  There are two groups of columns in the CSV file.  The first group is the data field(s) to match for aircraft whose fields you want to change.  The second group are the fields that you want to change when the previous field(s) match.  Each row has a rule number.  The last two columns are 1) the message you want to show in the program's status window when the rule is matched and 2) the field to show in that message. When you use an exclamation point (!) in a rule, that indicates to be exclusive.  For example if you use "!SWA" in the "OperatorICAO" field, that means not to execute that rule if the "OperatorICAO" is "SWA" (if you use an exclusive rule, be sure to also use an inclusive rule to avoid changing the fields for aircraft that don't match the exclusive rule).  The rule number is ignored and is for human readability only.  
 
@@ -24,7 +24,7 @@ Examples of how I use rules:
 - Assign operator codes to entire fleets to ensure VRS is accurate (e.g., all Southwest planes that aren't defined as SWA should be have the SWA operator code).
 - Assign proper operator codes to aircraft whose registrations don't indicate their operators (e.g., "Cbg LLC" is Key Lime Air so the operator code should be LYM).
 
-**Sils.csv file format explanation**
+<ins>**Sils.csv file format explanation**</ins>
 
 This file is not necessary since its contents are hard-coded into the program.  However, you can modify or add to the file to override the hard-coded silhouette mapping data.  When this file is provided, the hard-coded data are not used.  
 
