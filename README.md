@@ -22,13 +22,19 @@ I'm not a programmer. I wrote this for myself, figuring it out as I went along. 
 
 <ins>**Rules.csv file format explanation**</ins>
 
-This file is not necessary but will help you modify VRS's database as you like.  There are two groups of columns in the CSV file.  The first group is the data field(s) to match for aircraft whose fields you want to change.  The second group are the fields that you want to change when the previous field(s) match.  Each row has a rule number.  The last two columns are 1) the message you want to show in the program's status window when the rule is matched and 2) the field to show in that message. When you use an exclamation point (!) in a rule, that indicates to be exclusive.  For example if you use "!SWA" in the "OperatorICAO" field, that means not to execute that rule if the "OperatorICAO" is "SWA" (if you use an exclusive rule, be sure to also use an inclusive rule to avoid changing the fields for aircraft that don't match the exclusive rule).  The rule number is ignored and is for human readability only.  
+This file is not necessary but will help you modify VRS's database as you like.  
+
+Each row corresponds to a single rule and is given a number.  The rule number is ignored and is for human readability only.  There are three groups of columns in the CSV file.  The first group is the data field(s) to match for aircraft whose details you want to change in VRS's database.  The second group are the fields that you want to change when the previous field(s) match(es).  The last group are two columns that define 1) the message you want to show in the program's status window when that row's rule is matched and 2) the field to show in that message. 
+
+When you use an exclamation point (!) in a rule, that indicates to be exclusive.  For example if you use "!SWA" in the "OperatorICAO" field, that means not to execute that rule if the "OperatorICAO" is "SWA".  <ins>If you use an exclusive rule, be sure to also use an inclusive rule to avoid changing the fields for aircraft that don't match the exclusive rule.</ins>
 
 Examples of how I use rules:
 - Create unique ICAO operator codes for local aircraft so I can have my own unique operators flags based on company logos of flight schools, friends, etc.
 - Update the operator string to have proper capitalization (e.g., the FAA database will show "Atp Aircraft" but I prefer "ATP Aircaft").
 - Assign operator codes to entire fleets to ensure VRS is accurate (e.g., all Southwest planes that aren't defined as SWA should be have the SWA operator code).
 - Assign proper operator codes to aircraft whose registrations don't indicate their operators (e.g., "Cbg LLC" is Key Lime Air so the operator code should be LYM).
+
+View the included [Rules.csv](Rules.csv) file to see examples of the above.
 
 <ins>**Sils.csv file format explanation**</ins>
 
