@@ -47,7 +47,7 @@ Module VRS
             Form1.TextBox1.AppendText(vbCrLf & """Virtual Radar Server"" is not installed in given location.")
             Form1.TextBox1.Update()
             If File.Exists(dbPath & "AircraftOnlineLookupCache.sqb") = False Then
-                MsgBox(vbCrLf & "I can't find VRS's ""AircraftOnlineLookupCache.sqb"" file." & vbCrLf & vbCrLf & "Exiting.", "E's VRS updater")
+                MessageBox.Show(vbCrLf & "I can't find VRS's ""AircraftOnlineLookupCache.sqb"" file." & vbCrLf & vbCrLf & "Exiting.", "E's VRS updater")
                 Application.Exit()
                 End
             End If
