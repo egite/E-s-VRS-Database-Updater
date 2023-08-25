@@ -10,7 +10,7 @@ Any field in VRS's database can be modified based on a CSV-defined rules file (a
 
 By default, the program automatically downloads the most recent FAA registration database.  If you want to use the Canadian CCAR registration database, you must download that manually.  Since I am located in the US far from the Canadian border, I only update my local copy of the Canadian database every few months.
 
-By default, the program will make a backup of your VRS database.  So if this program corrupts VRS's database (I have yet to see this happen), you can revert to the original copy of the database.
+By default, the program will make a backup of your VRS database.  So if this program corrupts VRS's database (I have yet to see this happen), you can revert to the original copy of the database.  The filename of the backup includes the date and time of when the backup is made.
 
 To support being part of a scheduled task, the program has the option to automatically start updating the database as soon as it's run.  In my case, I run this program early Sunday morning to keep my VRS databased updated with the most recent registration data from the FAA and to ensure that newly entered aircraft in VRS's database are also updated.  
 
@@ -19,6 +19,8 @@ In many cases, the ICAO model codes for aircraft aren't assigned in the VRS data
 I don't know if this program will run within mono.  If you run Virtual Radar Server on a Linux box, you can copy your "AircraftOnlineLookupCache.sqb" file to a Windows box and run this program on that Windows box.  After the program is done processing the database, you can copy the database file back to your Linux box.
 
 I'm not a programmer. I wrote this for myself, figuring it out as I went along.  The code isn't very robust.  I didn't intend to share it however I believe it might have some value to the community.  
+
+Finally, there's no reason to run the program more than once-a-week in my experience.  Even though I live within sight of one of the busiest airports in the world, the number of new aircraft that enter my VRS's database each week is relatively low.  If you need to run it frequently, perhaps use the option not to download the FAA database each time so as not to unnecessarily burden the FAA's server.
 
 <ins>**Rules.csv file format explanation**</ins>
 
