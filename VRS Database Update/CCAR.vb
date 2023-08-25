@@ -14,7 +14,7 @@ Module Creat_SQL_CCAR
         If File.Exists(dbPath & "ccarcsdb.zip") = False Then
             Form1.TextBox1.AppendText(vbCrLf & "Skipping CCAR SQL database creation.")
             Form1.TextBox1.Update()
-            MsgBox("I don't see the CCAR database." & vbCrLf & "You can download the CCAR database from here:" & vbCrLf & vbCrLf & "https://wwwapps.tc.gc.ca/saf-sec-sur/2/ccarcs-riacc/DDZip.aspx" & vbCrLf & vbCrLf & "Place the zipfile in the same folder as this program.")
+            MessageBox.Show("I don't see the CCAR database." & vbCrLf & "You can download the CCAR database from here:" & vbCrLf & vbCrLf & "https://wwwapps.tc.gc.ca/saf-sec-sur/2/ccarcs-riacc/DDZip.aspx" & vbCrLf & vbCrLf & "Place the zipfile in the same folder as this program.", "E's VRS Updater")
             GoTo No_CCAR_SQL
         End If
 
@@ -46,7 +46,11 @@ Module Creat_SQL_CCAR
         Dim command As New SQLiteCommand("", connection)
 
         connection.Open()
-        If connection.State = ConnectionState.Closed Then MsgBox("Connection To db closed still.")
+        If connection.State = ConnectionState.Closed Then
+            MessageBox.Show("Connection To db closed still." & vbCrLf & "Exiting.", "E's VRS Updater")
+            Application.Exit()
+            End
+        End If
         command.CommandText = "CREATE TABLE Master (Registration Char, ICAO Char, CCAR_Type Char, Owner_Name Char, Manufacturer Char, Serial Char, Year Char)"
         command.ExecuteNonQuery()
         'connection.Close()

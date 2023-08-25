@@ -3,6 +3,9 @@ Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports System.Data.SQLite
 Imports System.Data.Common
 Imports System.Data.SqlTypes
+Imports System.Timers
+Imports System.IO
+Imports System.Numerics
 ' right click on project, manage NuGEt, get system.data.sqlite
 ' https://www.youtube.com/watch?v=1ucw719e4j8
 Module Create_SQL
@@ -14,16 +17,33 @@ Module Create_SQL
         Dim TimeEstimator1 As String, TimeEstimator2 As Double, Time_String As String, WTC As String
 
         Form1.TextBox1.AppendText(vbCrLf & "Creating FAA SQL database..." & vbCrLf & "  'Master' table...")
+
         On Error Resume Next
         Kill(dbPath & "FAADatabase.sqb")
         On Error GoTo 0
         Threading.Thread.Sleep(1000)
+        If File.Exists(dbPath & "FAADatabase.sqb") Then
+            On Error Resume Next
+            Kill(dbPath & "FAADatabase.sqb")
+            On Error GoTo 0
+            Threading.Thread.Sleep(1000)
+            If File.Exists(dbPath & "FAADatabase.sqb") Then
+                MessageBox.Show("I can't seem to delete the ""FAADatabase.sqb"" file. in the working folder." & vbCrLf & " Please delete this manually and run the program again." & vbCrLf & "Exiting.", "E's VRS Updater")
+                Application.Exit()
+                End
+            End If
+        End If
 
         Dim connection As New SQLiteConnection("DataSource=" & dbPath & "FAADatabase.sqb")
         Dim command As New SQLiteCommand("", connection)
 
         connection.Open()
-        If connection.State = ConnectionState.Closed Then MsgBox("Connection To db closed still.")
+        If connection.State = ConnectionState.Closed Then
+            MessageBox.Show("Connection To db closed still." & vbCrLf & "Exiting.", "E's VRS Updater")
+            Application.Exit()
+            End
+        End If
+
         command.CommandText = "CREATE TABLE Master (Registration Char, ICAO Char, Type Char, Owner_Name Char, Manufacturer_Kit Char, Type_Kit Char, Year Char)"
         command.ExecuteNonQuery()
         command.CommandText = "CREATE TABLE Aircraft_Reference (Type Char, Manufacturer Char, Model Char, Engine_Type Char, Species Char, Engine_Num Char, WTC Char)"

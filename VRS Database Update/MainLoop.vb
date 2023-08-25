@@ -53,6 +53,8 @@ Module Main_Program
         Form1.TextBox4.Update()
         Form1.TextBox6.Text = "100%"
         Form1.TextBox6.Update()
+        Form1.TextBox7.Text = " - "
+        Form1.TextBox7.Update()
         If File.Exists("C:\Users\" & UserName & "\AppData\Local\VirtualRadar\AircraftOnlineLookupCache.sqb") Then
             File.Copy(dbPath & "AircraftOnlineLookupCache.sqb", VRSdbPath & "\AircraftOnlineLookupCache.sqb", True)
         End If
