@@ -1,0 +1,64 @@
+Rule,ICAO,Registration,Country,Manufacturer,Model,ModelIcao,Operator,OperatorICAO,,,,ICAO,Registration,Country,Manufacturer,Model,ModelIcao,Operator,OperatorICAO,,Message,From dB
+1,,N68RX,,,,,,,,,,,,,,,,,UC0,,UC Health LifeLine helicopter:  ,Registration
+2,,N65RX,,,,,,,,,,,,,,,,,UC0,,UC Health LifeLine helicopter:  ,Registration
+3,,N934EM,,,,,,,,,,,,,,,,,UC0,,UC Health LifeLine helicopter:  ,Registration
+4,,N881GT,,,,,,,,,,,,,,,,,UC0,,UC Health LifeLine helicopter:  ,Registration
+5,,N866MB,,,,,,,,,,,,,,,,,UC0,,UC Health LifeLine helicopter:  ,Registration
+6,,N61RX,,,,,,,,,,,,,,,,,UC0,,UC Health LifeLine helicopter:  ,Registration
+7,,N911UC,,,,,,,,,,,,,,,,,UC0,,UC Health LifeLine helicopter:  ,Registration
+8,,,,,,,Co Fire Aviation Inc,,,,,,,,,,,,CF0,,CO Fire Aviation:  ,Registration
+9,,N801NZ,,,,,,,,,,,,,,,,,CF0,,CO Fire Aviation:  ,Registration
+10,,N802NZ,,,,,,,,,,,,,,,,,CF0,,CO Fire Aviation:  ,Registration
+11,,N803NZ,,,,,,,,,,,,,,,,,CF0,,CO Fire Aviation:  ,Registration
+12,,N804NZ,,,,,,,,,,,,,,,,,CF0,,CO Fire Aviation:  ,Registration
+13,,N805NZ,,,,,,,,,,,,,,,,,CF0,,CO Fire Aviation:  ,Registration
+14,,N806NZ,,,,,,,,,,,,,,,,,CF0,,CO Fire Aviation:  ,Registration
+15,,N807NZ,,,,,,,,,,,,,,,,,CF0,,CO Fire Aviation:  ,Registration
+16,,N808NZ,,,,,,,,,,,,,,,,,CF0,,CO Fire Aviation:  ,Registration
+17,,,,,,,Southwest Airlines,!SWA,,,,,,,,,,,SWA,,Southwest Airlines w/o op code:  ,Registration
+18,,,,,,,United Airlines Inc,!UAL,,,,,,,,,,,UAL,,United Airlines w/o op code:  ,Registration
+19,,,,,,,Guardian Flight LLC,,,,,,,,,,,,GU0,,Guardian:  ,Registration
+20,,,,,,,Air Methods Corp,,,,,,,,,,,,AM0,,Air Methods:  ,Registration
+21,,,,,,,Civil Air Patrol,,,,,,,,,,,,CAP,,Civil Air Patrol:  ,Registration
+22,,,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
+23,,,,,,,Christiansen Aviation Inc,,,,,,,,,,,,RTY,,Aims College:  ,Registration
+24,,,,,,,Aims Community College,,,,,,,,,,,,RTY,,Aims College:  ,Registration
+25,,!N5122U,,,,,Christiansen Aviation LLC,,,,,,,,,,,,RTY,,Aims College:  ,Registration
+26,,,,,,,Atp Aircraft,,,,,,,,,,,ATP Aircraft,ATP,,ATP:  ,Registration
+27,,,,,,,Czj Flying Inc,,,,,,,,,,,,CZJ,,The Flying School:  ,Registration
+28,,N835FS,,,,,,,,,,,,,,,,,CZJ,,The Flying School:  ,Registration
+29,,,,Mcdonnell Douglas,,,,,,,,,,,McDonnell Douglas,,,,,,,
+30,,,,,,,Reach Air Medical Services LLC,,,,,,,,,,,,RH0,,Reach Medical:  ,Registration
+31,,N5122U,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+32,,N1256U,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+33,,N1352U,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+34,,N73481,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+35,,N20749,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+36,,N9554V,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+37,,N98059,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+38,,,,,,,Spartan Education LLC,,,,,,,,,,,,SZZ,,Spartan Education:  ,Registration
+39,,,,,,,WheelsUp,,,,,,,,,,,,GAJ,,Wheels Up:  ,Registration
+40,,,,,,,Wheels Up,,,,,,,,,,,,GAJ,,Wheels Up:  ,Registration
+41,,,,,,,Delta Air Lines Inc,!DAL,,,,,,,,,,,DAL,,Delta Airlines w/o op code:  ,Registration
+42,,,,,,,State of Colorado,,,,,,,,,,,,CO0,,State of Colorado:  ,Registration
+43,,,,,,,United States Air Force,,,,,,,,,,,,AF0,,USAF:  ,Registration
+44,,,,,,,US Army,,,,,,,,,,,,AR0,,US Army:  ,Registration
+45,,,,,,,United States Army,,,,,,,,,,,,AR0,,US Army:  ,Registration
+46,,,,,,,Blue Ocean Aerospace,,,,,,,,,,,,BO0,,Blue Ocean:  ,Registration
+47,,,,,,,G & M Aircraft Inc,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
+48,,,,,,,G&M Aircraft Inc,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
+49,,,,,,,G & M Aircraft,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
+50,,,,,,,G&M Aircraft,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
+51,,,,,,,G&M Aircraft Inc,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
+52,,,,,,,M&G Aircraft Management LLC,,,,,,,,,,,,AS0,,Western Air Flight Academy:  ,Registration
+53,,,,,,,Navigation Leasing LLC,,,,,,,,,,,,AS0,,Western Air Flight Academy:  ,Registration
+54,,,,,,,Cbg LLC,,,,,,,,,,,,LYM,,Key Lime Air:  ,Registration
+55,,,,,,,Aero-sphere Inc,,,,,,,,,,,Aero-Sphere Inc,AS1,,Aero-Sphere:  ,Registration
+56,,N855CP,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
+57,,N64464,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
+58,,N523AB,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
+59,,N733XB,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
+60,,N4633J,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
+61,,N29AG,,,,,,,,,,,,,,,,,NG0,,Nutrien Ag:  ,Registration
+62,,,,,,,Flexjet LLC,,,,,,,,,,,,LXJ,,Flexjet:  ,Registration
+63,,,,,,,Experimental Aircraft Association Inc,,,,,,,,,,,,EAA,,EAA:,Registration
