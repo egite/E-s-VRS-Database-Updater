@@ -275,7 +275,9 @@ Module VRS
                 End If
                 OperatorIcao = rst2(8).ToString
                 Country = rst2(3).ToString
-                Model = Replace(rst2(5).ToString, "'", "''")
+                If Model = vbNullString Then
+                    Model = Replace(rst2(5).ToString, "'", "''")
+                End If
 
                 'make sure the plane is ID'd as from USA
                 UTC_Time = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") & ".0000000Z"
@@ -292,12 +294,8 @@ Module VRS
                     command2.ExecuteNonQuery()
                 End If
                 ChangeOp = 0
-                'If Registration = "10-0105" Then Stop
-                'If Registration = "N736QG" Then Stop
-                'If TheOperator = "United States Air Force" Then Stop
                 If Have_Rules = 1 Then
                     For m = 2 To Rules_Number
-                        'If m >= 45 Then Stop
                         Registration_in_Operator = 0
                         Not_Change_Flag = 0
                         Change_Flag = 0
@@ -480,7 +478,6 @@ OverHere:
                 rst2 = command2.ExecuteReader()
                 rst2.Read()
                 Registration = rst3(0).ToString
-
                 TheOperator = Replace(rst3(3).ToString, "'", "''")
                 Manufacturer = Replace(rst3(4), "'", "''")
                 Model = Replace(rst3(2).ToString, "'", "''")
@@ -577,8 +574,9 @@ OverHere:
                     ModelIcao = Determine_Silhouette(Model)
                     Manufacturer = Manufacturer_Orig
                     Silhouettes = 0
-                    If Found_Type = 0 Then
-                        ModelIcao = System.DBNull.Value.ToString
+                    If Found_Type = 0 Then  'if we didn't find it with the shortened manufacturer, let's try the full string
+                        ModelIcao = Determine_Silhouette(Model)
+                        If Found_Type = 0 Then ModelIcao = System.DBNull.Value.ToString
                         'OutputFile.WriteLine(Registration & "," & Manufacturer & "," & Model)
                     End If
                 Else

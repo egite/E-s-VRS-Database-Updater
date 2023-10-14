@@ -15,50 +15,187 @@ Rule,ICAO,Registration,Country,Manufacturer,Model,ModelIcao,Operator,OperatorICA
 14,,N806NZ,,,,,,,,,,,,,,,,,CF0,,CO Fire Aviation:  ,Registration
 15,,N807NZ,,,,,,,,,,,,,,,,,CF0,,CO Fire Aviation:  ,Registration
 16,,N808NZ,,,,,,,,,,,,,,,,,CF0,,CO Fire Aviation:  ,Registration
-17,,,,,,,Southwest Airlines,!SWA,,,,,,,,,,,SWA,,Southwest Airlines w/o op code:  ,Registration
-18,,,,,,,United Airlines Inc,!UAL,,,,,,,,,,,UAL,,United Airlines w/o op code:  ,Registration
-19,,,,,,,Guardian Flight LLC,,,,,,,,,,,,GU0,,Guardian:  ,Registration
-20,,,,,,,Air Methods Corp,,,,,,,,,,,,AM0,,Air Methods:  ,Registration
-21,,,,,,,Civil Air Patrol,,,,,,,,,,,,CAP,,Civil Air Patrol:  ,Registration
-22,,,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
-23,,,,,,,Christiansen Aviation Inc,,,,,,,,,,,,RTY,,Aims College:  ,Registration
-24,,,,,,,Aims Community College,,,,,,,,,,,,RTY,,Aims College:  ,Registration
-25,,!N5122U,,,,,Christiansen Aviation LLC,,,,,,,,,,,,RTY,,Aims College:  ,Registration
-26,,,,,,,Atp Aircraft,,,,,,,,,,,ATP Aircraft,ATP,,ATP:  ,Registration
-27,,,,,,,Czj Flying Inc,,,,,,,,,,,,CZJ,,The Flying School:  ,Registration
-28,,N835FS,,,,,,,,,,,,,,,,,CZJ,,The Flying School:  ,Registration
-29,,,,Mcdonnell Douglas,,,,,,,,,,,McDonnell Douglas,,,,,,,
-30,,,,,,,Reach Air Medical Services LLC,,,,,,,,,,,,RH0,,Reach Medical:  ,Registration
-31,,N5122U,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
-32,,N1256U,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
-33,,N1352U,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
-34,,N73481,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
-35,,N20749,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
-36,,N9554V,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
-37,,N98059,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
-38,,,,,,,Spartan Education LLC,,,,,,,,,,,,SZZ,,Spartan Education:  ,Registration
-39,,,,,,,WheelsUp,,,,,,,,,,,,GAJ,,Wheels Up:  ,Registration
-40,,,,,,,Wheels Up,,,,,,,,,,,,GAJ,,Wheels Up:  ,Registration
-41,,,,,,,Delta Air Lines Inc,!DAL,,,,,,,,,,,DAL,,Delta Airlines w/o op code:  ,Registration
-42,,,,,,,State of Colorado,,,,,,,,,,,,CO0,,State of Colorado:  ,Registration
-43,,,,,,,United States Air Force,,,,,,,,,,,,AF0,,USAF:  ,Registration
-44,,,,,,,US Army,,,,,,,,,,,,AR0,,US Army:  ,Registration
-45,,,,,,,United States Army,,,,,,,,,,,,AR0,,US Army:  ,Registration
-46,,,,,,,Blue Ocean Aerospace,,,,,,,,,,,,BO0,,Blue Ocean:  ,Registration
-47,,,,,,,G & M Aircraft Inc,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
-48,,,,,,,G&M Aircraft Inc,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
-49,,,,,,,G & M Aircraft,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
-50,,,,,,,G&M Aircraft,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
-51,,,,,,,G&M Aircraft Inc,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
-52,,,,,,,M&G Aircraft Management LLC,,,,,,,,,,,,AS0,,Western Air Flight Academy:  ,Registration
-53,,,,,,,Navigation Leasing LLC,,,,,,,,,,,,AS0,,Western Air Flight Academy:  ,Registration
-54,,,,,,,Cbg LLC,,,,,,,,,,,,LYM,,Key Lime Air:  ,Registration
-55,,,,,,,Aero-sphere Inc,,,,,,,,,,,Aero-Sphere Inc,AS1,,Aero-Sphere:  ,Registration
-56,,N855CP,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
-57,,N64464,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
-58,,N523AB,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
-59,,N733XB,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
-60,,N4633J,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
-61,,N29AG,,,,,,,,,,,,,,,,,NG0,,Nutrien Ag:  ,Registration
-62,,,,,,,Flexjet LLC,,,,,,,,,,,,LXJ,,Flexjet:  ,Registration
-63,,,,,,,Experimental Aircraft Association Inc,,,,,,,,,,,,EAA,,EAA:,Registration
+17,,N605BS,,,,,,,,,,,,,,,,,BSX,,BSX:  ,Registration
+18,,N650BS,,,,,,,,,,,,,,,,,BSX,,BSX:  ,Registration
+19,,N59ER,,,,,,,,,,,,,,,,,EAR,,Emarit Airlines:  ,Registration
+20,,,,,,,Southwest Airlines,!SWA,,,,,,,,,,,SWA,,Southwest Airlines w/o op code:  ,Registration
+21,,,,,,,United Airlines Inc,!UAL,,,,,,,,,,,UAL,,United Airlines w/o op code:  ,Registration
+22,,,,,,,Guardian Flight LLC,,,,,,,,,,,,GU0,,Guardian:  ,Registration
+23,,,,,,,Air Methods Corp,,,,,,,,,,,,AM0,,Air Methods:  ,Registration
+24,,,,,,,Civil Air Patrol,,,,,,,,,,,,CAP,,Civil Air Patrol:  ,Registration
+25,,,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
+26,,,,,,,Christiansen Aviation Inc,,,,,,,,,,,,RTY,,Aims College:  ,Registration
+27,,,,,,,Aims Community College,,,,,,,,,,,,RTY,,Aims College:  ,Registration
+28,,!N5122U,,,,,Christiansen Aviation LLC,,,,,,,,,,,,RTY,,Aims College:  ,Registration
+29,,,,,,,Atp Aircraft,,,,,,,,,,,ATP Aircraft,ATP,,ATP:  ,Registration
+30,,,,,,,Czj Flying Inc,,,,,,,,,,,,CZJ,,The Flying School:  ,Registration
+31,,N835FS,,,,,,,,,,,,,,,,,CZJ,,The Flying School:  ,Registration
+32,,,,Mcdonnell Douglas,,,,,,,,,,,McDonnell Douglas,,,,,,,
+33,,,,,,,Reach Air Medical Services LLC,,,,,,,,,,,,RH0,,Reach Medical:  ,Registration
+34,,N5122U,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+35,,N1256U,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+36,,N1352U,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+37,,N73481,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+38,,N20749,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+39,,N9554V,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+40,,N98059,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+41,,N43151,,,,,,,,,,,,,,,,,LEX,,Leading Edge:  ,Registration
+42,,,,,,,Spartan Education LLC,,,,,,,,,,,,SZZ,,Spartan Education:  ,Registration
+43,,,,,,,WheelsUp,,,,,,,,,,,,GAJ,,Wheels Up:  ,Registration
+44,,,,,,,Wheels Up,,,,,,,,,,,,GAJ,,Wheels Up:  ,Registration
+45,,,,,,,Delta Air Lines Inc,!DAL,,,,,,,,,,,DAL,,Delta Airlines w/o op code:  ,Registration
+46,,,,,,,State of Colorado,,,,,,,,,,,,CO0,,State of Colorado:  ,Registration
+47,,,,,,,United States Air Force,,,,,,,,,,,,AF0,,USAF:  ,Registration
+48,,,,,,,US Army,,,,,,,,,,,,AR0,,US Army:  ,Registration
+49,,,,,,,United States Army,,,,,,,,,,,,AR0,,US Army:  ,Registration
+50,,,,,,,Blue Ocean Aerospace,,,,,,,,,,,,BO0,,Blue Ocean:  ,Registration
+51,,,,,,,Anchor Roofing,,,,,,,,,,,,AN0,,Anchor Roofing:  ,Registration
+52,,,,,,,G & M Aircraft Inc,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
+53,,,,,,,G&M Aircraft Inc,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
+54,,,,,,,G & M Aircraft,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
+55,,,,,,,G&M Aircraft,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
+56,,,,,,,G&M Aircraft Inc,,,,,,,,,,,,RM0,,Rocky Mountain Flight School:  ,Registration
+57,,,,,,,M&G Aircraft Management LLC,,,,,,,,,,,,AS0,,Western Air Flight Academy:  ,Registration
+58,,,,,,,Navigation Leasing LLC,,,,,,,,,,,,AS0,,Western Air Flight Academy:  ,Registration
+59,,,,,,,Cbg LLC,,,,,,,,,,,,LYM,,Key Lime Air:  ,Registration
+60,,,,,,,Aero-sphere Inc,,,,,,,,,,,Aero-Sphere Inc,AS1,,Aero-Sphere:  ,Registration
+61,,N855CP,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
+62,,N64464,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
+63,,N523AB,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
+64,,N733XB,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
+65,,N4633J,,,,,Vector Air LLC,,,,,,,,,,,,VA0,,Vector Air:  ,Registration
+66,,N29AG,,,,,,,,,,,,,,,,,NG0,,Nutrien Ag:  ,Registration
+67,,,,,,,Flexjet LLC,,,,,,,,,,,,LXJ,,Flexjet:  ,Registration
+68,,,,,,,,,,,,,,,,,,,,,,
+69,,,,,,,,,,,,,,,,,,,,,,
+70,,,,,,,,,,,,,,,,,,,,,,
+71,,,,,,,,,,,,,,,,,,,,,,
+72,,,,,,,,,,,,,,,,,,,,,,
+73,,,,,,,,,,,,,,,,,,,,,,
+74,,,,,,,,,,,,,,,,,,,,,,
+75,,,,,,,,,,,,,,,,,,,,,,
+76,,,,,,,,,,,,,,,,,,,,,,
+77,,,,,,,,,,,,,,,,,,,,,,
+78,,,,,,,,,,,,,,,,,,,,,,
+79,,,,,,,,,,,,,,,,,,,,,,
+80,,,,,,,,,,,,,,,,,,,,,,
+81,,,,,,,,,,,,,,,,,,,,,,
+82,,,,,,,,,,,,,,,,,,,,,,
+83,,,,,,,,,,,,,,,,,,,,,,
+84,,,,,,,,,,,,,,,,,,,,,,
+85,,,,,,,,,,,,,,,,,,,,,,
+86,,,,,,,,,,,,,,,,,,,,,,
+87,,,,,,,,,,,,,,,,,,,,,,
+88,,,,,,,,,,,,,,,,,,,,,,
+89,,,,,,,,,,,,,,,,,,,,,,
+90,,,,,,,,,,,,,,,,,,,,,,
+91,,,,,,,,,,,,,,,,,,,,,,
+92,,,,,,,,,,,,,,,,,,,,,,
+93,,,,,,,,,,,,,,,,,,,,,,
+94,,,,,,,,,,,,,,,,,,,,,,
+95,,,,,,,,,,,,,,,,,,,,,,
+96,,,,,,,,,,,,,,,,,,,,,,
+97,,,,,,,,,,,,,,,,,,,,,,
+98,,,,,,,,,,,,,,,,,,,,,,
+99,,,,,,,,,,,,,,,,,,,,,,
+100,,,,,,,,,,,,,,,,,,,,,,
+101,,,,,,,,,,,,,,,,,,,,,,
+102,,,,,,,,,,,,,,,,,,,,,,
+103,,,,,,,,,,,,,,,,,,,,,,
+104,,,,,,,,,,,,,,,,,,,,,,
+105,,,,,,,,,,,,,,,,,,,,,,
+106,,,,,,,,,,,,,,,,,,,,,,
+107,,,,,,,,,,,,,,,,,,,,,,
+108,,,,,,,,,,,,,,,,,,,,,,
+109,,,,,,,,,,,,,,,,,,,,,,
+110,,,,,,,,,,,,,,,,,,,,,,
+111,,,,,,,,,,,,,,,,,,,,,,
+112,,,,,,,,,,,,,,,,,,,,,,
+113,,,,,,,,,,,,,,,,,,,,,,
+114,,,,,,,,,,,,,,,,,,,,,,
+115,,,,,,,,,,,,,,,,,,,,,,
+116,,,,,,,,,,,,,,,,,,,,,,
+117,,,,,,,,,,,,,,,,,,,,,,
+118,,,,,,,,,,,,,,,,,,,,,,
+119,,,,,,,,,,,,,,,,,,,,,,
+120,,,,,,,,,,,,,,,,,,,,,,
+121,,,,,,,,,,,,,,,,,,,,,,
+122,,,,,,,,,,,,,,,,,,,,,,
+123,,,,,,,,,,,,,,,,,,,,,,
+124,,,,,,,,,,,,,,,,,,,,,,
+125,,,,,,,,,,,,,,,,,,,,,,
+126,,,,,,,,,,,,,,,,,,,,,,
+127,,,,,,,,,,,,,,,,,,,,,,
+128,,,,,,,,,,,,,,,,,,,,,,
+129,,,,,,,,,,,,,,,,,,,,,,
+130,,,,,,,,,,,,,,,,,,,,,,
+131,,,,,,,,,,,,,,,,,,,,,,
+132,,,,,,,,,,,,,,,,,,,,,,
+133,,,,,,,,,,,,,,,,,,,,,,
+134,,,,,,,,,,,,,,,,,,,,,,
+135,,,,,,,,,,,,,,,,,,,,,,
+136,,,,,,,,,,,,,,,,,,,,,,
+137,,,,,,,,,,,,,,,,,,,,,,
+138,,,,,,,,,,,,,,,,,,,,,,
+139,,,,,,,,,,,,,,,,,,,,,,
+140,,,,,,,,,,,,,,,,,,,,,,
+141,,,,,,,,,,,,,,,,,,,,,,
+142,,,,,,,,,,,,,,,,,,,,,,
+143,,,,,,,,,,,,,,,,,,,,,,
+144,,,,,,,,,,,,,,,,,,,,,,
+145,,,,,,,,,,,,,,,,,,,,,,
+146,,,,,,,,,,,,,,,,,,,,,,
+147,,,,,,,,,,,,,,,,,,,,,,
+148,,,,,,,,,,,,,,,,,,,,,,
+149,,,,,,,,,,,,,,,,,,,,,,
+150,,,,,,,,,,,,,,,,,,,,,,
+151,,,,,,,,,,,,,,,,,,,,,,
+152,,,,,,,,,,,,,,,,,,,,,,
+153,,,,,,,,,,,,,,,,,,,,,,
+154,,,,,,,,,,,,,,,,,,,,,,
+155,,,,,,,,,,,,,,,,,,,,,,
+156,,,,,,,,,,,,,,,,,,,,,,
+157,,,,,,,,,,,,,,,,,,,,,,
+158,,,,,,,,,,,,,,,,,,,,,,
+159,,,,,,,,,,,,,,,,,,,,,,
+160,,,,,,,,,,,,,,,,,,,,,,
+161,,,,,,,,,,,,,,,,,,,,,,
+162,,,,,,,,,,,,,,,,,,,,,,
+163,,,,,,,,,,,,,,,,,,,,,,
+164,,,,,,,,,,,,,,,,,,,,,,
+165,,,,,,,,,,,,,,,,,,,,,,
+166,,,,,,,,,,,,,,,,,,,,,,
+167,,,,,,,,,,,,,,,,,,,,,,
+168,,,,,,,,,,,,,,,,,,,,,,
+169,,,,,,,,,,,,,,,,,,,,,,
+170,,,,,,,,,,,,,,,,,,,,,,
+171,,,,,,,,,,,,,,,,,,,,,,
+172,,,,,,,,,,,,,,,,,,,,,,
+173,,,,,,,,,,,,,,,,,,,,,,
+174,,,,,,,,,,,,,,,,,,,,,,
+175,,,,,,,,,,,,,,,,,,,,,,
+176,,,,,,,,,,,,,,,,,,,,,,
+177,,,,,,,,,,,,,,,,,,,,,,
+178,,,,,,,,,,,,,,,,,,,,,,
+179,,,,,,,,,,,,,,,,,,,,,,
+180,,,,,,,,,,,,,,,,,,,,,,
+181,,,,,,,,,,,,,,,,,,,,,,
+182,,,,,,,,,,,,,,,,,,,,,,
+183,,,,,,,,,,,,,,,,,,,,,,
+184,,,,,,,,,,,,,,,,,,,,,,
+185,,,,,,,,,,,,,,,,,,,,,,
+186,,,,,,,,,,,,,,,,,,,,,,
+187,,,,,,,,,,,,,,,,,,,,,,
+188,,,,,,,,,,,,,,,,,,,,,,
+189,,,,,,,,,,,,,,,,,,,,,,
+190,,,,,,,,,,,,,,,,,,,,,,
+191,,,,,,,,,,,,,,,,,,,,,,
+192,,,,,,,,,,,,,,,,,,,,,,
+193,,,,,,,,,,,,,,,,,,,,,,
+194,,,,,,,,,,,,,,,,,,,,,,
+195,,,,,,,,,,,,,,,,,,,,,,
+196,,,,,,,,,,,,,,,,,,,,,,
+197,,,,,,,,,,,,,,,,,,,,,,
+198,,,,,,,,,,,,,,,,,,,,,,
+199,,,,,,,,,,,,,,,,,,,,,,
+200,,,,,,,,,,,,,,,,,,,,,,

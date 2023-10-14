@@ -22,10 +22,11 @@
             Exit Function
         End If
 
-        'Dim Manufacturer As String, 
         Dim First_Two As String, First_Three As String, First_Four As String, First_Five As String, First_Six As String
         Dim i As Long, j As Integer, k As Integer
         Dim Split_String() As String, Split_String2() As String
+
+        Manufacturer = Replace(Manufacturer, ",", vbNullString)
 
         ICAO_Type_Text = Replace(ICAO_Type_Text, "-", vbNullString)
         ICAO_Type_Text = Replace(ICAO_Type_Text, " ", vbNullString)
