@@ -1,6 +1,6 @@
 # E's VRS Database Updater
 
-This program will comprehensively update [Virtual Radar Server's](https://github.com/vradarserver/vrs/releases) (VRS) aircraft database.  The database will be updated with the most recent U.S. [FAA registration database](https://www.faa.gov/licenses_certificates/aircraft_certification/aircraft_registry/releasable_aircraft_download/) and, if provided, the most recent [Canadian CCAR registration database](https://wwwapps.tc.gc.ca/saf-sec-sur/2/ccarcs-riacc/DDZip.aspx).  The updates to the VRS database include the legally recognized owner ("operator"), manufacturer, model, type and ICAO model code of each aircraft.  Additionally, aircraft models will be more specifically defined in the VRS database so you will see more diverse icons and silhouettes on the map and aircraft list within VRS.  
+This program will comprehensively update [Virtual Radar Server's](https://github.com/vradarserver/vrs/releases) (VRS) aircraft database.  The database will be updated with the most recent U.S. [FAA registration database](https://www.faa.gov/licenses_certificates/aircraft_certification/aircraft_registry/releasable_aircraft_download/), [the OpenSky database](https://opensky-network.org/datasets/metadata/) and, if provided, the most recent [Canadian CCAR registration database](https://wwwapps.tc.gc.ca/saf-sec-sur/2/ccarcs-riacc/DDZip.aspx).  The updates to the VRS database include the legally recognized owner ("operator"), manufacturer, model, type and ICAO model code of each aircraft.  Additionally, aircraft models will be more specifically defined in the VRS database so you will see more diverse icons and silhouettes on the map and aircraft list within VRS.  
 
 [![Image](Screenshot-small.jpg)](Screenshot.jpg)
 
@@ -11,6 +11,8 @@ Any field in VRS's database can be modified based on a CSV-defined rules file (a
 By default, the program automatically downloads the most recent FAA registration database.  If you want to use the Canadian CCAR registration database, you must download that manually.  Since I am located in the US far from the Canadian border, I only update my local copy of the Canadian database every few months.
 
 By default, the program will make a backup of your VRS database.  So if this program corrupts VRS's database (I have yet to see this happen), you can revert to the original copy of the database.  The filename of the backup includes the date and time of when the backup is made.
+
+You can also build a complete database so that aircraft not yet seen by VRS are included in its database.  This supports offline usage of VRS and avoids having to wait until you do an update to get registration data for aircraft not yet seen.
 
 To support being part of a scheduled task, the program has the option to automatically start updating the database as soon as it's run.  In my case, I run this program early Sunday morning to keep my VRS database updated with the most recent registration data from the FAA and to ensure that newly entered aircraft in VRS's database are also updated.  
 
