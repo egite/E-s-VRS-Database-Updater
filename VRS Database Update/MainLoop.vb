@@ -5,7 +5,7 @@ Imports System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel
 Module Main_Program
     Public dbPath As String, Want_Exit As Long, NoSilsFound As Integer, FirstRun As Integer, BackupVRSdb As String
     Public UserName As String, FAA_db_Download As String, Run_on_Start As String, AutoStartWait As Integer
-    Public VRSdbPath As String, TimeStarted As String
+    Public VRSdbPath As String, TimeStarted As String, Complete As String, OpenSky_Download As String
     Sub Main_Loop()
         'If Not File.Exists(dbPath & "Sils.csv") Then
         '    MessageBox.Show("Warning:  I can't find the ""Sils.csv"" file." & vbCrLf & vbCrLf &
@@ -15,6 +15,8 @@ Module Main_Program
         '    End
         'End If
         TimeStarted = DateTime.Now.ToString("HHmm")
+        Form1.TextBox1.AppendText("Started at:  " & TimeStarted & "." & vbCrLf)
+        Form1.TextBox1.Update()
         If VRSdbPath = dbPath Then
             MessageBox.Show("Working folder and VRS folder cannot be the same location." & vbCrLf & "Fix this and run again." & vbCrLf & "Exiting.", "E's VRS Updater")
             Exit Sub
@@ -44,11 +46,12 @@ Module Main_Program
             Call FAA_to_SQL()
         End If
         Call CCAR_to_SQL()
+        Call GetOpenSky()
         Call Update_VRS()
+        Form1.TextBox1.AppendText(vbCrLf & "Started:  " & TimeStarted & ".  Ended:  " & DateTime.Now.ToString("HHmm"))
+        Form1.TextBox1.Update()
         Form1.TextBox1.Text = Form1.TextBox1.Text & vbCrLf & "Done."
         Form1.TextBox1.Update()
-        Form1.TextBox4.AppendText(vbCrLf & "Started:  " & TimeStarted & ".  Ended:  " & DateTime.Now.ToString("HHmm"))
-        Form1.TextBox4.Update()
         Form1.TextBox4.AppendText(vbCrLf & "Done.")
         Form1.TextBox4.Update()
         Form1.TextBox6.Text = "100%"

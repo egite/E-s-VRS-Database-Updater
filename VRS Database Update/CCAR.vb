@@ -14,7 +14,7 @@ Module Creat_SQL_CCAR
         If File.Exists(dbPath & "ccarcsdb.zip") = False Then
             Form1.TextBox1.AppendText(vbCrLf & "Skipping CCAR SQL database creation.")
             Form1.TextBox1.Update()
-            MessageBox.Show("I don't see the CCAR database." & vbCrLf & "You can download the CCAR database from here:" & vbCrLf & vbCrLf & "https://wwwapps.tc.gc.ca/saf-sec-sur/2/ccarcs-riacc/DDZip.aspx" & vbCrLf & vbCrLf & "Place the zipfile in the same folder as this program.", "E's VRS Updater")
+            MessageBox.Show("I don't see the CCAR database zipfile." & vbCrLf & "You can download the CCAR database from here:" & vbCrLf & vbCrLf & "https://wwwapps.tc.gc.ca/saf-sec-sur/2/ccarcs-riacc/DDZip.aspx" & vbCrLf & vbCrLf & "Place the zipfile in the same folder as this program.", "E's VRS Updater")
             GoTo No_CCAR_SQL
         End If
 
