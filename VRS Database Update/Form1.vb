@@ -5,6 +5,7 @@ Imports System.Data.SQLite
 Imports System.Threading
 Imports System.Diagnostics
 Imports System.Data.Entity.Core.Common.CommandTrees
+Imports System.Numerics
 
 Public Class Form1
     Private Sub Form1_Start(sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
@@ -16,7 +17,7 @@ Public Class Form1
             connection.Open()
             command.CommandText = "CREATE TABLE Settings (Name Char, Information Char)"
             command.ExecuteNonQuery()
-            ToEnter = "('dbPath','" & Environment.CurrentDirectory & "\" & "')"
+            ToEnter = "('dbPath','" & Replace(Environment.CurrentDirectory, "'", "''") & "\" & "')"
             command.CommandText = "INSERT INTO Settings (Name, Information) VALUES " & ToEnter
             command.ExecuteNonQuery()
             ToEnter = "('FAA_db_Download','Y')"
@@ -29,6 +30,12 @@ Public Class Form1
             command.CommandText = "INSERT INTO Settings (Name, Information) VALUES " & ToEnter
             command.ExecuteNonQuery()
             ToEnter = "('Run_on_Start','N')"
+            command.CommandText = "INSERT INTO Settings (Name, Information) VALUES " & ToEnter
+            command.ExecuteNonQuery()
+            ToEnter = "('Complete','N')"
+            command.CommandText = "INSERT INTO Settings (Name, Information) VALUES " & ToEnter
+            command.ExecuteNonQuery()
+            ToEnter = "('OpenSky_Download','N')"
             command.CommandText = "INSERT INTO Settings (Name, Information) VALUES " & ToEnter
             command.ExecuteNonQuery()
             connection.Close()
@@ -48,7 +55,23 @@ Public Class Form1
         Run_on_Start = command.ExecuteScalar()
         command.CommandText = "SELECT Information FROM Settings WHERE Name = 'BackupVRSdb';"
         BackupVRSdb = command.ExecuteScalar()
+        command.CommandText = "SELECT Information FROM Settings WHERE Name = 'Complete';"
+        Complete = command.ExecuteScalar()
+        command.CommandText = "SELECT Information FROM Settings WHERE Name = 'OpenSky_Download';"
+        OpenSky_Download = command.ExecuteScalar()
         connection.Close()
+        If Complete = "Y" Then
+            CheckBox4.Checked = True
+        Else
+            CheckBox4.Checked = False
+        End If
+        CheckBox4.Update()
+        If OpenSky_Download = "Y" Then
+            CheckBox5.Checked = True
+        Else
+            CheckBox5.Checked = False
+        End If
+        CheckBox5.Update()
         If BackupVRSdb = "Y" Then
             CheckBox3.Checked = True
         Else
@@ -192,7 +215,7 @@ Public Class Form1
         command.CommandText = "UPDATE Settings SET " & ToEnter & " WHERE Name='FAA_db_Download'"
         command.ExecuteNonQuery()
         connection.Close()
-        CheckBox1.Update()
+        CheckBox2.Update()
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
@@ -200,7 +223,7 @@ Public Class Form1
         Dim connection As New SQLiteConnection("DataSource=" & Environment.CurrentDirectory & "\settings.sqb")
         Dim command As New SQLiteCommand("", connection)
         If DialogResult.OK = dialog.ShowDialog Then
-            dbPath = dialog.SelectedPath & "\"
+            dbPath = dialog.SelectedPath
             TextBox10.Text = dbPath
             TextBox10.Update()
             connection.Open()
@@ -215,7 +238,7 @@ Public Class Form1
         Dim connection As New SQLiteConnection("DataSource=" & Environment.CurrentDirectory & "\settings.sqb")
         Dim command As New SQLiteCommand("", connection)
         If DialogResult.OK = dialog.ShowDialog Then
-            VRSdbPath = dialog.SelectedPath & "\"
+            VRSdbPath = dialog.SelectedPath
             TextBox11.Text = VRSdbPath
             TextBox11.Update()
             connection.Open()
@@ -239,10 +262,46 @@ Public Class Form1
         command.CommandText = "UPDATE Settings SET " & ToEnter & " WHERE Name='BackupVRSdb'"
         command.ExecuteNonQuery()
         connection.Close()
-        CheckBox1.Update()
+        CheckBox3.Update()
+    End Sub
+
+
+    Private Sub CheckBox4_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox4.CheckedChanged
+        Dim connection As New SQLiteConnection("DataSource=" & Environment.CurrentDirectory & "\settings.sqb")
+        Dim command As New SQLiteCommand("", connection), ToEnter As String
+        connection.Open()
+        If CheckBox4.Checked = True Then
+            ToEnter = "Information= 'Y'"
+            Complete = "Y"
+        Else
+            ToEnter = "Information = 'N'"
+            Complete = "N"
+        End If
+        command.CommandText = "UPDATE Settings SET " & ToEnter & " WHERE Name='Complete'"
+        command.ExecuteNonQuery()
+        connection.Close()
+        CheckBox4.Update()
+    End Sub
+
+    Private Sub CheckBox5_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox5.CheckedChanged
+        Dim connection As New SQLiteConnection("DataSource=" & Environment.CurrentDirectory & "\settings.sqb")
+        Dim command As New SQLiteCommand("", connection), ToEnter As String
+        connection.Open()
+        If CheckBox5.Checked = True Then
+            ToEnter = "Information= 'Y'"
+            OpenSky_Download = "Y"
+        Else
+            ToEnter = "Information = 'N'"
+            OpenSky_Download = "N"
+        End If
+        command.CommandText = "UPDATE Settings SET " & ToEnter & " WHERE Name='OpenSky_Download'"
+        command.ExecuteNonQuery()
+        connection.Close()
+        CheckBox4.Update()
     End Sub
 
     Private Sub TextBox10_TextChanged(sender As Object, e As EventArgs) Handles TextBox10.TextChanged
 
     End Sub
+
 End Class

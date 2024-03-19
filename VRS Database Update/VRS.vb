@@ -10,6 +10,9 @@ Imports System.Windows.Input
 Imports System.IO
 Imports System.Text.Json.Nodes
 Imports System.DirectoryServices.ActiveDirectory
+Imports System.Diagnostics.Eventing.Reader
+Imports System.Data.Entity.Infrastructure
+Imports System.Globalization
 
 Module VRS
     Public Type_Data() As String, FAA_Model_Data() As String, FAA_Manufacturer_Data() As String, Remap_Data() As String
@@ -23,6 +26,10 @@ Module VRS
         Dim dbPath3 As String, Num_Records3 As Long, Manufacturer_Orig As String, m As Long, Country As String, ICAO As String
         Dim Rule(0 To 7) As String, Change(0 To 7) As String, Change_MSG As String, Split_String() As String, Rule_Flag As Integer
         Dim Not_Change_Flag As Integer, Registration_in_Operator As Integer, q As Double, Have_Rules As Integer, n As Integer
+        Dim Build_Complete As Integer, Exists As Integer, Num_Records4 As Long, Created_Time As String, SerialNumber As String
+        Dim oDate As DateTime
+
+        If Complete = "Y" Then Build_Complete = -1  'if we're going to build the complete database, then we set this to something nonzero to ensure updates always happen
 
         dbPath1 = dbPath & "FAADatabase.sqb"
         dbPath2 = dbPath & "AircraftOnlineLookupCache.sqb"
@@ -36,11 +43,13 @@ Module VRS
             End
         End If
 
-        If File.Exists("C:\Users\" & UserName & "\AppData\Local\VirtualRadar\AircraftOnlineLookupCache.sqb") And BackupVRSdb = "Y" Then
+        If File.Exists("C:\Users\" & UserName & "\AppData\Local\VirtualRadar\AircraftOnlineLookupCache.sqb") Then
             Form1.TextBox1.AppendText(vbCrLf & "Copying VirtualRadar database...")
             Form1.TextBox1.Update()
             File.Copy(VRSdbPath & "AircraftOnlineLookupCache.sqb", dbPath & "AircraftOnlineLookupCache.sqb", True)
-            File.Copy(VRSdbPath & "AircraftOnlineLookupCache.sqb", dbPath & "AircraftOnlineLookupCache-" & DateTime.Now.ToString("yyMMdd-HHmm") & ".sqb", True)
+            If BackupVRSdb = "Y" Then
+                File.Copy(VRSdbPath & "AircraftOnlineLookupCache.sqb", dbPath & "AircraftOnlineLookupCache-" & DateTime.Now.ToString("yyMMdd-HHmm") & ".sqb", True)
+            End If
             Form1.TextBox1.AppendText("Done.")
             Form1.TextBox1.Update()
         Else
@@ -125,7 +134,8 @@ Module VRS
         k = 0
         i = 0
         q = 0.01
-        'GoTo OverHere  'skip FAA db and do Canadian instead
+        'GoTo No_FAA  'skip FAA db and do Canadian instead
+        'GoTo No_CCAR 'skip FAA and Canadian db and do OpenSky instead
         While rst1.Read()
             i = i + 1
             ThePercent = 100 * i / Num_Records1
@@ -170,7 +180,8 @@ Module VRS
                 k = ThePercent
             End If
             command2.CommandText = "SELECT * FROM AircraftDetail WHERE Icao = '" & rst1(1) & "';"
-            If command2.ExecuteScalar() <> 0 Then
+            Exists = command2.ExecuteScalar()
+            If Exists <> Build_Complete Then
                 rst2 = command2.ExecuteReader()
                 rst2.Read()
                 TheOperator = vbNullString
@@ -273,22 +284,40 @@ Module VRS
                 If Found_Type = 0 Then
                     ModelIcao = System.DBNull.Value.ToString
                 End If
-                OperatorIcao = rst2(8).ToString
-                Country = rst2(3).ToString
-                If Model = vbNullString Then
-                    Model = Replace(rst2(5).ToString, "'", "''")
+                If Exists > 0 Then
+                    OperatorIcao = rst2(8).ToString
+                    Country = rst2(3).ToString
+                    If Model = vbNullString Then
+                        Model = Replace(rst2(5).ToString, "'", "''")
+                    End If
                 End If
 
-                'make sure the plane is ID'd as from USA
                 UTC_Time = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") & ".0000000Z"
-                ToEnter = "Registration = '" & Registration & "', Country = 'United States', " & "Manufacturer = '" & Manufacturer & "', Model = '" & Model & "', ModelIcao = '" & ModelIcao & "', Operator = '" & TheOperator & "', YearBuilt = '" & Year_Built & "', CreatedUtc = '" & UTC_Time & "', UpdatedUtc = '" & UTC_Time & "'"
+                Created_Time = vbNullString
+                If Exists <> 0 Then
+                    oDate = Convert.ToDateTime(rst2(11))
+                    Created_Time = oDate.ToString("yyyy-MM-dd HH:mm:ss") & ".0000000Z"
+                Else
+                    Created_Time = UTC_Time
+                End If
+                Created_Time = PrepNull(Created_Time)
+
                 rst2.Close()
-                'Form1.TextBox4.AppendText(vbCrLf & ToEnter)
-                command2.CommandText = "UPDATE AircraftDetail SET " & ToEnter & " WHERE ICAO='" & rst1(1).ToString & "'"
+
+                'make sure the plane is ID'd as from USA
+                If Exists > 0 Then
+                    ToEnter = "Registration = '" & Registration & "', Country = 'United States', " & "Manufacturer = '" & Manufacturer & "', Model = '" & Model & "', ModelIcao = '" & ModelIcao & "', Operator = '" & TheOperator & "', YearBuilt = '" & Year_Built & "', CreatedUtc = " & Created_Time & ", UpdatedUtc = '" & UTC_Time & "'"
+                    'Form1.TextBox4.AppendText(vbCrLf & ToEnter)
+                    command2.CommandText = "UPDATE AircraftDetail SET " & ToEnter & " WHERE ICAO='" & rst1(1).ToString & "'"
+                Else
+                    ToEnter = "('" & ICAO & "','" & Registration & "','United States'," & "'" & Manufacturer & "','" & Model & "','" & ModelIcao & "','" & Year_Built & "'," & Created_Time & ",'" & UTC_Time & "');"
+                    command2.CommandText = "INSERT INTO AircraftDetail (ICAO, Registration, Country, Manufacturer, Model, ModelIcao, YearBuilt, CreatedUtc, UpdatedUtc) VALUES " & ToEnter
+                End If
+                'Debug.Print(ToEnter)
                 command2.ExecuteNonQuery()
                 UTC_Enter = "UpdatedUtc = '" & UTC_Time & "', "
                 ToEnter = vbNullString
-                If ChangeOp > 0 Then
+                If ChangeOp > 0 Or Build_Complete = -1 Then
                     ToEnter = UTC_Enter & "Operator = '" & TheOperator
                     command2.CommandText = "UPDATE AircraftDetail SET " & ToEnter & "' WHERE Icao='" & rst1(1).ToString & "'"
                     command2.ExecuteNonQuery()
@@ -327,7 +356,6 @@ Module VRS
                         If ModelIcao = Rule(5) And Rule(5) <> vbNullString Then Rule_Flag = 1 + Rule_Flag
                         If TheOperator = Rule(6) And Rule(6) <> vbNullString Then Rule_Flag = 1 + Rule_Flag
                         If OperatorIcao = Rule(7) And Rule(7) <> vbNullString Then Rule_Flag = 1 + Rule_Flag
-
                         For n = 0 To 7
                             If n = 0 And "!" & ICAO = Rule(0) Then
                                 Not_Change_Flag = Not_Change_Flag + 1
@@ -403,14 +431,18 @@ Module VRS
                 End If
             End If
             If Want_Exit = 1 Then
-                rst1.Close()
+                rst0.Close()
                 conn0.Close()
+                rst1.Close()
                 conn1.Close()
+                rst2.Close()
                 conn2.Close()
                 End
             End If
         End While
-OverHere:
+        Form1.TextBox4.AppendText(vbCrLf & "FAA database processing completed.")
+        Form1.TextBox4.Update()
+No_FAA:
         rst1.Close()
         conn0.Close()
         conn1.Close()
@@ -422,6 +454,7 @@ OverHere:
         End If
 
         'now let's setup to do the CCAR database
+        Exists = 0
         Dim OutputFile As System.IO.StreamWriter
         If NoSilsFound = 1 Then
             If System.IO.File.Exists(dbPath & "No Silhouette Found.txt") = True Then
@@ -474,7 +507,8 @@ OverHere:
                 k = ThePercent
             End If
             command2.CommandText = "SELECT * FROM AircraftDetail WHERE Icao = '" & rst3(1).ToString & "';"
-            If command2.ExecuteScalar() <> 0 Then
+            Exists = command2.ExecuteScalar()
+            If Exists <> Build_Complete Then
                 rst2 = command2.ExecuteReader()
                 rst2.Read()
                 Registration = rst3(0).ToString
@@ -484,12 +518,12 @@ OverHere:
                 'Year_Built = rst3(6).ToString
                 'update year
                 m = 0
-                If rst3(6).ToString = vbNullString Then
+                If rst3(6).ToString = vbNullString And Exists <> 0 Then
                     If rst2(10).ToString <> vbNullString Then
                         Year_Built = rst2(10).ToString
                         m = 1
                     End If
-                ElseIf rst3(6) = System.DbNull.Value.ToString Then
+                ElseIf rst3(6) = System.DBNull.Value.ToString And Exists <> 0 Then
                     If rst2(10).ToString <> vbNullString Then
                         Year_Built = rst2(10).ToString
                         m = 1
@@ -509,29 +543,38 @@ OverHere:
                 End If
                 'update manufacturer
                 m = 0
-                If rst2(4).ToString = vbNullString Then
-                    If rst3(4).ToString <> vbNullString Then
-                        m = 1
+                If Exists <> 0 Then
+                    If rst2(4).ToString = vbNullString Then
+                        If rst3(4).ToString <> vbNullString Then
+                            m = 1
+                        End If
+                    ElseIf rst2(4) = System.DBNull.Value.ToString Then
+                        If rst3(4).ToString <> vbNullString Then
+                            m = 1
+                        End If
                     End If
-                ElseIf rst2(4) = System.DbNull.Value.tostring Then
-                    If rst3(4).ToString <> vbNullString Then
-                        m = 1
-                    End If
+                Else
+                    m = 1
                 End If
                 If m = 1 Then
                     Manufacturer = Replace(rst3(4), "'", "''")
                 End If
                 'update model
                 m = 0
-                If rst2(6).ToString = vbNullString Then
-                    If rst3(2).ToString <> vbNullString Then
-                        m = 1
+                If Exists <> 0 Then
+                    If rst2(6).ToString = vbNullString Then
+                        If rst3(2).ToString <> vbNullString Then
+                            m = 1
+                        End If
+                    ElseIf rst2(6) = System.DBNull.Value.ToString Then
+                        If rst3(2).ToString <> vbNullString Then
+                            m = 1
+                        End If
                     End If
-                ElseIf rst2(6) = System.DbNull.Value.ToString Then
-                    If rst3(2).ToString <> vbNullString Then
-                        m = 1
-                    End If
+                Else
+                    m = 1
                 End If
+
                 If m = 1 Then
                     Model = rst3(2)
                     Model = Replace(Model, "'", "''")
@@ -563,9 +606,15 @@ OverHere:
                 ElseIf Left(Manufacturer, 4) = "Bell" Then
                     Manufacturer = "Bell"
                 End If
-                If rst2(6).ToString = vbNullString Or rst2(6).ToString = System.DBNull.Value.ToString Or rst2(6).ToString = "NULL" Then
+
+                If Exists <> 0 Then
+                    If rst2(6).ToString = vbNullString Or rst2(6).ToString = System.DBNull.Value.ToString Or rst2(6).ToString = "NULL" Then
+                        m = 1
+                    End If
+                Else
                     m = 1
                 End If
+
                 If m = 1 Then
                     Emitter_Type = vbNullString
                     Found_Type = 0
@@ -582,17 +631,38 @@ OverHere:
                 Else
                     ModelIcao = rst2(6).ToString
                 End If
-                OperatorIcao = rst2(8).ToString
+                If Exists <> 0 Then
+                    OperatorIcao = rst2(8).ToString
+                End If
+
+
                 UTC_Time = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") & ".0000000Z"
-                ToEnter = "Registration = '" & Registration & "', Country = 'Canada', " & "Manufacturer = '" & Manufacturer & "', Model = '" & Model & "', ModelIcao = '" & ModelIcao & "', Operator = '" & TheOperator & "', YearBuilt = '" & Year_Built & "', CreatedUtc = '" & UTC_Time & "', UpdatedUtc = '" & UTC_Time & "'"
+
+                Created_Time = vbNullString
+                If Exists <> 0 Then
+                    oDate = Convert.ToDateTime(rst2(11))
+                    Created_Time = oDate.ToString("yyyy-MM-dd HH:mm:ss") & ".0000000Z"
+                Else
+                    Created_Time = UTC_Time
+                End If
+                Created_Time = PrepNull(Created_Time)
+
                 rst2.Close()
-                command2.CommandText = "UPDATE AircraftDetail SET " & ToEnter & " WHERE ICAO='" & rst3(1).ToString & "'"
+                If Exists > 0 Then
+                    ToEnter = "Registration = '" & Registration & "', Country = 'Canada', " & "Manufacturer = '" & Manufacturer & "', Model = '" & Model & "', ModelIcao = '" & ModelIcao & "', Operator = '" & TheOperator & "', YearBuilt = '" & Year_Built & "', CreatedUtc = '" & UTC_Time & "', UpdatedUtc = '" & UTC_Time & "'"
+                    command2.CommandText = "UPDATE AircraftDetail SET " & ToEnter & " WHERE ICAO='" & rst3(1).ToString & "'"
+                Else
+                    ToEnter = "('" & rst3(1).ToString & "','" & Registration & "','Canada'," & "'" & Manufacturer & "','" & Model & "','" & ModelIcao & "','" & Year_Built & "'," & Created_Time & ",'" & UTC_Time & "');"
+                    command2.CommandText = "INSERT INTO AircraftDetail (ICAO, Registration, Country, Manufacturer, Model, ModelIcao, YearBuilt, CreatedUtc, UpdatedUtc) VALUES " & ToEnter
+                End If
                 command2.ExecuteNonQuery()
                 If Want_Exit = 1 Then
-                    rst1.Close()
                     conn0.Close()
+                    rst1.Close()
                     conn1.Close()
+                    rst2.Close()
                     conn2.Close()
+                    rst3.Close()
                     conn3.Close()
                     End
                 End If
@@ -604,9 +674,287 @@ OverHere:
                 OutputFile.Close()
             End If
         End If
+        Form1.TextBox4.AppendText(vbCrLf & "CCAR database processing completed.")
+        Form1.TextBox4.Update()
 No_CCAR:
-        rst1.Close()
+
+        If Dir(dbPath & "OpenSkyDatabase.sqb") = vbNullString Then
+            Form1.TextBox1.AppendText(vbCrLf & "Updating VirtualRadar database...OpenSky skipped.")
+            Form1.TextBox1.Update()
+            GoTo No_OpenSky
+        End If
+
+
+        'now let's setup to do the OpenSky database
+        Exists = 0
+        If NoSilsFound = 1 Then
+            If System.IO.File.Exists(dbPath & "No Silhouette Found.txt") = True Then
+                System.IO.File.Delete(dbPath & "No Silhouette Found.txt")
+                Threading.Thread.Sleep(500)
+            End If
+            OutputFile = My.Computer.FileSystem.OpenTextFileWriter(dbPath & "No Silhouette Found.txt", True)
+        End If
+        Dim conn4 As New SQLiteConnection("DataSource=" & dbPath & "OpenSkyDatabase.sqb")
+        Dim command4 As New SQLiteCommand("", conn4)
+        Dim rst4 As DbDataReader
+        conn4.Open()
+        command4.CommandText = "SELECT Count(*) FROM Aircraft"
+        Num_Records4 = command4.ExecuteScalar()
+
+        Form1.TextBox1.AppendText(vbCrLf & "Updating VirtualRadar database (OpenSky)...")
+        Form1.TextBox1.Update()
+        Update_YN = 0
+        Update_Step = 1
+        command4.CommandText = "SELECT * FROM Aircraft"
+        rst4 = command4.ExecuteReader()
+
+        TimeEstimator1 = DateTime.Now.ToString("HH:mm:ss")
+
+        k = 0
+        i = 0
+        q = 0.01
+        While rst4.Read()
+            i = i + 1
+            ThePercent = 100 * i / Num_Records4
+            If ThePercent - k >= q Then
+                If q = 0.01 And ThePercent >= 0.5 Then
+                    q = 0.1
+                ElseIf q = 0.1 And ThePercent >= 1 Then
+                    q = 1
+                End If
+                TimeEstimator2 = CDbl(DateDiff("s", TimeEstimator1, DateTime.Now.ToString("HH:mm:ss")))
+                TimeEstimator2 = CDbl((TimeEstimator2 / (ThePercent / 100)) * (100 - ThePercent) / 100)
+                If TimeEstimator2 <> 0 Then
+                    If TimeEstimator2 > 60 Then
+                        Time_String = CStr(Math.Round(TimeEstimator2 / 60, 1))
+                        Form1.TextBox8.Text = "Minutes Remain"
+                    Else
+                        Time_String = CStr(Math.Round(TimeEstimator2, 1))
+                        Form1.TextBox8.Text = "Seconds Remain"
+                    End If
+                Else
+                    Time_String = vbNullString
+                End If
+                Form1.TextBox8.Update()
+                Form1.TextBox7.Text = Time_String
+                Form1.TextBox7.Update()
+                Form1.TextBox6.Text = Math.Round(ThePercent, 0) & "%"
+                Form1.TextBox6.Update()
+                Application.DoEvents()
+                k = ThePercent
+            End If
+            command2.CommandText = "SELECT * FROM AircraftDetail WHERE Icao = '" & rst4(0).ToString & "';"
+            Exists = command2.ExecuteScalar()
+            If Exists <> Build_Complete Then
+                rst2 = command2.ExecuteReader()
+                rst2.Read()
+                Registration = rst4(1).ToString
+                TheOperator = vbNullString
+                Manufacturer = Replace(rst4(2).ToString, "'", "''")
+                Model = Replace(rst4(3).ToString, "'", "''")
+                SerialNumber = Replace(rst4(7).ToString, "'", "''")
+                ModelIcao = rst4(4).ToString
+                Year_Built = "NULL"
+                OperatorIcao = "NULL"
+
+
+                'update year
+                If Exists <> 0 Then
+                    If rst2(10).ToString <> vbNullString Then
+                        Year_Built = rst2(10).ToString
+                        If Year_Built < 1900 Then Year_Built = "NULL"
+                    Else
+                        Year_Built = rst4(8).ToString
+                    End If
+                Else
+                    Year_Built = rst4(8).ToString
+                End If
+
+
+                'update operator
+                If Exists <> 0 Then
+                    If rst2(7).ToString = vbNullString Then
+                        TheOperator = Replace(rst4(5).ToString, "'", "''")
+                    Else
+                        TheOperator = rst2(7).ToString
+                    End If
+                Else
+                    TheOperator = Replace(rst4(5).ToString, "'", "''")
+                End If
+                If TheOperator <> vbNullString Then
+                    'If UCase(Right(TheOperator)) = "LLC" Then TheOperator = Left(TheOperator, Len(TheOperator) - 3) & "LLC"  'this catches if we see something xxxxxxllc where x is not a space
+                    TheOperator = Replace(TheOperator, " Llc", " LLC")
+                    TheOperator = Replace(TheOperator, " Llp", " LLP")
+                    TheOperator = Replace(TheOperator, " Of ", " of ")
+                    If Left(TheOperator, Len(rst4(1).ToString)) = rst4(1).ToString Then
+                        TheOperator = UCase(rst4(1).ToString) & Right$(TheOperator, Len(TheOperator) - Len(rst4(1).ToString))
+                    End If
+                    TheOperator = Replace(rst4(5).ToString, "'", "''")
+                End If
+
+
+                'update manufacturer
+                m = 0
+                If Exists <> 0 Then
+                    If rst2(4).ToString = vbNullString Then
+                        If rst4(2).ToString <> vbNullString Then
+                            m = 1
+                        End If
+                    ElseIf rst2(4) = System.DBNull.Value.ToString Then
+                        If rst4(2).ToString <> vbNullString Then
+                            m = 1
+                        End If
+                    End If
+                Else
+                    m = 1
+                End If
+                If m = 1 Then
+                    Manufacturer = Replace(rst4(2).ToString, "'", "''")
+                End If
+                'update model
+                m = 0
+                If Exists <> 0 Then
+                    If rst2(6).ToString = vbNullString Then
+                        If rst4(3).ToString <> vbNullString Then
+                            m = 1
+                        End If
+                    ElseIf rst2(6) = System.DBNull.Value.ToString Then
+                        If rst4(3).ToString <> vbNullString Then
+                            m = 1
+                        End If
+                    End If
+                Else
+                    m = 1
+                End If
+
+                If m = 1 Then
+                    Model = rst4(3).ToString
+                    Model = Replace(Model, "'", "''")
+                End If
+                'update silhouette
+                m = 0
+                Manufacturer_Orig = Manufacturer
+                'this is not a complete remapping
+                If Left(Manufacturer, 6) = "Cessna" Then
+                    Manufacturer = "Cessna"
+                ElseIf Left(Manufacturer, 6) = "Boeing" Or Left(Manufacturer, 10) = "The Boeing" Then
+                    Manufacturer = "Boeing"
+                ElseIf Left(Manufacturer, 6) = "Piper" Then
+                    Manufacturer = "Piper"
+                ElseIf Manufacturer = "Texas Engineering and Manufacturing Co. Inc." Then
+                    Manufacturer = "Temco"
+                ElseIf Left(Manufacturer, 8) = "Champion" Then
+                    Manufacturer = "Champion"
+                ElseIf Left(Manufacturer, 9) = "Schweizer" Then
+                    Manufacturer = "Schweizer"
+                ElseIf Left(Manufacturer, 7) = "Aeronca" Then
+                    Manufacturer = "Aeronca"
+                ElseIf Left(Manufacturer, 14) = "Aero Commander" Then
+                    Manufacturer = "Aero Commander"
+                ElseIf Left(Manufacturer, 5) = "Beech" Then
+                    Manufacturer = "Beech"
+                ElseIf Left(Manufacturer, 6) = "Airbus" Then
+                    Manufacturer = "Airbus"
+                ElseIf Left(Manufacturer, 4) = "Bell" Then
+                    Manufacturer = "Bell"
+                End If
+
+                If Exists <> 0 Then
+                    If rst2(6).ToString = vbNullString Or rst2(6).ToString = System.DBNull.Value.ToString Or rst2(6).ToString = "NULL" Then
+                        If ModelIcao = vbNullString Then m = 1
+                    Else
+                        ModelIcao = rst2(6).ToString
+                    End If
+                Else
+                    If ModelIcao = vbNullString Then m = 1
+                End If
+
+                If m = 1 Then
+                    Emitter_Type = vbNullString
+                    Found_Type = 0
+                    Temp_Split = Split(Manufacturer, " ")
+                    'Manufacturer = Temp_Split(0)                'Canada uses a much more verbose description of the manufacturer than the FAA, so just use the first word to help me find the ICAO model code
+                    ModelIcao = Determine_Silhouette(Model)
+                    Manufacturer = Manufacturer_Orig
+                    Silhouettes = 0
+                    If Found_Type = 0 Then  'if we didn't find it with the shortened manufacturer, let's try the full string
+                        ModelIcao = Determine_Silhouette(Model)
+                        If Found_Type = 0 Then ModelIcao = System.DBNull.Value.ToString
+                        'OutputFile.WriteLine(Registration & "," & Manufacturer & "," & Model)
+                    End If
+                End If
+                If Exists <> 0 Then
+                    If rst2(8).ToString <> vbNullString Then
+                        OperatorIcao = rst2(8).ToString
+                        OperatorIcao = PrepNull(OperatorIcao)
+                    End If
+                Else
+                    If rst4(6).ToString <> vbNullString Then
+                        OperatorIcao = rst4(6)
+                        OperatorIcao = PrepNull(OperatorIcao)
+                    End If
+                End If
+
+                If Exists <> 0 Then
+                    If rst2(9).ToString <> vbNullString Then
+                        SerialNumber = Replace(rst2(9).ToString, "'", "''")
+                    End If
+                End If
+
+                UTC_Time = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") & ".0000000Z"
+                Created_Time = vbNullString
+                If Exists <> 0 Then
+                    oDate = Convert.ToDateTime(rst2(11))
+                    Created_Time = oDate.ToString("yyyy-MM-dd HH:mm:ss") & ".0000000Z"
+                Else
+                    Created_Time = UTC_Time
+                End If
+                Created_Time = PrepNull(Created_Time)
+
+                rst2.Close()
+
+                'SERIAL
+                Manufacturer = PrepNull(Manufacturer)
+                Model = PrepNull(Model)
+                TheOperator = PrepNull(TheOperator)
+                ModelIcao = PrepNull(ModelIcao)
+                SerialNumber = PrepNull(SerialNumber)
+                Year_Built = PrepNull(Year_Built)
+                If Exists > 0 Then
+                    ToEnter = "Registration = '" & Registration & "', " & "Manufacturer = " & Manufacturer & ", Model = " & Model & ", ModelIcao = " & ModelIcao & ", Operator = " & TheOperator & ", OperatorIcao = " & OperatorIcao & ", Serial = " & SerialNumber & ", YearBuilt = " & Year_Built & ", CreatedUtc = " & Created_Time & ", UpdatedUtc = '" & UTC_Time & "'"
+                    command2.CommandText = "UPDATE AircraftDetail SET " & ToEnter & " WHERE ICAO='" & rst4(0).ToString & "'"
+                Else
+                    ToEnter = "('" & rst4(0).ToString & "','" & Registration & "'," & Manufacturer & "," & Model & "," & ModelIcao & "," & TheOperator & "," & OperatorIcao & "," & SerialNumber & "," & Year_Built & "," & Created_Time & ",'" & UTC_Time & "');"
+                    command2.CommandText = "INSERT INTO AircraftDetail (ICAO, Registration, Manufacturer, Model, ModelIcao, Operator, OperatorIcao, Serial, YearBuilt, CreatedUtc, UpdatedUtc) VALUES " & ToEnter
+                End If
+                'Debug.Print(ToEnter) ''''''''''''''''''''''
+                command2.ExecuteNonQuery()
+                If Want_Exit = 1 Then
+                    conn0.Close()
+                    rst1.Close()
+                    conn1.Close()
+                    rst2.Close()
+                    conn2.Close()
+                    rst4.Close()
+                    conn4.Close()
+                    End
+                End If
+            End If
+        End While
+        rst4.Close()
+        conn4.Close()
+        If NoSilsFound = 1 Then
+            If OutputFile.BaseStream.CanWrite = True Then
+                OutputFile.Close()
+            End If
+        End If
+        Form1.TextBox4.AppendText(vbCrLf & "OpenSky database processing completed.")
+        Form1.TextBox4.Update()
+
+
+No_OpenSky:
         conn0.Close()
+        rst1.Close()
         conn1.Close()
         conn2.Close()
     End Sub
