@@ -6,6 +6,7 @@ Module Main_Program
     Public dbPath As String, Want_Exit As Long, NoSilsFound As Integer, FirstRun As Integer, BackupVRSdb As String
     Public UserName As String, FAA_db_Download As String, Run_on_Start As String, AutoStartWait As Integer
     Public VRSdbPath As String, TimeStarted As String, Complete As String, OpenSky_Download As String
+    Public OpenSky_URL As String, FAA_URL As String
     Sub Main_Loop()
         'If Not File.Exists(dbPath & "Sils.csv") Then
         '    MessageBox.Show("Warning:  I can't find the ""Sils.csv"" file." & vbCrLf & vbCrLf &
@@ -28,7 +29,11 @@ Module Main_Program
             If File.Exists(dbPath & "ReleasableAircraft.zip") Then
                 My.Computer.FileSystem.DeleteFile(dbPath & "ReleasableAircraft.zip")
             End If
-            My.Computer.Network.DownloadFile("https://registry.faa.gov/database/ReleasableAircraft.zip", dbPath & "ReleasableAircraft.zip")
+            Try
+                My.Computer.Network.DownloadFile(FAA_URL, dbPath & "ReleasableAircraft.zip")
+            Catch ex As Exception
+                MsgBox("Attempt to download the FAA database the below URL failed." & vbCrLf & vbCrLf & FAA_URL & vbCrLf & vbCrLf & "The error was " & ex.GetType().ToString & vbCrLf & vbCrLf & "You may need to exit the program and edit the URL in the settings.sqb file.")
+            End Try
             Form1.TextBox1.Text = "Downloading FAA database...Done."
             Form1.TextBox1.AppendText(vbCrLf & "Unzipping FAA database...")
             Form1.TextBox1.Update()

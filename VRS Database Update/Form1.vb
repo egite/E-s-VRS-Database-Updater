@@ -5,7 +5,7 @@ Imports System.Data.SQLite
 Imports System.Threading
 Imports System.Diagnostics
 Imports System.Data.Entity.Core.Common.CommandTrees
-Imports System.Numerics
+'Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class Form1
     Private Sub Form1_Start(sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Shown
@@ -35,7 +35,13 @@ Public Class Form1
             ToEnter = "('Complete','N')"
             command.CommandText = "INSERT INTO Settings (Name, Information) VALUES " & ToEnter
             command.ExecuteNonQuery()
-            ToEnter = "('OpenSky_Download','N')"
+            ToEnter = "('OpenSky_Download','Y')"
+            command.CommandText = "INSERT INTO Settings (Name, Information) VALUES " & ToEnter
+            command.ExecuteNonQuery()
+            ToEnter = "('FAA_URL','https://registry.faa.gov/database/ReleasableAircraft.zip')"
+            command.CommandText = "INSERT INTO Settings (Name, Information) VALUES " & ToEnter
+            command.ExecuteNonQuery()
+            ToEnter = "('OpenSky_URL','https://s3.opensky-network.org/data-samples/metadata/aircraftDatabase.zip')"
             command.CommandText = "INSERT INTO Settings (Name, Information) VALUES " & ToEnter
             command.ExecuteNonQuery()
             connection.Close()
@@ -43,8 +49,22 @@ Public Class Form1
         connection.Open()
         command.CommandText = "SELECT Information FROM Settings WHERE Name = 'dbPath';"
         dbPath = command.ExecuteScalar()
+        If Strings.Right(dbPath, 1) <> "\" Then
+            dbPath = dbPath & "\"
+        End If
         TextBox10.Text = dbPath
         TextBox10.Update()
+        command.CommandText = "SELECT Information FROM Settings WHERE Name = 'FAA_URL';"
+        FAA_URL = command.ExecuteScalar()
+        command.CommandText = "SELECT Information FROM Settings WHERE Name = 'OpenSky_URL';"
+        OpenSky_URL = command.ExecuteScalar()
+        command.CommandText = "SELECT Information FROM Settings WHERE Name = 'VRSdbPath';"
+        VRSdbPath = command.ExecuteScalar()
+        If Strings.Right(VRSdbPath, 1) <> "\" Then
+            VRSdbPath = VRSdbPath & "\"
+        End If
+        TextBox11.Text = VRSdbPath
+        TextBox11.Update()
         command.CommandText = "SELECT Information FROM Settings WHERE Name = 'FAA_db_Download';"
         FAA_db_Download = command.ExecuteScalar()
         command.CommandText = "SELECT Information FROM Settings WHERE Name = 'VRSdbPath';"

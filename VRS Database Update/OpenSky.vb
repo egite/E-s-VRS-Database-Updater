@@ -14,7 +14,11 @@ Module OpenSky
         If File.Exists(dbPath & "aircraftDatabase.zip") Then
             My.Computer.FileSystem.DeleteFile(dbPath & "aircraftDatabase.zip")
         End If
-        My.Computer.Network.DownloadFile("https://opensky-network.org/datasets/metadata/aircraftDatabase.zip", dbPath & "aircraftDatabase.zip")
+        Try
+            My.Computer.Network.DownloadFile(OpenSky_URL, dbPath & "aircraftDatabase.zip")
+        Catch ex As Exception
+            MsgBox("Attempt to download the OpenSky database the below URL failed." & vbCrLf & vbCrLf & OpenSky_URL & vbCrLf & vbCrLf & "The error was " & ex.GetType().ToString & vbCrLf & vbCrLf & "You may need to exit the program and edit the URL in the settings.sqb file.")
+        End Try
         Form1.TextBox1.AppendText("...Done.")
         Form1.TextBox1.AppendText(vbCrLf & "Unzipping OpenSky database...")
         Form1.TextBox1.Update()
@@ -33,14 +37,16 @@ Module OpenSky
 
         Form1.TextBox1.AppendText(vbCrLf & "Creating OpenSky SQL database...")
 
-        On Error Resume Next
-        Kill(dbPath & "OpenSkyDatabase.sqb")
-        On Error GoTo 0
+        Try
+            Kill(dbPath & "OpenSkyDatabase.sqb")
+        Catch ex As Exception
+        End Try
         Threading.Thread.Sleep(1000)
         If File.Exists(dbPath & "OpenSkyDatabase.sqb") Then
-            On Error Resume Next
-            Kill(dbPath & "OpenSkyDatabase.sqb")
-            On Error GoTo 0
+            Try
+                Kill(dbPath & "OpenSkyDatabase.sqb")
+            Catch ex As Exception
+            End Try
             Threading.Thread.Sleep(1000)
             If File.Exists(dbPath & "OpenSkyDatabase.sqb") Then
                 MessageBox.Show("I can't seem to delete the ""OpenSkyDatabase.sqb"" file. in the working folder." & vbCrLf & " Please delete this manually and run the program again." & vbCrLf & "Exiting.", "E's VRS Updater")

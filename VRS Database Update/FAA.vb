@@ -57,7 +57,6 @@ Module Create_SQL
         m = 0
         j = 0
         ToEnter = vbNullString
-
         TimeEstimator1 = DateTime.Now.ToString("HH:mm:ss")
         For i = 1 To Num_Registrations - 1
             Year_Built = Mid$(Registration_Data(i), 52, 4)
