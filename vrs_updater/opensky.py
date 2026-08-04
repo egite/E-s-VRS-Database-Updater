@@ -31,21 +31,29 @@ def download_opensky(settings: Settings) -> bool:
 
     # OpenSky extracts to a nested path: media/data/samples/metadata/aircraftDatabase.csv
     extract_dir = os.path.join(settings.work_dir, "_opensky_extract")
-    extract_zip(zip_path, extract_dir, "Extracting OpenSky database")
-
-    # Move the CSV to the working directory
-    nested_csv = os.path.join(extract_dir, "media", "data", "samples", "metadata", "aircraftDatabase.csv")
     dest_csv = os.path.join(settings.work_dir, "aircraftDatabase.csv")
+    try:
+        extract_zip(zip_path, extract_dir, "Extracting OpenSky database")
 
-    if os.path.exists(nested_csv):
-        if os.path.exists(dest_csv):
-            os.remove(dest_csv)
-        shutil.move(nested_csv, dest_csv)
-    elif os.path.exists(os.path.join(extract_dir, "aircraftDatabase.csv")):
-        src = os.path.join(extract_dir, "aircraftDatabase.csv")
+        # Move the CSV to the working directory
+        nested_csv = os.path.join(extract_dir, "media", "data", "samples", "metadata", "aircraftDatabase.csv")
+        flat_csv = os.path.join(extract_dir, "aircraftDatabase.csv")
+
+        if os.path.exists(nested_csv):
+            src = nested_csv
+        elif os.path.exists(flat_csv):
+            src = flat_csv
+        else:
+            print("  ERROR: aircraftDatabase.csv not found inside OpenSky ZIP "
+                  "(archive layout may have changed).")
+            return False
+
         if os.path.exists(dest_csv):
             os.remove(dest_csv)
         shutil.move(src, dest_csv)
+    except Exception as e:
+        print(f"  ERROR: Failed to extract/move OpenSky database: {e}")
+        return False
 
     safe_delete(extract_dir)
     safe_delete(zip_path)

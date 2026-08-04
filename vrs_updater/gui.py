@@ -49,7 +49,7 @@ class VRSUpdaterApp:
                 pass
 
         self.settings = Settings()
-        self.chk_log_errors_var = tk.BooleanVar(value=False)
+        self.chk_log_errors_var = tk.BooleanVar(value=True)
         self.chk_log_activity_var = tk.BooleanVar(value=False)
         self._error_log_file = None   # Open file handle during a run
         self._activity_log_file = None
@@ -537,7 +537,7 @@ class VRSUpdaterApp:
             self.chk_skip_nzcaa_var.set(data.get("skip_nz_caa", False))
             self.chk_skip_casa_var.set(data.get("skip_casa", False))
             self.chk_skip_rules_var.set(data.get("skip_rules", False))
-            self.chk_log_errors_var.set(data.get("log_errors", False))
+            self.chk_log_errors_var.set(data.get("log_errors", True))
             self.chk_log_activity_var.set(data.get("log_activity", False))
             from .config import DEFAULT_FAA_URL, DEFAULT_CCAR_URL, DEFAULT_OPENSKY_URL, DEFAULT_NZCAA_URL, DEFAULT_CASA_URL
             self.settings.faa_url = data.get("faa_url", DEFAULT_FAA_URL)
@@ -1629,7 +1629,12 @@ class VRSUpdaterApp:
                 return False
             try:
                 return f.result()
-            except Exception:
+            except Exception as e:
+                # Catch-all safety net: anything a download task raised that
+                # wasn't already logged with its reason (extraction, move, an
+                # unexpected error) is surfaced here instead of vanishing.
+                self._log_status(f"  ERROR: {key} download/extract failed: {e}")
+                self._log_error(f"Download: {key} exception: {e}")
                 return False
 
         faa_downloaded = _safe_result("FAA")

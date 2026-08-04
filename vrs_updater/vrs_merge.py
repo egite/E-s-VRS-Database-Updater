@@ -272,6 +272,39 @@ def _load_existing_vrs(conn: sqlite3.Connection) -> Dict[str, dict]:
     return existing
 
 
+def _log_db_freshness(name: str, path: str, max_age_days: int) -> None:
+    """Log how fresh an intermediate source DB is before it is merged.
+
+    Each intermediate .sqb is rebuilt from a fresh download during a run, so its
+    mtime marks the last successful refresh of that source. When a download or
+    parse fails, the run falls back to a previous run's .sqb (the "will try to use
+    existing data" path in gui.py / main.py) and the merge only checks that the
+    file exists (os.path.exists) -- so old data gets merged with no indication it
+    is old. This surfaces that: if the file is older than the source's max-age
+    limit it logs a WARNING (which the GUI routes to the error log); otherwise it
+    logs a plain line noting the date.
+
+    max_age_days == 0 means "always download", so anything not refreshed this run
+    (older than ~1 day) is treated as stale.
+    """
+    try:
+        mtime = os.path.getmtime(path)
+    except OSError:
+        return
+    age_days = (datetime.now().timestamp() - mtime) / 86400.0
+    date_str = datetime.fromtimestamp(mtime).strftime("%d %b %Y %H:%M")
+    threshold = max_age_days if max_age_days and max_age_days > 0 else 1
+    age_str = f"{age_days:.1f} days"
+    if age_days > threshold:
+        print(f"  WARNING: {name} database is STALE - last refreshed {date_str} "
+              f"({age_str} old; limit {threshold}d). This run did not refresh it; "
+              f"merging OLD {name} data.")
+        detail_log(f"WARNING: {name} merging STALE data from {date_str} "
+                   f"({age_str} old; limit {threshold}d).")
+    else:
+        print(f"  {name} database current: {date_str} ({age_str} old).")
+
+
 def update_vrs(settings: Settings):
     """Main merge: FAA + CCAR + OpenSky -> VRS AircraftOnlineLookupCache.sqb.
 
@@ -346,6 +379,7 @@ def update_vrs(settings: Settings):
             if settings.skip_opensky:
                 print("  OpenSky merge skipped.")
             elif os.path.exists(opensky_db):
+                _log_db_freshness("OpenSky", opensky_db, settings.opensky_max_age_days)
                 _merge_opensky(opensky_db, existing, dirty, sil_lookup, build_complete, utc_now)
             else:
                 print("  OpenSky database not found, skipping.")
@@ -354,6 +388,7 @@ def update_vrs(settings: Settings):
             if settings.skip_ccar:
                 print("  CCAR merge skipped.")
             elif os.path.exists(ccar_db):
+                _log_db_freshness("CCAR", ccar_db, settings.ccar_max_age_days)
                 _merge_ccar(ccar_db, existing, dirty, sil_lookup, build_complete, utc_now)
             else:
                 print("  CCAR database not found, skipping.")
@@ -362,6 +397,7 @@ def update_vrs(settings: Settings):
             if settings.skip_nz_caa:
                 print("  NZ CAA merge skipped.")
             elif os.path.exists(nz_caa_db):
+                _log_db_freshness("NZ CAA", nz_caa_db, settings.nz_caa_max_age_days)
                 _merge_nz_caa(nz_caa_db, existing, dirty, sil_lookup, build_complete, utc_now)
             else:
                 print("  NZ CAA database not found, skipping.")
@@ -370,6 +406,7 @@ def update_vrs(settings: Settings):
             if settings.skip_casa:
                 print("  CASA merge skipped.")
             elif os.path.exists(casa_db):
+                _log_db_freshness("CASA", casa_db, settings.casa_max_age_days)
                 _merge_casa(casa_db, existing, dirty, sil_lookup, utc_now)
             else:
                 print("  CASA database not found, skipping.")
@@ -378,6 +415,7 @@ def update_vrs(settings: Settings):
             if settings.skip_faa:
                 print("  FAA merge skipped.")
             else:
+                _log_db_freshness("FAA", faa_db, settings.faa_max_age_days)
                 _merge_faa(faa_db, existing, dirty, sil_lookup, build_complete, utc_now,
                            work_dir=settings.work_dir)
         elif source.startswith("Rules"):

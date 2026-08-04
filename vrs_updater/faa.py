@@ -68,7 +68,11 @@ def download_faa(settings: Settings) -> bool:
     if not download_file(settings.faa_url, zip_path, "Downloading FAA database"):
         return False
 
-    extract_zip(zip_path, extract_dir, "Extracting FAA database")
+    try:
+        extract_zip(zip_path, extract_dir, "Extracting FAA database")
+    except Exception as e:
+        print(f"  ERROR: Failed to extract FAA database: {e}")
+        return False
     safe_delete(zip_path)
     return True
 
