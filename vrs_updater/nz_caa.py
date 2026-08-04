@@ -36,7 +36,8 @@ def download_nz_caa(settings: Settings) -> bool:
             print(f"  in: {dest}")
             safe_delete(dest)
             return False
-    except OSError:
+    except OSError as e:
+        print(f"  ERROR: Could not read downloaded NZ CAA file: {e}")
         return False
 
     size_kb = os.path.getsize(dest) / 1024

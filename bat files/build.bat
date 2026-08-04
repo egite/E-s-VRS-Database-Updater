@@ -6,6 +6,10 @@ REM runs against the project root (where run.py, Rules.csv, the icons, etc. live
 for %%I in ("%~dp0..") do set "PROJECT_DIR=%%~fI\"
 cd /d "%PROJECT_DIR%"
 
+REM Capture build start time. 'o' (round-trip) format parses culture-invariantly
+REM later, regardless of the machine's date/time locale.
+for /f "usebackq delims=" %%s in (`powershell -NoProfile -Command "(Get-Date).ToString('o')"`) do set "BUILD_START=%%s"
+
 echo ============================================================
 echo  E's VRS Database Updater - Build Script
 echo ============================================================
@@ -125,3 +129,13 @@ echo.
 echo Output folder: %PROJECT_DIR%dist\
 echo ============================================================
 
+
+echo.
+echo [5/5] Copying to J:
+
+copy /y "%PROJECT_DIR%dist\VRS_Database_Updater_x64.exe" "J:\VRS Database Updater\VRS Database Update.exe"
+
+REM --- Build-time pop-up (finish timestamp + elapsed time) ---
+powershell -NoProfile -Command "$start=[datetime]::Parse('%BUILD_START%'); $end=Get-Date; $s=$end-$start; $msg='Build completed.' + [Environment]::NewLine + [Environment]::NewLine + 'Finished: ' + $end.ToString('yyyy-MM-dd HH:mm:ss') + [Environment]::NewLine + ('Elapsed:  {0}h {1:00}m {2:00}s' -f [int]$s.TotalHours, $s.Minutes, $s.Seconds); Add-Type -AssemblyName System.Windows.Forms | Out-Null; [System.Windows.Forms.MessageBox]::Show($msg, 'VRS Database Updater - Build Complete', 'OK', 'Information') | Out-Null"
+
+timeout /t 5
