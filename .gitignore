@@ -376,3 +376,13 @@ venv/
 *.sqb
 *.7z
 settings.json
+
+# === Local-only / personal (this working copy; not part of the shared repo) ===
+.claude/
+CLAUDE.md
+TODO.txt
+vrs-ref/
+*.lnk
+/Archive Project.bat
+bat files/Start E's VRS Updater.bat
+bat files/copy_to_H.bat
