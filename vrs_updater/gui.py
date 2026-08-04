@@ -1684,6 +1684,8 @@ class VRSUpdaterApp:
         with ThreadPoolExecutor(max_workers=4) as pool:
             if settings.skip_faa:
                 self._log_status("  FAA - skipped.")
+            elif "FAA" in fresh_skipped:
+                self._log_status("  FAA - existing database still current, skipping re-parse.")
             elif settings.download_faa or not os.path.exists(settings.faa_db_path):
                 self._task_progress["FAA"] = 0
                 parse_tasks["FAA"] = pool.submit(_tracked_call, "FAA", parse_faa, settings)
@@ -1692,12 +1694,16 @@ class VRSUpdaterApp:
 
             if settings.skip_ccar:
                 self._log_status("  CCAR - skipped.")
+            elif "CCAR" in fresh_skipped:
+                self._log_status("  CCAR - existing database still current, skipping re-parse.")
             else:
                 self._task_progress["CCAR"] = 0
                 parse_tasks["CCAR"] = pool.submit(_tracked_call, "CCAR", parse_ccar, settings)
 
             if settings.skip_nz_caa:
                 self._log_status("  NZ CAA - skipped.")
+            elif "NZ CAA" in fresh_skipped:
+                self._log_status("  NZ CAA - existing database still current, skipping re-parse.")
             elif settings.download_nz_caa or not os.path.exists(settings.nz_caa_db_path):
                 self._task_progress["NZ CAA"] = 0
                 parse_tasks["NZ CAA"] = pool.submit(_tracked_call, "NZ CAA", parse_nz_caa, settings)
@@ -1706,6 +1712,8 @@ class VRSUpdaterApp:
 
             if settings.skip_casa:
                 self._log_status("  CASA - skipped.")
+            elif "CASA" in fresh_skipped:
+                self._log_status("  CASA - existing database still current, skipping re-parse.")
             elif settings.download_casa or not os.path.exists(settings.casa_db_path):
                 self._task_progress["CASA"] = 0
                 parse_tasks["CASA"] = pool.submit(_tracked_call, "CASA", parse_casa, settings)
@@ -1714,6 +1722,8 @@ class VRSUpdaterApp:
 
             if settings.skip_opensky:
                 self._log_status("  OpenSky - skipped.")
+            elif "OpenSky" in fresh_skipped:
+                self._log_status("  OpenSky - existing database still current, skipping re-parse.")
             elif settings.download_opensky or not os.path.exists(settings.opensky_db_path):
                 self._task_progress["OpenSky"] = 0
                 parse_tasks["OpenSky"] = pool.submit(_tracked_call, "OpenSky", parse_opensky, settings)
