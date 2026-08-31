@@ -22,6 +22,8 @@ from typing import Dict, List, Optional, Tuple
 from .utils import title_case, clean_operator_name, ProgressReporter
 from .silhouette import SilhouetteLookup, load_silhouettes
 from .config import Settings
+from .rules import (Rule, load_rules, apply_rules, RULE_TO_DB,
+                    MSG_FIELD_MAP)
 
 # Detail log callback - GUI patches this to route to the Details tab
 # Default: no-op (CLI mode doesn't need per-record detail spam)
@@ -76,109 +78,10 @@ def _normalize_manufacturer(mfr: str) -> str:
 # ---------------------------------------------------------------------------
 # Rules engine
 # ---------------------------------------------------------------------------
+# The rule format, matching, loading and saving live in rules.py so that the
+# GUI rules editor and this merge pass cannot drift apart.
 
-class Rule:
-    """A single rule from Rules.csv."""
-    __slots__ = ('match_fields', 'change_fields', 'msg_field', 'msg_text')
-
-    FIELD_NAMES = ['ICAO', 'Registration', 'Country', 'Manufacturer',
-                   'Model', 'ModelIcao', 'Operator', 'OperatorICAO']
-
-    def __init__(self, match_fields: Dict[str, str], change_fields: Dict[str, str],
-                 msg_field: str = "", msg_text: str = ""):
-        self.match_fields = match_fields    # field_name -> required value (or "!value" for negation)
-        self.change_fields = change_fields  # field_name -> new value
-        self.msg_field = msg_field
-        self.msg_text = msg_text
-
-
-def load_rules(rules_path: str) -> List[Rule]:
-    """Load rules from Rules.csv.
-
-    The CSV has columns:
-      Rule, ICAO, Registration, Country, Manufacturer, Model, ModelIcao, Operator, OperatorICAO,
-      (gap cols), ICAO, Registration, Country, Manufacturer, Model, ModelIcao, Operator, OperatorICAO,
-      (gap), Message, From dB
-    """
-    rules = []
-    if not os.path.exists(rules_path):
-        return rules
-
-    with open(rules_path, 'r', encoding='utf-8', errors='replace') as f:
-        lines = f.readlines()
-
-    for line_num, line in enumerate(lines):
-        if line_num == 0:
-            continue  # Skip header
-
-        fields = line.rstrip('\n').split(',')
-        if len(fields) < 22:
-            continue
-
-        # Match fields (columns 1-8)
-        match = {}
-        for i, name in enumerate(Rule.FIELD_NAMES):
-            val = fields[i + 1].strip() if i + 1 < len(fields) else ""
-            if val:
-                match[name] = val
-
-        if not match:
-            continue
-
-        # Change fields (columns 12-19)
-        change = {}
-        for i, name in enumerate(Rule.FIELD_NAMES):
-            val = fields[i + 12].strip() if i + 12 < len(fields) else ""
-            if val:
-                change[name] = val
-
-        msg_field = fields[20].strip() if len(fields) > 20 else ""
-        msg_text = fields[21].strip() if len(fields) > 21 else ""
-
-        rules.append(Rule(match, change, msg_field, msg_text))
-
-    print(f"  Loaded {len(rules)} rules from Rules.csv.")
-    return rules
-
-
-def apply_rules(rules: List[Rule], record: Dict[str, str]) -> Optional[Rule]:
-    """Check if any rule matches the record and return the matched Rule.
-
-    Returns the first matching Rule, or None if no rule matched.
-    VB.NET string comparison is case-insensitive by default, so we
-    use .lower() for all field matching.
-    """
-    for rule in rules:
-        positive_count = 0
-        positive_matched = 0
-        negation_triggered = False
-
-        for field_name, rule_val in rule.match_fields.items():
-            field_val = record.get(field_name) or ""
-            if rule_val.startswith("!"):
-                # Negation: rule matches if field equals the negated value
-                if field_val.lower() == rule_val[1:].lower():
-                    negation_triggered = True
-                    break
-            else:
-                positive_count += 1
-                if field_val.lower() == rule_val.lower():
-                    positive_matched += 1
-
-        if negation_triggered:
-            continue
-        if positive_count > 0 and positive_matched == positive_count:
-            return rule
-
-    return None
-
-
-# Mapping from Rule FIELD_NAMES (mixed case) to DB/existing-dict column names
-_RULE_TO_DB = {
-    'ICAO': 'Icao', 'Registration': 'Registration', 'Country': 'Country',
-    'Manufacturer': 'Manufacturer', 'Model': 'Model', 'ModelIcao': 'ModelIcao',
-    'Operator': 'Operator', 'OperatorICAO': 'OperatorIcao',
-}
+_RULE_TO_DB = RULE_TO_DB
 
 
 def _apply_rules_pass(rules: List[Rule], existing: Dict[str, dict],
@@ -215,19 +118,20 @@ def _apply_rules_pass(rules: List[Rule], existing: Dict[str, dict],
 
             # Build log message matching VB.NET format:
             #   msg_text + field_value + ". " + Registration + " -- From rules."
+            #
+            # VB.NET read the "From dB" column from the wrong index (the blank
+            # spacer at 20 rather than 22), so the field value was never
+            # actually appended. Reading the right column revives the feature,
+            # but most rules name Registration there - and the registration is
+            # already printed at the end - so only append when it adds
+            # something the line does not already carry.
             reg = ex.get('Registration', '')
             change_msg = matched_rule.msg_text
             if matched_rule.msg_field:
-                # Map msg_field names from Rules.csv to record keys
-                msg_field_map = {
-                    'ICAO': 'ICAO', 'Registration': 'Registration',
-                    'Country': 'Country', 'Manufacturer': 'Manufacturer',
-                    'Model': 'Model', 'ModelIcao': 'ModelIcao',
-                    'Operator': 'Operator', 'Operator ICAO': 'OperatorICAO',
-                }
-                rk = msg_field_map.get(matched_rule.msg_field, '')
-                if rk:
-                    change_msg += record.get(rk, '') + "."
+                rk = MSG_FIELD_MAP.get(matched_rule.msg_field, '')
+                val = record.get(rk, '') if rk else ''
+                if val and val != reg:
+                    change_msg = (change_msg + " " + val + ".").strip()
             if change_msg:
                 detail_log(f"{change_msg} {reg}")
 
@@ -305,6 +209,82 @@ def _log_db_freshness(name: str, path: str, max_age_days: int) -> None:
         print(f"  {name} database current: {date_str} ({age_str} old).")
 
 
+def _stage_vrs_db(settings: Settings) -> bool:
+    """Copy the VRS database into the working folder, backing it up first.
+
+    Returns False (after printing the reason) when no database can be found.
+    """
+    vrs_db = settings.vrs_db_path
+
+    if settings.vrs_dir:
+        vrs_source = os.path.join(settings.vrs_dir, "AircraftOnlineLookupCache.sqb")
+        if os.path.exists(vrs_source):
+            print("  Copying VRS database to working directory...")
+            shutil.copy2(vrs_source, vrs_db)
+            if settings.backup_vrs_db:
+                backup_name = f"AircraftOnlineLookupCache-{datetime.now().strftime('%y%m%d-%H%M')}.sqb"
+                shutil.copy2(vrs_source, os.path.join(settings.work_dir, backup_name))
+                print(f"  Backup saved as {backup_name}")
+        elif not os.path.exists(vrs_db):
+            print("  ERROR: VRS AircraftOnlineLookupCache.sqb not found.")
+            return False
+
+    if not os.path.exists(vrs_db):
+        print("  ERROR: AircraftOnlineLookupCache.sqb not found in working directory.")
+        return False
+
+    return True
+
+
+def _publish_vrs_db(settings: Settings) -> None:
+    """Copy the updated working database back to the VRS install folder."""
+    if not settings.vrs_dir:
+        return
+    vrs_dest = os.path.join(settings.vrs_dir, "AircraftOnlineLookupCache.sqb")
+    if os.path.exists(os.path.dirname(vrs_dest)):
+        print("  Copying updated database back to VRS location...")
+        shutil.copy2(settings.vrs_db_path, vrs_dest)
+
+
+def apply_rules_only(settings: Settings) -> int:
+    """Apply Rules.csv to the VRS database without downloading or merging.
+
+    Handles the database the same way a full run does - stage it into the
+    working folder, back it up, write, copy it back - so the result reaches
+    VRS identically. Returns the number of records changed.
+    """
+    rules = load_rules(settings.rules_path)
+    if not rules:
+        print("  No rules found - nothing to apply.")
+        return 0
+
+    if not _stage_vrs_db(settings):
+        return 0
+
+    phase_callback("Processing: Rules")
+    vrs_conn = sqlite3.connect(settings.vrs_db_path)
+    vrs_conn.execute("PRAGMA journal_mode=WAL")
+    vrs_conn.execute("PRAGMA synchronous=NORMAL")
+    try:
+        existing = _load_existing_vrs(vrs_conn)
+        original_icaos = set(existing.keys())
+        dirty: set = set()
+        utc_now = _utc_now_str()
+
+        _apply_rules_pass(rules, existing, dirty, utc_now)
+
+        phase_callback("Processing: Writing to disk")
+        _final_flush(vrs_conn, existing, original_icaos, dirty, utc_now)
+    finally:
+        vrs_conn.close()
+
+    if dirty:
+        _publish_vrs_db(settings)
+
+    print(f"  Rules pass complete - {len(dirty):,} records changed.")
+    return len(dirty)
+
+
 def update_vrs(settings: Settings):
     """Main merge: FAA + CCAR + OpenSky -> VRS AircraftOnlineLookupCache.sqb.
 
@@ -333,22 +313,7 @@ def update_vrs(settings: Settings):
             print(f"  Saving FAA snapshot as {os.path.basename(faa_snapshot)}...")
             shutil.copy2(faa_db, faa_snapshot)
 
-    # Copy VRS database from VRS install location to working dir
-    if settings.vrs_dir:
-        vrs_source = os.path.join(settings.vrs_dir, "AircraftOnlineLookupCache.sqb")
-        if os.path.exists(vrs_source):
-            print("  Copying VRS database to working directory...")
-            shutil.copy2(vrs_source, vrs_db)
-            if settings.backup_vrs_db:
-                backup_name = f"AircraftOnlineLookupCache-{datetime.now().strftime('%y%m%d-%H%M')}.sqb"
-                shutil.copy2(vrs_source, os.path.join(settings.work_dir, backup_name))
-                print(f"  Backup saved as {backup_name}")
-        elif not os.path.exists(vrs_db):
-            print("  ERROR: VRS AircraftOnlineLookupCache.sqb not found.")
-            return
-
-    if not os.path.exists(vrs_db):
-        print("  ERROR: AircraftOnlineLookupCache.sqb not found in working directory.")
+    if not _stage_vrs_db(settings):
         return
 
     # Load silhouette data
@@ -431,12 +396,7 @@ def update_vrs(settings: Settings):
 
     vrs_conn.close()
 
-    # Copy updated DB back to VRS location
-    if settings.vrs_dir:
-        vrs_dest = os.path.join(settings.vrs_dir, "AircraftOnlineLookupCache.sqb")
-        if os.path.exists(os.path.dirname(vrs_dest)):
-            print("  Copying updated database back to VRS location...")
-            shutil.copy2(vrs_db, vrs_dest)
+    _publish_vrs_db(settings)
 
     print("  VRS database update complete.")
 
@@ -1076,6 +1036,16 @@ def _final_flush(vrs_conn: sqlite3.Connection,
     touched ICAO to `dirty`. This function then partitions `dirty` by whether
     the row was originally in the DB (UPDATE) or new (INSERT) and writes
     everything in one transaction. Untouched rows are left alone.
+
+    Every touched record is rewritten even when none of its values changed,
+    because the write also refreshes UpdatedUtc - and VRS treats that column
+    as a cache-expiry stamp, not as data. VRS re-queries its online lookup
+    service for any record whose UpdatedUtc is more than 28 days old and
+    overwrites the result, which would undo the merge and any custom rules.
+    See RecordNeedsRefresh() in VRS's AircraftOnlineLookupManager, and note
+    that StandaloneAircraftOnlineLookupCache hardcodes RefreshOutOfDateAircraft
+    to true for this database. Skipping unchanged rows to save writes is
+    therefore not safe.
     """
     if not dirty:
         print("")

@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 REM This bat lives in "<project>\bat files\" — step up one level so PyInstaller
-REM runs against the project root (where run.py, Rules.csv, the icons, etc. live).
+REM runs against the project root (where run.py, the icons, etc. live).
 for %%I in ("%~dp0..") do set "PROJECT_DIR=%%~fI\"
 cd /d "%PROJECT_DIR%"
 
@@ -33,7 +33,7 @@ set "ENTRY=run.py"
 set "ICON=database.ico"
 set "NAME=E's VRS Database Updater"
 set "COMMON_OPTS=--onefile --windowed --noconfirm --clean"
-set "DATA_OPTS=--add-data "Rules.csv;." --add-data "Sils.csv;." --add-data "database.ico;." --add-data "banner_app_icon.png;." --add-data "banner_arrow.png;." --add-data "banner_sources.png;." --add-data "banner_vrs_icon.png;.""
+set "DATA_OPTS=--add-data "database.ico;." --add-data "banner_app_icon.png;." --add-data "banner_arrow.png;." --add-data "banner_sources.png;." --add-data "banner_vrs_icon.png;.""
 
 REM --- Build 64-bit ---
 echo.
@@ -42,8 +42,6 @@ echo ============================================================
 python -m PyInstaller %COMMON_OPTS% ^
     --name "VRS_Database_Updater_x64" ^
     --icon "%ICON%" ^
-    --add-data "Rules.csv;." ^
-    --add-data "Sils.csv;." ^
     --add-data "database.ico;." ^
     --add-data "banner_app_icon.png;." ^
     --add-data "banner_arrow.png;." ^
@@ -94,8 +92,6 @@ echo Using 32-bit Python: %PY32%
 "%PY32%" -m PyInstaller %COMMON_OPTS% ^
     --name "VRS_Database_Updater_x86" ^
     --icon "%ICON%" ^
-    --add-data "Rules.csv;." ^
-    --add-data "Sils.csv;." ^
     --add-data "database.ico;." ^
     --add-data "banner_app_icon.png;." ^
     --add-data "banner_arrow.png;." ^
@@ -133,7 +129,7 @@ echo ============================================================
 echo.
 echo [5/5] Copying to J:
 
-copy /y "%PROJECT_DIR%dist\VRS_Database_Updater_x64.exe" "J:\VRS Database Updater\VRS Database Update.exe"
+copy /y "%PROJECT_DIR%dist\VRS_Database_Updater_x64.exe" "J:\VRS Database Updater\VRS_Database_Updater.exe"
 
 REM --- Build-time pop-up (finish timestamp + elapsed time) ---
 powershell -NoProfile -Command "$start=[datetime]::Parse('%BUILD_START%'); $end=Get-Date; $s=$end-$start; $msg='Build completed.' + [Environment]::NewLine + [Environment]::NewLine + 'Finished: ' + $end.ToString('yyyy-MM-dd HH:mm:ss') + [Environment]::NewLine + ('Elapsed:  {0}h {1:00}m {2:00}s' -f [int]$s.TotalHours, $s.Minutes, $s.Seconds); Add-Type -AssemblyName System.Windows.Forms | Out-Null; [System.Windows.Forms.MessageBox]::Show($msg, 'VRS Database Updater - Build Complete', 'OK', 'Information') | Out-Null"

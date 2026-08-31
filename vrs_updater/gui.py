@@ -19,7 +19,13 @@ from .ccar import parse_ccar
 from .nz_caa import download_nz_caa, parse_nz_caa
 from .casa import download_casa, parse_casa
 from .opensky import download_opensky, parse_opensky
-from .vrs_merge import update_vrs
+from .vrs_merge import update_vrs, apply_rules_only
+from .config import _resolve_data_file
+from .rules import load_rules
+from .rules_editor import open_rules_editor
+from .sils_editor import open_sils_editor
+from .manual import open_manual
+from . import display_version
 
 # When frozen (PyInstaller), bundled data files are in sys._MEIPASS; settings persist next to the exe
 if getattr(sys, 'frozen', False):
@@ -30,12 +36,18 @@ else:
     _SETTINGS_JSON = os.path.join(_DATA_DIR, "settings.json")
 
 
+# Consecutive failed downloads of one source before the run stops treating it
+# as bad luck and tells the user the address is probably wrong.
+DOWNLOAD_ALERT_THRESHOLD = 14
+
+
 class VRSUpdaterApp:
     """Main GUI application matching the VB.NET Form1 layout."""
 
     def __init__(self, root: tk.Tk):
         self.root = root
-        self.root.title("E's VRS Database Updater (Python Edition v2.0)")
+        self.root.title("E's VRS Database Updater (Python Edition %s)"
+                        % display_version())
         self.root.geometry("720x790")
         self.root.resizable(True, True)
         self.root.minsize(600, 640)
@@ -68,6 +80,10 @@ class VRSUpdaterApp:
         self._disk_last_time = 0.0         # Time of last measurement
         self._disk_poll_id = None          # after() ID for polling
 
+        # Must exist before _load_settings(), which restores the saved tally
+        self._download_failures = {}     # source -> consecutive failed downloads
+        self._download_alert_acked = set()   # sources whose alert the user dismissed
+
         self._build_menu()
         self._build_ui()
         self._load_settings()
@@ -84,6 +100,10 @@ class VRSUpdaterApp:
         # Auto-start countdown if "Run on Start" is checked
         if self.chk_run_on_start_var.get():
             self._start_countdown(10)
+        else:
+            # An alert raised by an unattended run has no one to show it to at
+            # the time, so it waits here for the next person to open the program.
+            self.root.after(400, self._show_download_alerts)
 
     # ------------------------------------------------------------------
     # Menu bar
@@ -100,9 +120,13 @@ class VRSUpdaterApp:
 
         tools_menu = tk.Menu(menubar, tearoff=0)
         tools_menu.add_command(label="Search Database...", command=self._show_search)
+        tools_menu.add_command(label="Rules Editor...", command=self._show_rules_editor)
+        tools_menu.add_command(label="Silhouette Editor...", command=self._show_sils_editor)
         menubar.add_cascade(label="Tools", menu=tools_menu)
 
         help_menu = tk.Menu(menubar, tearoff=0)
+        help_menu.add_command(label="User Manual...", command=self._show_manual)
+        help_menu.add_separator()
 
         features_menu = tk.Menu(help_menu, tearoff=0)
         features_menu.add_command(label="View All Features...", command=self._show_features)
@@ -113,6 +137,9 @@ class VRSUpdaterApp:
         features_menu.add_command(label="Dark Terminal Theme", state="disabled")
         features_menu.add_command(label="Cancel Support", state="disabled")
         features_menu.add_command(label="Disk Throughput Monitor", state="disabled")
+        features_menu.add_command(label="Integrated Rules Editor", state="disabled")
+        features_menu.add_command(label="Integrated Silhouette Editor", state="disabled")
+        features_menu.add_command(label="Built-in User Manual", state="disabled")
         features_menu.add_command(label="Custom Rules Override", state="disabled")
         features_menu.add_command(label="Skip Processing Controls", state="disabled")
         features_menu.add_command(label="Phase Indicator", state="disabled")
@@ -241,9 +268,17 @@ class VRSUpdaterApp:
         self.chk_backup_var = tk.BooleanVar(value=True)
         self.chk_complete_var = tk.BooleanVar()
 
-        ttk.Checkbutton(opt_frame, text="Run on Start", variable=self.chk_run_on_start_var).grid(row=0, column=0, sticky="w", padx=(0, 16))
-        ttk.Checkbutton(opt_frame, text="Backup VRS database", variable=self.chk_backup_var).grid(row=0, column=1, sticky="w", padx=(0, 16))
+        ttk.Checkbutton(opt_frame, text="Run on Start", variable=self.chk_run_on_start_var).grid(row=0, column=0, sticky="w", padx=(0, 12))
+        ttk.Checkbutton(opt_frame, text="Backup VRS database", variable=self.chk_backup_var).grid(row=0, column=1, sticky="w", padx=(0, 12))
         ttk.Checkbutton(opt_frame, text="Build complete database", variable=self.chk_complete_var).grid(row=0, column=2, sticky="w")
+
+        # Compact padding keeps this button inside the checkbutton row height
+        ttk.Style().configure("Compact.TButton", padding=(8, 0),
+                              font=("Segoe UI", 8))
+        self.btn_apply_rules = ttk.Button(opt_frame, text="Apply Rules",
+                                          style="Compact.TButton",
+                                          command=self._on_apply_rules)
+        self.btn_apply_rules.grid(row=0, column=3, sticky="w", padx=(10, 0))
 
         # Progress frame (dark themed) — bottom of right column so it bottom-
         # aligns with the Auto-Download box on the left.
@@ -407,6 +442,8 @@ class VRSUpdaterApp:
             "opensky_url": self.settings.opensky_url,
             "nz_caa_url": self.settings.nz_caa_url,
             "casa_url": self.settings.casa_url,
+            "download_failures": self._download_failures,
+            "download_alert_acked": sorted(self._download_alert_acked),
             "merge_order": self.settings.merge_order,
             "faa_max_age_days": self.settings.faa_max_age_days,
             "ccar_max_age_days": self.settings.ccar_max_age_days,
@@ -539,6 +576,13 @@ class VRSUpdaterApp:
             self.chk_skip_rules_var.set(data.get("skip_rules", False))
             self.chk_log_errors_var.set(data.get("log_errors", True))
             self.chk_log_activity_var.set(data.get("log_activity", False))
+            failures = data.get("download_failures", {})
+            if isinstance(failures, dict):
+                self._download_failures = {k: v for k, v in failures.items()
+                                           if isinstance(v, int) and v > 0}
+            acked = data.get("download_alert_acked", [])
+            if isinstance(acked, list):
+                self._download_alert_acked = {a for a in acked if isinstance(a, str)}
             from .config import DEFAULT_FAA_URL, DEFAULT_CCAR_URL, DEFAULT_OPENSKY_URL, DEFAULT_NZCAA_URL, DEFAULT_CASA_URL
             self.settings.faa_url = data.get("faa_url", DEFAULT_FAA_URL)
             self.settings.ccar_url = data.get("ccar_url", DEFAULT_CCAR_URL)
@@ -822,6 +866,15 @@ class VRSUpdaterApp:
         if d:
             self.vrs_dir_var.set(d)
 
+    def _update_apply_rules_state(self):
+        """Enable "Apply Rules Now" only when there is a rules file to apply."""
+        if not hasattr(self, "btn_apply_rules"):
+            return
+        work_dir = self.work_dir_var.get().strip()
+        rules_found = bool(work_dir) and os.path.isdir(work_dir)             and os.path.exists(self._rules_paths()[0])
+        self.btn_apply_rules.config(
+            state="normal" if rules_found and not self.running else "disabled")
+
     def _refresh_db_status(self):
         """Update the date/age label next to each Auto-Download checkbox.
 
@@ -829,6 +882,8 @@ class VRSUpdaterApp:
         flags the entry as stale if it exceeds that source's max-age setting
         (0 = never stale).
         """
+        self._update_apply_rules_state()
+
         if not hasattr(self, "_db_status_labels"):
             return
         work_dir = self.work_dir_var.get().strip()
@@ -1105,18 +1160,22 @@ class VRSUpdaterApp:
                 pass
             self._activity_log_file = None
 
+    def _show_manual(self):
+        """Open the built-in user manual."""
+        open_manual(self.root, _DATA_DIR)
+
     def _show_about(self):
         messagebox.showinfo(
             "About",
             "E's VRS Database Updater\n"
-            "Python Edition v2.0\n\n"
-            "https://github.com/egite/E-s-VRS-Database-Updater"
+            "Python Edition %s\n\n"
+            "https://github.com/egite/E-s-VRS-Database-Updater" % display_version()
         )
 
     def _show_features(self):
         win = tk.Toplevel(self.root)
         win.title("Program Features")
-        win.geometry("520x540")
+        win.geometry("660x600")
         win.resizable(False, False)
         win.configure(bg="#1E1E1E")
         try:
@@ -1147,7 +1206,7 @@ class VRSUpdaterApp:
                 "CASA Australian aircraft register (registration-based matching)",
                 "OpenSky Network aircraft database",
                 "Custom Rules.csv for operator/registration overrides",
-                "Sils.csv for ICAO type code to silhouette mapping",
+                "Sils.csv overlay for ICAO type code to silhouette mapping",
             ]),
             ("Downloads & Parsing", [
                 "Concurrent FAA, CCAR, and OpenSky downloads",
@@ -1158,7 +1217,7 @@ class VRSUpdaterApp:
                 "Streaming CSV parsing (low memory footprint)",
             ]),
             ("Performance Optimizations", [
-                "O(1) dict-based silhouette lookups (vs linear scan)",
+                "Memoized silhouette lookups (repeat model/manufacturer pairs resolved once)",
                 "Pre-loaded VRS database dict for O(1) ICAO lookups",
                 "Parameterized SQL queries (no string concatenation)",
                 "Batched transactions (10,000 records per commit)",
@@ -1176,15 +1235,31 @@ class VRSUpdaterApp:
                 "Cancel button to stop processing mid-stream",
                 "Phase indicator showing current processing step",
                 "Batched detail log updates (500ms flush) for UI performance",
+                "Built-in user manual (Help menu), searchable and exportable",
                 "Search VRS database by ICAO, registration, operator, etc.",
                 "Export search results to CSV",
+                "Rules Editor: edit Rules.csv without a spreadsheet, with validation",
+                "Test a rule against the live database before saving it",
+                "Create a rule from any aircraft found in Search Database",
+                "Silhouette Editor: edit Sils.csv, one alias per line, with validation",
+                "Test Lookup resolves a manufacturer/model the way the update does",
+                "Apply Rules button re-applies Rules.csv without a full update",
+            ]),
+            ("Customization", [
+                "Rules.csv overrides operator, model, and type data per aircraft",
+                "Rules are first-match-wins, and can be reordered in the editor",
+                "\"!\" exclusions so a rule can skip aircraft already correct",
+                "Sils.csv layers over the built-in silhouette table",
+                "A Sils row overrides, adds to, or disables a built-in mapping",
+                "Validation flags rules and rows that can never match",
+                "Editors keep a .bak of the previous file on every save",
             ]),
             ("Settings & Persistence", [
                 "JSON-based settings persistence (window size, position, all options)",
-                "Configurable FAA, CCAR, and OpenSky download URLs",
+                "Configurable download URLs for all five registers",
                 "Configurable download age limits (0-30 days) per database",
-                "Skip Processing: selectively skip FAA, CCAR, OpenSky, or Rules",
-                "Configurable database priority order (FAA, CCAR, OpenSky, Rules)",
+                "Skip Processing: skip any register, or the Rules pass, per run",
+                "Configurable database priority order decides which source wins",
                 "Remembers working directory and VRS directory paths",
                 "Saves/restores all checkboxes and options between sessions",
                 "Optional error log file (DDMMYYYY-HHMM timestamped, saved to working folder)",
@@ -1195,7 +1270,8 @@ class VRSUpdaterApp:
                 "Operator name cleaning (Mc prefix, & patterns, embedded registrations)",
                 "Non-ASCII character removal and SQL escaping",
                 "CCAR binary-to-hex ICAO address conversion",
-                "Merges FAA + CCAR + OpenSky + Rules into VRS AircraftOnlineLookupCache.sqb",
+                "Merges FAA + CCAR + NZ CAA + CASA + OpenSky + Rules into VRS",
+                "Single bulk write at the end, so a canceled run changes nothing",
             ]),
         ]
 
@@ -1215,6 +1291,62 @@ class VRSUpdaterApp:
     # ------------------------------------------------------------------
     # Search / Export dialog
     # ------------------------------------------------------------------
+    # ------------------------------------------------------------------
+    # Rules editor
+    # ------------------------------------------------------------------
+    def _data_file_paths(self, filename):
+        """Return (load_path, save_path) for a bundled data file.
+
+        Loading falls back to the bundled copy, but edits always save into the
+        working folder - a frozen build's bundle directory is temporary.
+        """
+        work_dir = self.work_dir_var.get().strip()
+        load_path = _resolve_data_file(work_dir, filename)
+        save_path = os.path.join(work_dir, filename) if work_dir else load_path
+        return load_path, save_path
+
+    def _rules_paths(self):
+        return self._data_file_paths("Rules.csv")
+
+    def _sils_paths(self):
+        return self._data_file_paths("Sils.csv")
+
+    def _show_rules_editor(self, prefill_record=None):
+        """Open the integrated Rules.csv editor."""
+        work_dir = self.work_dir_var.get().strip()
+        if not work_dir or not os.path.isdir(work_dir):
+            messagebox.showwarning("Rules Editor",
+                                   "Set a valid working folder first.")
+            return
+
+        load_path, save_path = self._rules_paths()
+        vrs_db = os.path.join(work_dir, "AircraftOnlineLookupCache.sqb")
+
+        open_rules_editor(
+            self.root, load_path,
+            vrs_db=vrs_db if os.path.exists(vrs_db) else None,
+            data_dir=_DATA_DIR,
+            on_saved=lambda n: self._log_status(
+                "Rules.csv saved - %d rules. Takes effect on the next update." % n),
+            prefill_record=prefill_record,
+            save_path=save_path)
+
+    def _show_sils_editor(self):
+        """Open the integrated Sils.csv editor."""
+        work_dir = self.work_dir_var.get().strip()
+        if not work_dir or not os.path.isdir(work_dir):
+            messagebox.showwarning("Silhouette Editor",
+                                   "Set a valid working folder first.")
+            return
+
+        load_path, save_path = self._sils_paths()
+        open_sils_editor(
+            self.root, load_path,
+            data_dir=_DATA_DIR,
+            on_saved=lambda n: self._log_status(
+                "Sils.csv saved - %d rows. Takes effect on the next update." % n),
+            save_path=save_path)
+
     def _show_search(self):
         """Open a search dialog for the VRS database."""
         vrs_db = os.path.join(self.work_dir_var.get(), "AircraftOnlineLookupCache.sqb")
@@ -1300,6 +1432,29 @@ class VRSUpdaterApp:
         hsb.grid(row=1, column=0, sticky="ew")
         tree_frame.rowconfigure(0, weight=1)
         tree_frame.columnconfigure(0, weight=1)
+
+        # --- Right-click: turn a found aircraft into a rule ---
+        ctx = tk.Menu(tree, tearoff=0, bg="#263238", fg="#D4D4D4",
+                      activebackground="#1565C0", activeforeground="white")
+
+        def create_rule_from_selection():
+            sel = tree.selection()
+            if not sel:
+                return
+            record = dict(zip(columns, tree.item(sel[0], "values")))
+            self._show_rules_editor(prefill_record=record)
+
+        ctx.add_command(label="Create Rule from This Aircraft...",
+                        command=create_rule_from_selection)
+
+        def show_context_menu(event):
+            row = tree.identify_row(event.y)
+            if not row:
+                return
+            tree.selection_set(row)
+            ctx.tk_popup(event.x_root, event.y_root)
+
+        tree.bind("<Button-3>", show_context_menu)
 
         # --- Bottom buttons ---
         btn_frame = tk.Frame(win, bg="#1E1E1E", pady=6)
@@ -1485,6 +1640,7 @@ class VRSUpdaterApp:
         self._cancelled.clear()
         self.btn_start.config(state="disabled", bg="#999999")
         self.btn_cancel.config(state="normal")
+        self.btn_apply_rules.config(state="disabled")
         self._clear_logs()
 
         # Start disk throughput polling
@@ -1493,6 +1649,91 @@ class VRSUpdaterApp:
         # Run in background thread
         thread = threading.Thread(target=self._run_updater, args=(settings,), daemon=True)
         thread.start()
+
+    def _on_apply_rules(self):
+        """Apply Rules.csv to the VRS database without downloading or merging."""
+        if self.running:
+            return
+        if self._countdown_id:
+            self.root.after_cancel(self._countdown_id)
+            self._countdown_id = None
+
+        settings = self._build_settings()
+        if settings.vrs_dir and settings.vrs_dir == settings.work_dir:
+            messagebox.showerror("Error",
+                                 "Working folder and VRS folder cannot be the same location.\n"
+                                 "Fix this and run again.")
+            return
+
+        rules_path = self._rules_paths()[0]
+        try:
+            rule_count = len(load_rules(rules_path, quiet=True))
+        except Exception as e:
+            messagebox.showerror("Apply Rules", "Could not read %s:\n%s" % (rules_path, e))
+            return
+        if not rule_count:
+            messagebox.showinfo("Apply Rules", "%s contains no rules." % rules_path)
+            return
+
+        if not messagebox.askyesno(
+                "Apply Rules Now",
+                "Apply %d rules to the VRS database?\n\n%s\n\n"
+                "No databases are downloaded or merged - only the rules pass runs."
+                % (rule_count, rules_path)):
+            return
+
+        os.makedirs(settings.work_dir, exist_ok=True)
+
+        self.running = True
+        self._cancelled.clear()
+        self.btn_start.config(state="disabled", bg="#999999")
+        self.btn_cancel.config(state="normal")
+        self.btn_apply_rules.config(state="disabled")
+        self._clear_logs()
+        self._start_disk_poll()
+
+        thread = threading.Thread(target=self._run_apply_rules,
+                                  args=(settings,), daemon=True)
+        thread.start()
+
+    def _run_apply_rules(self, settings: Settings):
+        """Run the rules-only pass in the background (mirrors _run_updater)."""
+        import time
+
+        self._patch_progress()
+
+        time_started = datetime.now().strftime("%H:%M")
+        start_time = time.time()
+        self._open_error_log()
+        self._open_activity_log()
+        self._log_status(f"Started at: {time_started}")
+        self._log_status("")
+        self._set_phase("Applying rules")
+        self._log_status("Applying rules to the VRS database...")
+        self._log_status("-" * 40)
+
+        try:
+            apply_rules_only(settings)
+        except InterruptedError:
+            self._log_status("")
+            self._log_status("*** Cancelled by user ***")
+        except Exception as e:
+            self._log_status(f"ERROR: {e}")
+            self._log_error(str(e))
+
+        elapsed = time.time() - start_time
+        self._log_status("")
+        self._log_status("=" * 50)
+        self._log_status(f"Done! Started: {time_started}  "
+                         f"Ended: {datetime.now().strftime('%H:%M')}")
+        self._log_status(f"Total time: {elapsed:.1f} seconds")
+        self._log_status("=" * 50)
+        self._log_detail("Done.")
+        self._close_error_log()
+        self._close_activity_log()
+
+        self._reset_progress()
+        self.root.after(0, self._finish_run)
 
     def _clear_logs(self):
         for w in (self.txt_status, self.txt_details):
@@ -1643,21 +1884,13 @@ class VRSUpdaterApp:
         casa_downloaded = _safe_result("CASA")
         opensky_downloaded = _safe_result("OpenSky")
 
-        if settings.download_faa and not faa_downloaded and "FAA" not in fresh_skipped:
-            self._log_status("  WARNING: FAA download failed. Will try existing data.")
-            self._log_error("Download: FAA download failed")
-        if settings.download_ccar and not ccar_downloaded and "CCAR" not in fresh_skipped:
-            self._log_status("  WARNING: CCAR download failed. Will try existing data.")
-            self._log_error("Download: CCAR download failed")
-        if settings.download_nz_caa and not nzcaa_downloaded and "NZ CAA" not in fresh_skipped:
-            self._log_status("  WARNING: NZ CAA download failed. Will try existing data.")
-            self._log_error("Download: NZ CAA download failed")
-        if settings.download_casa and not casa_downloaded and "CASA" not in fresh_skipped:
-            self._log_status("  WARNING: CASA download failed. Will try existing data.")
-            self._log_error("Download: CASA download failed")
-        if settings.download_opensky and not opensky_downloaded and "OpenSky" not in fresh_skipped:
-            self._log_status("  WARNING: OpenSky download failed. Will try existing data.")
-            self._log_error("Download: OpenSky download failed")
+        self._tally_downloads((
+            (settings.download_faa,     "FAA",     faa_downloaded,     settings.faa_url),
+            (settings.download_ccar,    "CCAR",    ccar_downloaded,    settings.ccar_url),
+            (settings.download_nz_caa,  "NZ CAA",  nzcaa_downloaded,   settings.nz_caa_url),
+            (settings.download_casa,    "CASA",    casa_downloaded,    settings.casa_url),
+            (settings.download_opensky, "OpenSky", opensky_downloaded, settings.opensky_url),
+        ), fresh_skipped)
 
         if self._cancelled.is_set():
             self._log_status(""); self._log_status("*** Cancelled ***")
@@ -1817,9 +2050,12 @@ class VRSUpdaterApp:
         self.phase_var.set("Idle")
         self.btn_start.config(state="normal", bg="#4CAF50")
         self.btn_cancel.config(state="disabled")
+        self._update_apply_rules_state()
         if not self._cancelled.is_set():
             self.percent_var.set("100%")
         self._refresh_db_status()
+        if not self._auto_run:
+            self._show_download_alerts()
         # Auto-exit countdown if this was an auto-run
         if self._auto_run and not self._cancelled.is_set():
             self._auto_run = False
@@ -1855,6 +2091,101 @@ class VRSUpdaterApp:
         self.txt_status.see("end")
         self.txt_status.config(state="disabled")
         self._exit_countdown_id = self.root.after(1000, self._exit_countdown_tick)
+
+    def _tally_downloads(self, results, fresh_skipped):
+        """Record which downloads worked, and shout when one keeps failing.
+
+        A source that fails once is usually a blip - the run carries on with
+        the copy already on disk. A source that fails run after run means the
+        address is wrong or the file has moved, and the merge has been quietly
+        using stale data ever since. The tally survives between runs in
+        settings.json so that pattern is visible.
+        """
+        alerting = []
+
+        for wanted, name, succeeded, url in results:
+            if not wanted or name in fresh_skipped:
+                continue          # not attempted this run - leave the tally alone
+
+            if succeeded:
+                previous = self._download_failures.pop(name, 0)
+                # The problem is gone, so any alert for it no longer applies.
+                self._download_alert_acked.discard(name)
+                if previous:
+                    self._log_status(f"  {name} download recovered after "
+                                     f"{previous} failed run(s).")
+                continue
+
+            count = self._download_failures.get(name, 0) + 1
+            self._download_failures[name] = count
+            self._log_status(f"  WARNING: {name} download failed. Will try existing data.")
+            self._log_error(f"Download: {name} download failed "
+                            f"({count} consecutive)")
+
+            if count >= DOWNLOAD_ALERT_THRESHOLD:
+                alerting.append((name, count, url))
+
+        self._save_settings_json()
+
+        # Logged every run, acknowledged or not - the log is where an
+        # unattended run leaves its evidence.
+        for name, count, url in alerting:
+            self._log_status("")
+            self._log_status(f"  *** {name} has now failed {count} runs in a row. ***")
+            self._log_status(f"  *** The address is probably wrong or the file has moved: ***")
+            self._log_status(f"  ***   {url} ***")
+            self._log_status(f"  *** Fix it in File > Settings. Until then every run ***")
+            self._log_status(f"  *** merges stale {name} data. ***")
+            self._log_error(f"ALERT: {name} download has failed {count} consecutive "
+                            f"runs - check the URL: {url}")
+
+    def _pending_download_alerts(self):
+        """Sources past the failure threshold that have not been acknowledged.
+
+        Derived from the saved tally rather than from the run that produced it,
+        so an alert raised during an unattended run is still waiting the next
+        time somebody opens the program.
+        """
+        urls = {
+            "FAA": self.settings.faa_url,
+            "CCAR": self.settings.ccar_url,
+            "NZ CAA": self.settings.nz_caa_url,
+            "CASA": self.settings.casa_url,
+            "OpenSky": self.settings.opensky_url,
+        }
+        return [(name, count, urls.get(name, ""))
+                for name, count in sorted(self._download_failures.items())
+                if count >= DOWNLOAD_ALERT_THRESHOLD
+                and name not in self._download_alert_acked]
+
+    def _show_download_alerts(self):
+        """Show the persistent-failure alert, and remember it was seen.
+
+        Never called on an unattended run: a modal would block the auto-exit
+        and leave the scheduled task hanging until somebody clicked it. The
+        alert is not lost though - it keeps waiting until acknowledged here,
+        or until the download starts working again.
+        """
+        try:
+            if not self.root.winfo_exists():
+                return      # closed before the startup check fired
+        except tk.TclError:
+            return
+
+        pending = self._pending_download_alerts()
+        if not pending:
+            return
+
+        lines = ["%s has failed %d runs in a row.\n    %s" % entry
+                 for entry in pending]
+        messagebox.showwarning(
+            "Download Address Probably Wrong",
+            "\n\n".join(lines)
+            + "\n\nEvery run since has merged stale data for those sources.\n"
+              "Update the address in File > Settings.")
+
+        self._download_alert_acked.update(name for name, _c, _u in pending)
+        self._save_settings_json()
 
     def _patch_progress(self):
         """Redirect print(), ProgressReporter, and detail_log to the GUI."""

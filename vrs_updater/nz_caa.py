@@ -28,7 +28,7 @@ def download_nz_caa(settings: Settings) -> bool:
 
     # Verify we got a CSV and not an HTML bot-challenge page
     try:
-        with open(dest, 'r', encoding='utf-8', errors='replace') as f:
+        with open(dest, 'r', encoding='utf-8-sig', errors='replace') as f:
             first_line = f.read(512)
         if '<html' in first_line.lower():
             print("  ERROR: NZ CAA download returned an HTML page (bot protection).")
@@ -56,7 +56,7 @@ def parse_nz_caa(settings: Settings) -> bool:
         return False
 
     # Count lines for progress
-    with open(csv_path, 'r', encoding='utf-8', errors='replace') as f:
+    with open(csv_path, 'r', encoding='utf-8-sig', errors='replace') as f:
         total_lines = sum(1 for _ in f)
 
     db_path = settings.nz_caa_db_path
@@ -81,7 +81,7 @@ def parse_nz_caa(settings: Settings) -> bool:
     prog = ProgressReporter("NZ CAA")
 
     batch = []
-    with open(csv_path, 'r', encoding='utf-8', errors='replace') as f:
+    with open(csv_path, 'r', encoding='utf-8-sig', errors='replace') as f:
         reader = csv.reader(f)
         header = None
         line_num = 0

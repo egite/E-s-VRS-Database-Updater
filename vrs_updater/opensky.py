@@ -71,7 +71,7 @@ def parse_opensky(settings: Settings) -> bool:
         return False
 
     # Count lines for progress
-    with open(csv_path, 'r', encoding='utf-8', errors='replace') as f:
+    with open(csv_path, 'r', encoding='utf-8-sig', errors='replace') as f:
         total_lines = sum(1 for _ in f)
 
     db_path = settings.opensky_db_path
@@ -98,7 +98,7 @@ def parse_opensky(settings: Settings) -> bool:
     prog = ProgressReporter("OpenSky")
 
     batch = []
-    with open(csv_path, 'r', encoding='utf-8', errors='replace') as f:
+    with open(csv_path, 'r', encoding='utf-8-sig', errors='replace') as f:
         # The OpenSky CSV uses a slightly unusual quoting style.
         # The VB.NET code splits on '","' which works for their format.
         # We'll use the same approach for compatibility.

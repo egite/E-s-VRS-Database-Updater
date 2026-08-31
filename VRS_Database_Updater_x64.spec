@@ -5,7 +5,7 @@ a = Analysis(
     ['run.py'],
     pathex=[],
     binaries=[],
-    datas=[('Rules.csv', '.'), ('Sils.csv', '.'), ('database.ico', '.'), ('banner_app_icon.png', '.'), ('banner_arrow.png', '.'), ('banner_sources.png', '.'), ('banner_vrs_icon.png', '.')],
+    datas=[('database.ico', '.'), ('banner_app_icon.png', '.'), ('banner_arrow.png', '.'), ('banner_sources.png', '.'), ('banner_vrs_icon.png', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

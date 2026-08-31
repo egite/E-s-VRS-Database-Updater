@@ -25,11 +25,12 @@ from .nz_caa import download_nz_caa, parse_nz_caa
 from .casa import download_casa, parse_casa
 from .opensky import download_opensky, parse_opensky
 from .vrs_merge import update_vrs
+from . import display_version
 
 
 def print_banner():
     print("=" * 60)
-    print("  E's VRS Database Updater  (Python Edition v2.0)")
+    print("  E's VRS Database Updater  (Python Edition %s)" % display_version())
     print("=" * 60)
     print()
 
