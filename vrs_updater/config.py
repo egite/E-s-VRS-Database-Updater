@@ -29,7 +29,7 @@ def _resolve_data_file(work_dir: str, filename: str) -> str:
 DEFAULT_FAA_URL = "https://registry.faa.gov/database/ReleasableAircraft.zip"
 DEFAULT_OPENSKY_URL = "https://s3.opensky-network.org/data-samples/metadata/aircraftDatabase.zip"
 DEFAULT_CCAR_URL = "https://wwwapps.tc.gc.ca/saf-sec-sur/2/ccarcs-riacc/DDZip.aspx"
-DEFAULT_NZCAA_URL = "https://www.aviation.govt.nz/assets/aircraft/aircraft-register/Aircraft-Register-for-website-.csv"
+DEFAULT_NZCAA_URL = "https://www.aviation.govt.nz/assets/aircraft/aircraft-register/Aircraft-Register-for-website.csv"
 DEFAULT_CASA_URL = "https://services.casa.gov.au/CSV/acrftreg.zip"
 
 

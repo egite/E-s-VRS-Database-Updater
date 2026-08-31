@@ -9,9 +9,10 @@ The lookup data comes from Sils.csv (preferred) or falls back to the
 hardcoded arrays in Sils.vb.
 """
 
-import csv
 import os
 from typing import Optional, Tuple, List
+
+from .sils import SilEntry, load_sils, join_aliases
 
 
 class SilhouetteLookup:
@@ -22,41 +23,103 @@ class SilhouetteLookup:
         self.models: List[str] = []          # FAA_Model_Data
         self.remaps: List[str] = []          # Remap_Data
         self.types: List[str] = []           # Type_Data
+        self.entries: List[SilEntry] = []    # the Sils.csv rows, in file order
+        self.builtin_start: int = 0          # index where built-in rows begin
+        self.last_match_index: int = -1      # row that satisfied the last lookup
+        self._cache: dict = {}               # (model, mfr, emitter) -> result
 
     def load_csv(self, csv_path: str) -> bool:
-        """Load silhouette data from Sils.csv, falling back to built-in data.
+        """Load silhouette data: Sils.csv layered over the built-in table.
 
-        Mirrors VRS.vb behaviour: use Sils.csv if present, otherwise use the
-        hardcoded mapping from Sils.vb (shipped as sils_data.py).
+        Sils.csv is an overlay, not a replacement. Its rows are scanned first,
+        so a row in the file overrides the built-in mapping for the
+        manufacturer/model pairs it covers, and anything the file does not
+        cover still resolves from the built-in table. A file row with no Type
+        and no Remap suppresses the built-in mapping instead of replacing it.
+
+        Only usable built-in rows are appended - a row with no manufacturer or
+        no model can never match, so carrying thousands of them would just
+        make every lookup slower.
         """
         self.manufacturers.clear()
         self.models.clear()
         self.remaps.clear()
         self.types.clear()
+        self.entries = []
+        self._cache = {}
 
-        if os.path.exists(csv_path):
-            with open(csv_path, 'r', encoding='utf-8', errors='replace') as f:
-                reader = csv.reader(f)
-                for row in reader:
-                    if len(row) < 4:
-                        continue
-                    self.manufacturers.append(row[0])
-                    self.models.append(row[1])
-                    self.remaps.append(row[2])
-                    self.types.append(row[3])
-            print(f"  Loaded {len(self.types)} silhouette mappings from Sils.csv.")
+        # ---- overlay: Sils.csv, scanned first so it wins -----------------
+        found_csv = os.path.exists(csv_path)
+        if found_csv:
+            # Parsed by sils.py so the Sils editor and this lookup cannot
+            # disagree about the file format.
+            self.entries = load_sils(csv_path, quiet=True)
+
+        builtin = self._layer(self.entries)
+        if found_csv:
+            usable = sum(1 for e in self.entries if e.usable)
+            print(f"  Loaded {usable} silhouette mappings from Sils.csv, "
+                  f"layered over {builtin} built-in mappings.")
             return True
 
-        # Fall back to built-in data (equivalent to VB.NET Call Sils())
-        from .sils_data import SILS_DATA
-        for mfr, mdl, rmp, typ in SILS_DATA:
+        print(f"  Sils.csv not found; using {builtin} built-in silhouette mappings.")
+        return False
+
+    def load_entries(self, entries) -> None:
+        """Load an in-memory overlay (used by the Sils editor's Test Lookup)."""
+        self.manufacturers.clear()
+        self.models.clear()
+        self.remaps.clear()
+        self.types.clear()
+        self.entries = list(entries)
+        self._cache = {}
+        self._layer(self.entries)
+
+    def _layer(self, entries) -> int:
+        """Stack `entries` over the built-in table. Returns the built-in count.
+
+        Only usable built-in rows are appended - a row with no manufacturer or
+        no model can never match, so carrying thousands of them would just make
+        every lookup slower.
+        """
+        def add(mfr, mdl, rmp, typ):
             self.manufacturers.append(mfr)
             self.models.append(mdl)
             self.remaps.append(rmp)
             self.types.append(typ)
-        print(f"  Sils.csv not found; using {len(self.types)} built-in silhouette mappings.")
+
+        for entry in entries:
+            add(join_aliases(entry.manufacturers), join_aliases(entry.models),
+                entry.remap, entry.type_code)
+
+        self.builtin_start = len(self.types)
+
+        from .sils_data import SILS_DATA
+        for mfr, mdl, rmp, typ in SILS_DATA:
+            if mfr.strip() and mdl.strip():
+                add(mfr, mdl, rmp, typ)
+
+        return len(self.types) - self.builtin_start
 
     def determine_silhouette(self, icao_type_input: str, manufacturer: str,
+                              emitter_type: str = "") -> Tuple[str, bool]:
+        """Cached wrapper around the resolver.
+
+        The table scan is linear and the merge calls this once or twice per
+        aircraft, but a registry has far fewer distinct manufacturer/model
+        pairs than records, so memoizing collapses the repeats.
+        """
+        key = (icao_type_input, manufacturer, emitter_type)
+        hit = self._cache.get(key)
+        if hit is not None:
+            self.last_match_index = hit[1]
+            return hit[0]
+        result = self._determine_silhouette(icao_type_input, manufacturer,
+                                            emitter_type)
+        self._cache[key] = (result, self.last_match_index)
+        return result
+
+    def _determine_silhouette(self, icao_type_input: str, manufacturer: str,
                               emitter_type: str = "") -> Tuple[str, bool]:
         """Determine the ICAO type code for silhouette display.
 
@@ -194,6 +257,7 @@ class SilhouetteLookup:
         """
         mfr_lower = manufacturer.lower()
         orig_lower = orig.lower()
+        self.last_match_index = -1
         for i in range(len(self.types)):
             mfr_entry = self.manufacturers[i]
             if mfr_entry:
@@ -206,6 +270,7 @@ class SilhouetteLookup:
                                 model_part = model_part.strip()
                                 if orig_lower == model_part.lower() or model_part == "*":
                                     result = self.remaps[i] if self.remaps[i] else self.types[i]
+                                    self.last_match_index = i
                                     return result
         return None
 

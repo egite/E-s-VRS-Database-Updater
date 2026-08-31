@@ -23,6 +23,11 @@ from .config import Settings
 
 BATCH_SIZE = 10000
 
+# Column names parse_casa reads. "Mark" is mandatory - every row is gated on
+# it, so if it is absent the parse yields nothing at all.
+REQUIRED_COLUMNS = ("Mark", "Manu", "Model", "regholdname", "Serial",
+                    "Yearmanu", "ICAOtypedesig")
+
 
 def download_casa(settings: Settings) -> bool:
     """Download the CASA aircraft register ZIP and extract the CSV."""
@@ -70,7 +75,7 @@ def parse_casa(settings: Settings) -> bool:
         return False
 
     # Count lines for progress
-    with open(csv_path, 'r', encoding='utf-8', errors='replace') as f:
+    with open(csv_path, 'r', encoding='utf-8-sig', errors='replace') as f:
         total_lines = sum(1 for _ in f)
 
     db_path = settings.casa_db_path
@@ -95,15 +100,30 @@ def parse_casa(settings: Settings) -> bool:
     prog = ProgressReporter("CASA")
 
     batch = []
-    with open(csv_path, 'r', encoding='utf-8', errors='replace') as f:
+    with open(csv_path, 'r', encoding='utf-8-sig', errors='replace') as f:
         reader = csv.reader(f)
         header = None
         line_num = 0
         for row in reader:
             line_num += 1
             if header is None:
-                # Map column names to indices
-                header = {col.strip(): i for i, col in enumerate(row)}
+                # Map column names to indices. Strip any stray BOM as well:
+                # every row is gated on "Mark", so a corrupted first column
+                # name would silently discard the whole register.
+                header = {col.strip().lstrip('\ufeff'): i
+                          for i, col in enumerate(row)}
+                missing = [c for c in REQUIRED_COLUMNS if c not in header]
+                if missing:
+                    print("  WARNING: CASA CSV is missing expected column(s): %s"
+                          % ", ".join(missing))
+                    print("           Columns found: %s"
+                          % ", ".join(sorted(header)))
+                    if "Mark" in missing:
+                        print("  ERROR: without the Mark column no aircraft can be "
+                              "read. The CASA register format has probably changed.")
+                        conn.close()
+                        safe_delete(db_path)
+                        return False
                 continue
 
             prog.update(line_num, total_lines)
@@ -162,11 +182,19 @@ def parse_casa(settings: Settings) -> bool:
 
     conn.execute("CREATE INDEX IF NOT EXISTS idx_casa_reg ON Aircraft(Registration)")
     conn.commit()
+    rows_written = conn.execute("SELECT COUNT(*) FROM Aircraft").fetchone()[0]
     conn.close()
     prog.done()
 
+    if not rows_written:
+        print("  ERROR: CASA register parsed to 0 aircraft - the downloaded file "
+              "was empty or its format has changed. Keeping the CSV at %s for "
+              "inspection." % csv_path)
+        return False
+
     safe_delete(csv_path)
-    print("  CASA database creation complete.")
+    print("  CASA database creation complete (%s aircraft)."
+          % "{:,}".format(rows_written))
     return True
 
 
