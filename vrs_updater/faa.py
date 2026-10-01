@@ -13,6 +13,7 @@ Efficiency improvements over VB.NET version:
 
 import os
 import sqlite3
+from datetime import datetime
 from .utils import (
     title_case, remove_non_ascii, download_file, extract_zip,
     safe_delete, ProgressReporter
@@ -185,6 +186,11 @@ def parse_faa(settings: Settings) -> bool:
     prog.done()
 
     # ---- Parse ACFTREF.txt ----
+    # The reference table is what gives every US aircraft its manufacturer and
+    # its ICAO type code (and so its silhouette and map icon). Merging without
+    # it blanks all three, so a missing or unparsable file must never pass
+    # quietly - see _ensure_reference() below.
+    ref_rows = 0
     if os.path.exists(acftref_path):
         print("    'Aircraft_Reference' table...")
         prog = ProgressReporter("Reference")
@@ -192,6 +198,7 @@ def parse_faa(settings: Settings) -> bool:
         with open(acftref_path, 'r', encoding='latin-1', errors='replace') as f:
             total_lines = sum(1 for _ in f)
 
+        short_lines = 0
         batch = []
         with open(acftref_path, 'r', encoding='latin-1', errors='replace') as f:
             for line_num, line in enumerate(f):
@@ -199,6 +206,7 @@ def parse_faa(settings: Settings) -> bool:
                     continue
 
                 if len(line) < 77:
+                    short_lines += 1
                     continue
 
                 faa_type = line[:REF_TYPE_END]
@@ -232,15 +240,102 @@ def parse_faa(settings: Settings) -> bool:
             conn.commit()
         prog.done()
 
+        ref_rows = conn.execute("SELECT COUNT(*) FROM Aircraft_Reference").fetchone()[0]
+        if ref_rows == 0 and short_lines:
+            print(f"    WARNING: every one of the {short_lines:,} data lines in "
+                  f"ACFTREF.txt was shorter than the 77 columns the parser "
+                  f"expects - the file layout has probably changed.")
+    else:
+        print("    WARNING: ACFTREF.txt is not in the FAA download.")
+
     # Create indexes for faster lookups during merge
     print("    Creating indexes...")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_master_icao ON Master(ICAO)")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_ref_type ON Aircraft_Reference(Type)")
     conn.commit()
 
+    ok = _ensure_reference(conn, settings, ref_rows)
+
     conn.close()
 
     # Clean up extracted files
     safe_delete(extract_dir)
+    if not ok:
+        return False
     print("  FAA database creation complete.")
+    return True
+
+
+def _ensure_reference(conn: sqlite3.Connection, settings: Settings,
+                      ref_rows: int) -> bool:
+    """Guarantee FAADatabase.sqb has reference data, or fail the parse.
+
+    A good parse refreshes the cache. A bad one is refilled from it, because
+    the reference table describes types rather than individual aircraft and so
+    goes stale very slowly - a copy from last week still resolves nearly every
+    aircraft, which is worth far more than the empty table it replaces.
+
+    Returns False when no reference data can be had from either source. The
+    caller must then abandon the FAA update: merging a 0-row reference table
+    silently blanks Manufacturer and ModelIcao for every US aircraft in VRS,
+    which is how the 2026-09-30 release wiped 247,000 type codes.
+    """
+    cache = settings.faa_ref_cache_path
+
+    if ref_rows > 0:
+        print(f"    {ref_rows:,} reference records parsed.")
+        try:
+            # Build beside the cache and rename over it, so an interruption
+            # mid-write cannot leave us with neither the old copy nor a
+            # complete new one.
+            tmp = cache + ".tmp"
+            safe_delete(tmp)
+            conn.execute("ATTACH DATABASE ? AS refcache", (tmp,))
+            conn.execute("CREATE TABLE refcache.Aircraft_Reference AS "
+                         "SELECT * FROM main.Aircraft_Reference")
+            conn.commit()
+            conn.execute("DETACH DATABASE refcache")
+            os.replace(tmp, cache)
+            print(f"    Cached reference data as {os.path.basename(cache)}.")
+        except Exception as e:
+            # A cache we failed to write is not worth failing the run over;
+            # this release's own reference data is already in place.
+            print(f"    WARNING: could not refresh the reference cache: {e}")
+        return True
+
+    if not os.path.exists(cache):
+        print("  ERROR: the FAA release carries no usable aircraft reference "
+              "data and no cached copy exists.")
+        print("         Merging now would erase the manufacturer and ICAO type "
+              "code of every US aircraft in the VRS database, so the FAA "
+              "update has been abandoned.")
+        print("         Fix: restore FAAReference.sqb from a backup, or build "
+              "it from an older FAADatabase snapshot.")
+        return False
+
+    try:
+        conn.execute("ATTACH DATABASE ? AS refcache", (cache,))
+        conn.execute("INSERT INTO main.Aircraft_Reference "
+                     "SELECT * FROM refcache.Aircraft_Reference")
+        conn.commit()
+        conn.execute("DETACH DATABASE refcache")
+        restored = conn.execute("SELECT COUNT(*) FROM Aircraft_Reference").fetchone()[0]
+    except Exception as e:
+        print(f"  ERROR: cached reference data could not be read: {e}")
+        return False
+
+    if restored == 0:
+        print("  ERROR: the cached reference data is itself empty.")
+        return False
+
+    age = ""
+    try:
+        days = (datetime.now() - datetime.fromtimestamp(os.path.getmtime(cache))).days
+        age = f", cached {days} day{'s' if days != 1 else ''} ago"
+    except OSError:
+        pass
+    print(f"    Restored {restored:,} reference records from "
+          f"{os.path.basename(cache)}{age}.")
+    print("    NOTE: manufacturers and type codes come from cached data until "
+          "the FAA ships ACFTREF.txt again.")
     return True

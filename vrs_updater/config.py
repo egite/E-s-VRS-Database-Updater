@@ -74,6 +74,18 @@ class Settings:
         return os.path.join(self.work_dir, "FAADatabase.sqb")
 
     @property
+    def faa_ref_cache_path(self) -> str:
+        """Last known-good copy of the FAA Aircraft_Reference table.
+
+        The reference data (ACFTREF.txt) describes aircraft types, not
+        individual aircraft, so it is nearly static - and the FAA removed it
+        from ReleasableAircraft.zip on 2026-09-30. Keeping the last good copy
+        outside FAADatabase.sqb means a release that omits the file no longer
+        costs us the manufacturer and type code of every US aircraft.
+        """
+        return os.path.join(self.work_dir, "FAAReference.sqb")
+
+    @property
     def ccar_db_path(self) -> str:
         return os.path.join(self.work_dir, "CCARDatabase.sqb")
 
