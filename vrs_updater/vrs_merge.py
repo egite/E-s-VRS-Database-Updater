@@ -509,8 +509,18 @@ def _merge_faa(faa_db: str, existing: Dict[str, dict],
     try:
         for row in faa_conn.execute("SELECT * FROM Aircraft_Reference"):
             ref_lookup[row["Type"]] = dict(row)
-    except Exception:
-        pass
+    except Exception as e:
+        # Used to be a bare pass, which turned a missing or unreadable
+        # reference table into a silent, total loss of manufacturer and type
+        # code data.
+        print(f"  ERROR: could not read the FAA Aircraft_Reference table: {e}")
+
+    if not ref_lookup:
+        print("  ERROR: the FAA reference table is empty - skipping the FAA "
+              "merge rather than blanking Manufacturer and ModelIcao for "
+              "every US aircraft.")
+        faa_conn.close()
+        return
 
     # Load old FAA database for PII recovery fallback
     old_faa_lookup = _load_old_faa_owners(work_dir, faa_db) if work_dir else {}
@@ -561,6 +571,14 @@ def _merge_faa(faa_db: str, existing: Dict[str, dict],
         if not model and ex and ex.get("Model"):
             model = ex["Model"]
 
+        # Same for manufacturer. Model had this fallback and Manufacturer did
+        # not, which is why the 2026-09-30 release - with no ACFTREF.txt -
+        # left 513,000 models in place while blanking 300,000 manufacturers.
+        # An absent source value means "the FAA did not tell us", never
+        # "the aircraft has no manufacturer".
+        if not manufacturer and ex and ex.get("Manufacturer"):
+            manufacturer = ex["Manufacturer"]
+
         # Resolve operator with PII handling, then clean the result
         raw_operator = _resolve_faa_operator(
             owner, registration, manu_kit, faa_type, ref_lookup, ex,
@@ -581,7 +599,11 @@ def _merge_faa(faa_db: str, existing: Dict[str, dict],
         # Determine silhouette
         model_icao, found = sil.determine_silhouette(model, manufacturer)
         if not found:
-            model_icao = ""
+            # Keep the code VRS already had. A failed lookup means this
+            # manufacturer/model pair is not in the mapping table - which is
+            # also what happens when the inputs arrive empty - and clearing
+            # the column costs the aircraft its silhouette and its map icon.
+            model_icao = (ex.get("ModelIcao") or "") if ex else ""
 
         # Preserve existing created time
         created_time = utc_now
