@@ -27,6 +27,11 @@ class SilhouetteLookup:
         self.builtin_start: int = 0          # index where built-in rows begin
         self.last_match_index: int = -1      # row that satisfied the last lookup
         self._cache: dict = {}               # (model, mfr, emitter) -> result
+        # Index built by _build_index(): lowercased manufacturer alias -> the
+        # rows naming it, in table order, plus the rows whose manufacturer is
+        # the "*" wildcard. Each row is (index, model_aliases, model_wild, code).
+        self._by_mfr: dict = {}
+        self._wild_rows: list = []
 
     def load_csv(self, csv_path: str) -> bool:
         """Load silhouette data: Sils.csv layered over the built-in table.
@@ -99,15 +104,45 @@ class SilhouetteLookup:
             if mfr.strip() and mdl.strip():
                 add(mfr, mdl, rmp, typ)
 
+        self._build_index()
         return len(self.types) - self.builtin_start
+
+    def _build_index(self) -> None:
+        """Index the table by manufacturer so a lookup touches only the rows
+        that could match, instead of splitting and lowercasing every alias of
+        every row on every miss.
+
+        Rows keep their table index so first-match-wins is decided exactly as
+        the linear scan decided it: the candidate with the lowest index wins,
+        whether it was reached through its manufacturer alias or through a
+        "*" manufacturer wildcard.
+        """
+        self._by_mfr = {}
+        self._wild_rows = []
+        for i in range(len(self.types)):
+            mfr_entry = self.manufacturers[i]
+            model_entry = self.models[i]
+            if not mfr_entry or not model_entry:
+                continue  # the scan could never match these rows either
+            model_parts = [p.strip() for p in model_entry.split(",")]
+            model_aliases = frozenset(p.lower() for p in model_parts)
+            model_wild = "*" in model_parts
+            code = self.remaps[i] if self.remaps[i] else self.types[i]
+            row = (i, model_aliases, model_wild, code)
+            mfr_parts = {p.strip() for p in mfr_entry.split(",")}
+            if "*" in mfr_parts:
+                self._wild_rows.append(row)
+            for part in mfr_parts:
+                if part != "*":
+                    self._by_mfr.setdefault(part.lower(), []).append(row)
 
     def determine_silhouette(self, icao_type_input: str, manufacturer: str,
                               emitter_type: str = "") -> Tuple[str, bool]:
         """Cached wrapper around the resolver.
 
-        The table scan is linear and the merge calls this once or twice per
-        aircraft, but a registry has far fewer distinct manufacturer/model
-        pairs than records, so memoizing collapses the repeats.
+        The merge calls this once or twice per aircraft, but a registry has
+        far fewer distinct manufacturer/model pairs than records, so memoizing
+        collapses the repeats; the indexed table lookup handles the misses.
         """
         key = (icao_type_input, manufacturer, emitter_type)
         hit = self._cache.get(key)
@@ -246,33 +281,37 @@ class SilhouetteLookup:
         return icao_text, found
 
     def _lookup_in_data(self, orig: str, cleaned: str, manufacturer: str) -> Optional[str]:
-        """Search the Sils.csv data for a matching type code.
+        """Search the silhouette table for a matching type code.
 
-        Linear scan matching Silhouette.vb lines 119-144 exactly:
-        iterate all entries, check manufacturer match (or wildcard *),
-        then check model match (or wildcard *).
+        Same result as the linear scan in Silhouette.vb lines 119-144: the
+        first row (in table order) whose manufacturer list contains the
+        manufacturer or "*", and whose model list contains the model or "*".
+        Comparison is case-insensitive, as VB.NET string comparison is.
 
-        VB.NET string comparison is case-insensitive by default,
-        so we use .lower() for manufacturer and model matching.
+        A row whose Type and Remap are both empty still counts as the match -
+        it returns an empty code, which is how a Sils.csv row suppresses a
+        built-in mapping - so the scan must stop there, not skip past it.
         """
         mfr_lower = manufacturer.lower()
         orig_lower = orig.lower()
         self.last_match_index = -1
-        for i in range(len(self.types)):
-            mfr_entry = self.manufacturers[i]
-            if mfr_entry:
-                for mfr_part in mfr_entry.split(","):
-                    mfr_part = mfr_part.strip()
-                    if mfr_lower == mfr_part.lower() or mfr_part == "*":
-                        model_entry = self.models[i]
-                        if model_entry:
-                            for model_part in model_entry.split(","):
-                                model_part = model_part.strip()
-                                if orig_lower == model_part.lower() or model_part == "*":
-                                    result = self.remaps[i] if self.remaps[i] else self.types[i]
-                                    self.last_match_index = i
-                                    return result
-        return None
+
+        best = None
+        for row in self._by_mfr.get(mfr_lower, ()):
+            if row[2] or orig_lower in row[1]:
+                best = row
+                break
+        for row in self._wild_rows:
+            if best is not None and row[0] > best[0]:
+                break  # every later wildcard row loses to the match in hand
+            if row[2] or orig_lower in row[1]:
+                if best is None or row[0] < best[0]:
+                    best = row
+                break
+        if best is None:
+            return None
+        self.last_match_index = best[0]
+        return best[3]
 
 
 # Module-level convenience for the shared lookup instance

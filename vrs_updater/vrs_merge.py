@@ -22,8 +22,8 @@ from typing import Dict, List, Optional, Tuple
 from .utils import title_case, clean_operator_name, ProgressReporter
 from .silhouette import SilhouetteLookup, load_silhouettes
 from .config import Settings
-from .rules import (Rule, load_rules, apply_rules, RULE_TO_DB,
-                    MSG_FIELD_MAP)
+from .rules import (Rule, load_rules, compile_rules, first_match,
+                    RULE_TO_DB, MSG_FIELD_MAP)
 
 # Detail log callback - GUI patches this to route to the Details tab
 # Default: no-op (CLI mode doesn't need per-record detail spam)
@@ -99,18 +99,23 @@ def _apply_rules_pass(rules: List[Rule], existing: Dict[str, dict],
     total = len(existing)
     rules_applied = 0
     count = 0
+    compiled = compile_rules(rules)
 
     for icao, ex in existing.items():
         count += 1
         prog.update(count, total)
 
-        # Build a record using Rule field names
-        record = {rk: (ex.get(dk) or "") for rk, dk in _RULE_TO_DB.items()}
-
-        matched_rule = apply_rules(rules, record)
+        matched_rule = first_match(compiled, ex)
 
         if matched_rule:
             rules_applied += 1
+            # The "From dB" value is read before the changes land, so a rule
+            # that both names and rewrites a field logs what it found.
+            msg_val = ''
+            if matched_rule.msg_field:
+                rk = MSG_FIELD_MAP.get(matched_rule.msg_field, '')
+                msg_val = (ex.get(_RULE_TO_DB[rk]) or '') if rk else ''
+
             # Map changed Rule fields back to DB column names
             for rule_field, new_val in matched_rule.change_fields.items():
                 db_col = _RULE_TO_DB.get(rule_field, rule_field)
@@ -127,11 +132,8 @@ def _apply_rules_pass(rules: List[Rule], existing: Dict[str, dict],
             # something the line does not already carry.
             reg = ex.get('Registration', '')
             change_msg = matched_rule.msg_text
-            if matched_rule.msg_field:
-                rk = MSG_FIELD_MAP.get(matched_rule.msg_field, '')
-                val = record.get(rk, '') if rk else ''
-                if val and val != reg:
-                    change_msg = (change_msg + " " + val + ".").strip()
+            if msg_val and msg_val != reg:
+                change_msg = (change_msg + " " + msg_val + ".").strip()
             if change_msg:
                 detail_log(f"{change_msg} {reg}")
 

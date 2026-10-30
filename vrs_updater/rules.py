@@ -123,6 +123,62 @@ def apply_rules(rules: List[Rule], record: Dict[str, str]) -> Optional[Rule]:
     return None
 
 
+# A rule prepared for the merge pass: (rule, positives, negations), where
+# positives and negations are lists of (db_column, lowercased_value).
+CompiledRule = Tuple[Rule, List[Tuple[str, str]], List[Tuple[str, str]]]
+
+
+def compile_rules(rules: List[Rule]) -> List[CompiledRule]:
+    """Prepare rules for matching against VRS records by DB column name.
+
+    rule_matches() is written for one record at a time and lowercases every
+    rule value on every call. The merge pass asks the same question for
+    every record in the database, so the per-rule work is done once here.
+    A rule with no positive match field can never fire and is dropped.
+    """
+    compiled: List[CompiledRule] = []
+    for rule in rules:
+        positives = []
+        negations = []
+        for field_name, rule_val in rule.match_fields.items():
+            col = RULE_TO_DB.get(field_name, field_name)
+            if rule_val.startswith("!"):
+                negations.append((col, rule_val[1:].lower()))
+            else:
+                positives.append((col, rule_val.lower()))
+        if positives:
+            compiled.append((rule, positives, negations))
+    return compiled
+
+
+def first_match(compiled: List[CompiledRule], db_record: Dict[str, str]) -> Optional[Rule]:
+    """Return the first compiled rule matching a VRS record, or None.
+
+    `db_record` is keyed by DB column name (Icao, OperatorIcao, ...), as the
+    merge holds it. Gives the same answer as apply_rules() over the record
+    translated to rule field names, but lowercases each column at most once
+    per record and nothing per rule.
+    """
+    lowered: Dict[str, str] = {}
+    for rule, positives, negations in compiled:
+        for col, val in positives:
+            lv = lowered.get(col)
+            if lv is None:
+                lv = lowered[col] = (db_record.get(col) or "").lower()
+            if lv != val:
+                break
+        else:
+            for col, val in negations:
+                lv = lowered.get(col)
+                if lv is None:
+                    lv = lowered[col] = (db_record.get(col) or "").lower()
+                if lv == val:
+                    break
+            else:
+                return rule
+    return None
+
+
 # ---------------------------------------------------------------------------
 # Load / save
 # ---------------------------------------------------------------------------
