@@ -38,6 +38,26 @@ def _default_phase_callback(phase: str):
 
 phase_callback = _default_phase_callback
 
+# Tallies for the GUI's end-of-run summary, filled in as the merge goes and
+# reset at the start of update_vrs() / apply_rules_only(). The CLI ignores it.
+#   sources       {name: {"processed", "updated", "new" | "unmatched"}}
+#   rules_applied int, or None when the rules pass did not run
+#   pii           {"total", "old_pii", "old_faa", "kit", "removed"} or None
+#   stale         [source names merged from a stale local copy]
+#   written       {"updates", "inserts", "seconds"} or None when nothing was
+run_summary: dict = {}
+
+
+def _reset_run_summary() -> None:
+    run_summary.clear()
+    run_summary.update({"sources": {}, "rules_applied": None, "pii": None,
+                        "stale": [], "written": None})
+
+
+# Populated from import so the merge functions can be called on their own
+# (tests, the Sils editor) without first going through update_vrs().
+_reset_run_summary()
+
 
 # Manufacturer normalization map (replaces repeated if/elseif chains in VB.NET)
 MANUFACTURER_NORMALIZE = {
@@ -141,6 +161,7 @@ def _apply_rules_pass(rules: List[Rule], existing: Dict[str, dict],
 
     prog.done()
 
+    run_summary["rules_applied"] = rules_applied
     if rules_applied > 0:
         detail_log(f"Rules: {rules_applied:,} applied.")
         print(f"  Rules: {rules_applied:,} applied.")
@@ -202,6 +223,7 @@ def _log_db_freshness(name: str, path: str, max_age_days: int) -> None:
     threshold = max_age_days if max_age_days and max_age_days > 0 else 1
     age_str = f"{age_days:.1f} days"
     if age_days > threshold:
+        run_summary.setdefault("stale", []).append(name)
         print(f"  WARNING: {name} database is STALE - last refreshed {date_str} "
               f"({age_str} old; limit {threshold}d). This run did not refresh it; "
               f"merging OLD {name} data.")
@@ -255,6 +277,7 @@ def apply_rules_only(settings: Settings) -> int:
     working folder, back it up, write, copy it back - so the result reaches
     VRS identically. Returns the number of records changed.
     """
+    _reset_run_summary()
     rules = load_rules(settings.rules_path)
     if not rules:
         print("  No rules found - nothing to apply.")
@@ -301,6 +324,7 @@ def update_vrs(settings: Settings):
     opensky_db = settings.opensky_db_path
 
     build_complete = settings.build_complete
+    _reset_run_summary()
 
     # Validate FAA DB exists (unless skipped)
     if not settings.skip_faa:
@@ -635,8 +659,11 @@ def _merge_faa(faa_db: str, existing: Dict[str, dict],
     # Summary
     detail_log(f"FAA: {count:,} processed, {num_updates:,} updated, {num_inserts:,} new.")
     print(f"  FAA merge complete. {count:,} records processed ({num_updates:,} updated, {num_inserts:,} new).")
+    run_summary["sources"]["FAA"] = {"processed": count, "updated": num_updates, "new": num_inserts}
 
     pii_total = pii_old_pii + pii_old_faa + pii_kit + pii_removed
+    run_summary["pii"] = {"total": pii_total, "old_pii": pii_old_pii, "old_faa": pii_old_faa,
+                          "kit": pii_kit, "removed": pii_removed}
     if pii_total > 0:
         detail_log(f"PII summary:  {pii_total:,} redacted owners — "
                    f"{pii_old_pii:,} kept from VRS, "
@@ -733,6 +760,7 @@ def _merge_ccar(ccar_db: str, existing: Dict[str, dict],
     prog.done()
     detail_log(f"CCAR: {count:,} processed, {num_updates:,} updated, {num_inserts:,} new.")
     detail_log("CCAR database processing completed.")
+    run_summary["sources"]["CCAR"] = {"processed": count, "updated": num_updates, "new": num_inserts}
     print(f"  CCAR merge complete. {count:,} records processed ({num_updates:,} updated, {num_inserts:,} new).")
 
 
@@ -819,6 +847,7 @@ def _merge_nz_caa(nz_caa_db: str, existing: Dict[str, dict],
     prog.done()
     detail_log(f"NZ CAA: {count:,} processed, {num_updates:,} updated, {num_inserts:,} new.")
     detail_log("NZ CAA database processing completed.")
+    run_summary["sources"]["NZ CAA"] = {"processed": count, "updated": num_updates, "new": num_inserts}
     print(f"  NZ CAA merge complete. {count:,} records processed ({num_updates:,} updated, {num_inserts:,} new).")
 
 
@@ -925,6 +954,7 @@ def _merge_casa(casa_db: str, existing: Dict[str, dict],
     prog.done()
     detail_log(f"CASA: {count:,} processed, {num_updates:,} updated, {num_skipped:,} skipped (no matching ICAO).")
     detail_log("CASA database processing completed.")
+    run_summary["sources"]["CASA"] = {"processed": count, "updated": num_updates, "unmatched": num_skipped}
     print(f"  CASA merge complete. {count:,} records processed ({num_updates:,} updated, {num_skipped:,} no match).")
 
 
@@ -1046,6 +1076,7 @@ def _merge_opensky(opensky_db: str, existing: Dict[str, dict],
     prog.done()
     detail_log(f"OpenSky: {count:,} processed, {num_updates:,} updated, {num_inserts:,} new.")
     detail_log("OpenSky database processing completed.")
+    run_summary["sources"]["OpenSky"] = {"processed": count, "updated": num_updates, "new": num_inserts}
     print(f"  OpenSky merge complete. {count:,} records processed ({num_updates:,} updated, {num_inserts:,} new).")
 
 
@@ -1139,5 +1170,6 @@ def _final_flush(vrs_conn: sqlite3.Connection,
     elapsed = (datetime.now() - flush_start).total_seconds()
     total_rows = len(updates) + len(inserts)
     rate = total_rows / elapsed if elapsed > 0 else 0
+    run_summary["written"] = {"updates": len(updates), "inserts": len(inserts), "seconds": elapsed}
     print(f"  Disk write complete: {total_rows:,} rows in {elapsed:.2f}s "
           f"({rate:,.0f} rows/sec).")

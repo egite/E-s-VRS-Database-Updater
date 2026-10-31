@@ -58,9 +58,9 @@ MANUAL = [
     ("note", "These two must not be the same folder. The program refuses to "
              "run if they are."),
     ("h", "2. Choose which registers to download"),
-    ("p", "Tick the registers you want under Auto-Download. If you only track "
-          "aircraft in one country, there is no need to download the others. "
-          "Each entry shows the date of the copy you already have."),
+    ("p", "Tick Download for the registers you want under Data Sources. If you "
+          "only track aircraft in one country, there is no need to download the "
+          "others. Each row shows the date of the copy you already have."),
     ("h", "3. Close VRS"),
     ("p", "Shut down Virtual Radar Server before running an update, so that "
           "the database file is not in use while it is being replaced."),
@@ -75,14 +75,15 @@ MANUAL = [
 ("The Main Window", [
     ("h", "Paths"),
     ("p", "The Working Folder and VRS Folder, each with a Browse button."),
-    ("h", "Auto-Download"),
-    ("p", "One checkbox per register. Next to each is the date of the copy in "
-          "your working folder, turning amber when it is older than that "
-          "register's age limit."),
-    ("h", "Skip Processing"),
-    ("p", "Skips merging a source even though you have a copy of it. Use this "
-          "to leave one register out of a run without losing its downloaded "
-          "data. The Rules checkbox skips the Rules.csv pass in the same way."),
+    ("h", "Data Sources"),
+    ("p", "One row per register with two toggles. Download fetches a fresh "
+          "copy when the local one is older than that register's age limit; "
+          "Process merges the copy you have into VRS. Untick Process to leave "
+          "a register out of a run without losing its downloaded data. The "
+          "Rules row has only a Process toggle, which runs the Rules.csv pass."),
+    ("p", "Local copy shows the date of each register in your working folder, "
+          "turning amber when it is older than the age limit, and for Rules "
+          "shows how many rules the file holds."),
     ("h", "Options"),
     ("b", "Run on Start - begins an update ten seconds after launch, and "
           "closes the program when it finishes. Intended for scheduled tasks."),
@@ -91,17 +92,22 @@ MANUAL = [
     ("b", "Build complete database - also adds aircraft VRS has never seen, "
           "instead of only updating ones already in your database. Makes the "
           "database much larger, and is what you want for offline use."),
-    ("b", "Apply Rules - applies Rules.csv to your VRS database on its own, "
-          "with no downloading or merging. Greyed out when no rules file is "
-          "found. See Custom Rules."),
     ("h", "Progress"),
     ("p", "Shows percent complete, an estimated time remaining, current phase, "
-          "and live disk throughput. Program Progress lists the major steps; "
-          "Database Update Status lists individual record changes."),
-    ("h", "Start and Cancel"),
+          "and live disk throughput. Program Progress lists the major steps and "
+          "ends with a run summary: records processed, updated and added per "
+          "source, how redacted owners were handled, what was written, and how "
+          "many warnings and errors appeared."),
+    ("p", "Database Update Status lists individual record changes. Only the "
+          "last 5,000 lines stay on screen so a full build does not bog the "
+          "window down; Save Log writes every line of the run to a text file."),
+    ("h", "Start, Cancel and Apply Rules"),
     ("p", "Cancel stops the run at the next safe point. Because all changes "
           "are written in a single step at the very end, cancelling partway "
           "through leaves your VRS database untouched."),
+    ("p", "Apply Rules applies Rules.csv to your VRS database on its own, with "
+          "no downloading or merging. Greyed out when no rules file is found. "
+          "See Custom Rules."),
 ]),
 
 ("Running an Update", [

@@ -40,6 +40,12 @@ else:
 # as bad luck and tells the user the address is probably wrong.
 DOWNLOAD_ALERT_THRESHOLD = 14
 
+# Lines kept on screen in Database Update Status. A full build logs well over
+# 100,000 record changes; the Text widget gets slow and hungry long before
+# that, so only the tail stays in the widget. Every line is kept in memory
+# for Save Log.
+DETAIL_MAX_LINES = 5000
+
 
 class VRSUpdaterApp:
     """Main GUI application matching the VB.NET Form1 layout."""
@@ -76,6 +82,10 @@ class VRSUpdaterApp:
         self._cancelled = threading.Event()  # Set when user clicks Cancel
         self._detail_batch = []            # Batched detail messages
         self._detail_flush_scheduled = False
+        self._detail_lines = []            # Every detail line this run, for Save Log
+        self._detail_trimmed = False       # True once the widget dropped old lines
+        self._warning_count = 0            # Status lines tagged warning this run
+        self._error_count = 0              # Status lines tagged error this run
         self._disk_last_bytes = 0          # Last measured total file sizes
         self._disk_last_time = 0.0         # Time of last measurement
         self._disk_poll_id = None          # after() ID for polling
@@ -126,27 +136,8 @@ class VRSUpdaterApp:
 
         help_menu = tk.Menu(menubar, tearoff=0)
         help_menu.add_command(label="User Manual...", command=self._show_manual)
+        help_menu.add_command(label="Features...", command=self._show_features)
         help_menu.add_separator()
-
-        features_menu = tk.Menu(help_menu, tearoff=0)
-        features_menu.add_command(label="View All Features...", command=self._show_features)
-        features_menu.add_separator()
-        features_menu.add_command(label="Concurrent Downloads", state="disabled")
-        features_menu.add_command(label="Parallel Database Parsing", state="disabled")
-        features_menu.add_command(label="O(1) Silhouette Lookups", state="disabled")
-        features_menu.add_command(label="Dark Terminal Theme", state="disabled")
-        features_menu.add_command(label="Cancel Support", state="disabled")
-        features_menu.add_command(label="Disk Throughput Monitor", state="disabled")
-        features_menu.add_command(label="Integrated Rules Editor", state="disabled")
-        features_menu.add_command(label="Integrated Silhouette Editor", state="disabled")
-        features_menu.add_command(label="Built-in User Manual", state="disabled")
-        features_menu.add_command(label="Custom Rules Override", state="disabled")
-        features_menu.add_command(label="Skip Processing Controls", state="disabled")
-        features_menu.add_command(label="Phase Indicator", state="disabled")
-        features_menu.add_command(label="Download Age Limits", state="disabled")
-        features_menu.add_command(label="Database Priority Order", state="disabled")
-        help_menu.add_cascade(label="Features", menu=features_menu)
-
         help_menu.add_command(label="About", command=self._show_about)
         menubar.add_cascade(label="Help", menu=help_menu)
 
@@ -206,13 +197,14 @@ class VRSUpdaterApp:
 
         path_frame.columnconfigure(1, weight=1)
 
-        # --- Options: Auto-Download (left) + stacked Skip/Options (right) ---
+        # --- Data Sources (left): one row per register with Download and
+        #     Process toggles and the age of the local copy. Options and the
+        #     progress readout stack on the right.
         opt_row = ttk.Frame(self.root)
         opt_row.pack(fill="x", padx=8, pady=4)
 
-        # Auto-Download group — one row per source with date/age status
-        dl_frame = ttk.LabelFrame(opt_row, text="Auto-Download", padding=8)
-        dl_frame.pack(side="left", padx=(0, 4), fill="y")
+        src_frame = ttk.LabelFrame(opt_row, text="Data Sources", padding=8)
+        src_frame.pack(side="left", padx=(0, 4), fill="y")
 
         self.chk_faa_download_var = tk.BooleanVar(value=True)
         self.chk_ccar_download_var = tk.BooleanVar(value=True)
@@ -220,32 +212,9 @@ class VRSUpdaterApp:
         self.chk_casa_download_var = tk.BooleanVar(value=True)
         self.chk_opensky_download_var = tk.BooleanVar(value=True)
 
-        # (label, var, db filename, settings attr for stale-days threshold)
-        self._db_sources = [
-            ("FAA",     self.chk_faa_download_var,     "FAADatabase.sqb",    "faa_max_age_days"),
-            ("CCAR",    self.chk_ccar_download_var,    "CCARDatabase.sqb",   "ccar_max_age_days"),
-            ("NZ CAA",  self.chk_nzcaa_download_var,   "NZCAADatabase.sqb",  "nz_caa_max_age_days"),
-            ("CASA",    self.chk_casa_download_var,    "CASADatabase.sqb",   "casa_max_age_days"),
-            ("OpenSky", self.chk_opensky_download_var, "OpenSkyDatabase.sqb","opensky_max_age_days"),
-        ]
-        self._db_status_labels = {}  # name -> (label widget, filename, age_attr)
-        for r, (name, var, filename, age_attr) in enumerate(self._db_sources):
-            ttk.Checkbutton(dl_frame, text=name, variable=var).grid(
-                row=r, column=0, sticky="w", padx=(0, 12), pady=1)
-            lbl = tk.Label(dl_frame, text="—", fg="#888888",
-                           font=("Segoe UI", 9), anchor="w")
-            lbl.grid(row=r, column=1, sticky="w", pady=1)
-            self._db_status_labels[name] = (lbl, filename, age_attr)
-        dl_frame.columnconfigure(1, weight=1)
-
-        # Right column: Skip Processing on top, Options on bottom
-        right_col = ttk.Frame(opt_row)
-        right_col.pack(side="left", fill="both", expand=True, padx=(4, 0))
-
-        # Skip Processing group (top)
-        skip_frame = ttk.LabelFrame(right_col, text="Skip Processing", padding=8)
-        skip_frame.pack(side="top", fill="x")
-
+        # The settings file and Settings objects speak of "skip"; the window
+        # shows the positive "Process", so these checkbuttons are wired with
+        # onvalue=False - ticked means not skipped.
         self.chk_skip_faa_var = tk.BooleanVar()
         self.chk_skip_ccar_var = tk.BooleanVar()
         self.chk_skip_nzcaa_var = tk.BooleanVar()
@@ -253,37 +222,59 @@ class VRSUpdaterApp:
         self.chk_skip_opensky_var = tk.BooleanVar()
         self.chk_skip_rules_var = tk.BooleanVar()
 
-        ttk.Checkbutton(skip_frame, text="FAA", variable=self.chk_skip_faa_var).grid(row=0, column=0, sticky="w", padx=(0, 10))
-        ttk.Checkbutton(skip_frame, text="CCAR", variable=self.chk_skip_ccar_var).grid(row=0, column=1, sticky="w", padx=(0, 10))
-        ttk.Checkbutton(skip_frame, text="NZ CAA", variable=self.chk_skip_nzcaa_var).grid(row=0, column=2, sticky="w", padx=(0, 10))
-        ttk.Checkbutton(skip_frame, text="CASA", variable=self.chk_skip_casa_var).grid(row=0, column=3, sticky="w", padx=(0, 10))
-        ttk.Checkbutton(skip_frame, text="OpenSky", variable=self.chk_skip_opensky_var).grid(row=0, column=4, sticky="w", padx=(0, 10))
-        ttk.Checkbutton(skip_frame, text="Rules", variable=self.chk_skip_rules_var).grid(row=0, column=5, sticky="w")
+        hdr_font = ("Segoe UI", 8)
+        for c, text in enumerate(("Source", "Download", "Process", "Local copy")):
+            tk.Label(src_frame, text=text, fg="#666666", font=hdr_font,
+                     anchor="w").grid(row=0, column=c, sticky="w",
+                                      padx=(0, 10), pady=(0, 2))
 
-        # Options group (bottom)
+        # (label, download var, skip var, db filename, settings attr for stale-days threshold)
+        self._db_sources = [
+            ("FAA",     self.chk_faa_download_var,     self.chk_skip_faa_var,     "FAADatabase.sqb",     "faa_max_age_days"),
+            ("CCAR",    self.chk_ccar_download_var,    self.chk_skip_ccar_var,    "CCARDatabase.sqb",    "ccar_max_age_days"),
+            ("NZ CAA",  self.chk_nzcaa_download_var,   self.chk_skip_nzcaa_var,   "NZCAADatabase.sqb",   "nz_caa_max_age_days"),
+            ("CASA",    self.chk_casa_download_var,    self.chk_skip_casa_var,    "CASADatabase.sqb",    "casa_max_age_days"),
+            ("OpenSky", self.chk_opensky_download_var, self.chk_skip_opensky_var, "OpenSkyDatabase.sqb", "opensky_max_age_days"),
+        ]
+        self._db_status_labels = {}  # name -> (label widget, filename, age_attr)
+        for r, (name, dl_var, skip_var, filename, age_attr) in enumerate(self._db_sources, start=1):
+            ttk.Label(src_frame, text=name).grid(row=r, column=0, sticky="w", padx=(0, 10), pady=1)
+            ttk.Checkbutton(src_frame, variable=dl_var).grid(row=r, column=1, pady=1)
+            ttk.Checkbutton(src_frame, variable=skip_var,
+                            onvalue=False, offvalue=True).grid(row=r, column=2, pady=1)
+            lbl = tk.Label(src_frame, text="\u2014", fg="#888888",
+                           font=("Segoe UI", 9), anchor="w")
+            lbl.grid(row=r, column=3, sticky="w", pady=1)
+            self._db_status_labels[name] = (lbl, filename, age_attr)
+
+        # Rules.csv has nothing to download, only a pass to run.
+        rules_row = len(self._db_sources) + 1
+        ttk.Label(src_frame, text="Rules").grid(row=rules_row, column=0, sticky="w", padx=(0, 10), pady=1)
+        ttk.Checkbutton(src_frame, variable=self.chk_skip_rules_var,
+                        onvalue=False, offvalue=True).grid(row=rules_row, column=2, pady=1)
+        self.lbl_rules_status = tk.Label(src_frame, text="\u2014", fg="#888888",
+                                         font=("Segoe UI", 9), anchor="w")
+        self.lbl_rules_status.grid(row=rules_row, column=3, sticky="w", pady=1)
+        src_frame.columnconfigure(3, weight=1)
+
+        # Right column: Options on top, progress readout at the bottom so it
+        # lines up with the foot of the Data Sources box.
+        right_col = ttk.Frame(opt_row)
+        right_col.pack(side="left", fill="both", expand=True, padx=(4, 0))
+
         opt_frame = ttk.LabelFrame(right_col, text="Options", padding=8)
-        opt_frame.pack(side="top", fill="x", pady=(4, 0))
+        opt_frame.pack(side="top", fill="both", expand=True)
 
         self.chk_run_on_start_var = tk.BooleanVar()
         self.chk_backup_var = tk.BooleanVar(value=True)
         self.chk_complete_var = tk.BooleanVar()
 
-        ttk.Checkbutton(opt_frame, text="Run on Start", variable=self.chk_run_on_start_var).grid(row=0, column=0, sticky="w", padx=(0, 12))
-        ttk.Checkbutton(opt_frame, text="Backup VRS database", variable=self.chk_backup_var).grid(row=0, column=1, sticky="w", padx=(0, 12))
-        ttk.Checkbutton(opt_frame, text="Build complete database", variable=self.chk_complete_var).grid(row=0, column=2, sticky="w")
+        ttk.Checkbutton(opt_frame, text="Run on Start", variable=self.chk_run_on_start_var).grid(row=0, column=0, sticky="w", pady=1)
+        ttk.Checkbutton(opt_frame, text="Backup VRS database", variable=self.chk_backup_var).grid(row=1, column=0, sticky="w", pady=1)
+        ttk.Checkbutton(opt_frame, text="Build complete database", variable=self.chk_complete_var).grid(row=2, column=0, sticky="w", pady=1)
 
-        # Compact padding keeps this button inside the checkbutton row height
-        ttk.Style().configure("Compact.TButton", padding=(8, 0),
-                              font=("Segoe UI", 8))
-        self.btn_apply_rules = ttk.Button(opt_frame, text="Apply Rules",
-                                          style="Compact.TButton",
-                                          command=self._on_apply_rules)
-        self.btn_apply_rules.grid(row=0, column=3, sticky="w", padx=(10, 0))
-
-        # Progress frame (dark themed) — bottom of right column so it bottom-
-        # aligns with the Auto-Download box on the left.
         prog_frame = tk.Frame(right_col, bg="#263238", padx=8, pady=6)
-        prog_frame.pack(side="top", fill="x", pady=(4, 0))
+        prog_frame.pack(side="bottom", fill="x", pady=(4, 0))
 
         tk.Label(prog_frame, text="Progress:", bg="#263238", fg="#B0BEC5",
                  font=("Segoe UI", 9)).grid(row=0, column=0, sticky="w")
@@ -306,7 +297,7 @@ class VRSUpdaterApp:
         self.progress_bar.grid(row=0, column=4, padx=(16, 0), sticky="ew")
         prog_frame.columnconfigure(4, weight=1)
 
-        # --- Start / Cancel buttons + throughput ---
+        # --- Start / Cancel / Apply Rules buttons + throughput ---
         btn_frame = ttk.Frame(self.root)
         btn_frame.pack(fill="x", padx=8, pady=4)
 
@@ -320,6 +311,13 @@ class VRSUpdaterApp:
                                     activebackground="#d32f2f", relief="raised", bd=2,
                                     state="disabled")
         self.btn_cancel.pack(side="left", padx=(8, 0))
+
+        self.btn_apply_rules = tk.Button(btn_frame, text="  Apply Rules  ",
+                                         command=self._on_apply_rules,
+                                         bg="#1565C0", fg="white", font=("Segoe UI", 11, "bold"),
+                                         activebackground="#1976D2", relief="raised", bd=2,
+                                         disabledforeground="#DDDDDD")
+        self.btn_apply_rules.pack(side="left", padx=(8, 0))
 
         # Phase indicator (right side)
         self.phase_var = tk.StringVar(value="Idle")
@@ -361,6 +359,16 @@ class VRSUpdaterApp:
 
         # --- Detail log (Database Update Status) - dark terminal ---
         detail_frame = ttk.LabelFrame(self.paned, text="Database Update Status", padding=4)
+
+        detail_hdr = ttk.Frame(detail_frame)
+        detail_hdr.pack(fill="x", pady=(0, 2))
+        self.detail_count_var = tk.StringVar(value="")
+        tk.Label(detail_hdr, textvariable=self.detail_count_var, fg="#666666",
+                 font=("Segoe UI", 8), anchor="w").pack(side="left")
+        self.btn_save_log = ttk.Button(detail_hdr, text="Save Log...",
+                                       command=self._save_detail_log)
+        self.btn_save_log.pack(side="right")
+
         self.txt_details = scrolledtext.ScrolledText(
             detail_frame, height=20, wrap="word",
             font=("Consolas", 9), state="disabled",
@@ -680,9 +688,20 @@ class VRSUpdaterApp:
     # ------------------------------------------------------------------
     # Logging helpers (thread-safe via root.after)
     # ------------------------------------------------------------------
-    def _log_status(self, msg: str):
-        """Append to status log with color coding."""
-        tag = self._classify_status(msg)
+    def _log_status(self, msg: str, tag: str = None, count: bool = True):
+        """Append to status log with color coding.
+
+        The tag is inferred from the text unless given. Warnings and errors
+        are counted for the end-of-run summary, except for the summary's own
+        lines, which pass count=False.
+        """
+        if tag is None:
+            tag = self._classify_status(msg)
+        if count:
+            if tag == "warning":
+                self._warning_count += 1
+            elif tag == "error":
+                self._error_count += 1
         self.root.after(0, self._append_colored, self.txt_status, msg, tag)
         self._log_activity(msg)
 
@@ -730,19 +749,70 @@ class VRSUpdaterApp:
         return ""
 
     def _flush_detail_batch(self):
-        """Flush batched detail messages to the widget."""
+        """Flush batched detail messages to the widget, keeping only the tail.
+
+        Every line is remembered in _detail_lines for Save Log; the widget
+        holds at most DETAIL_MAX_LINES so it stays responsive on a full build.
+        """
         self._detail_flush_scheduled = False
         if not self._detail_batch:
             return
-        self.txt_details.config(state="normal")
-        for msg, tag in self._detail_batch:
+        batch = self._detail_batch
+        self._detail_batch = []
+        self._detail_lines.extend(msg for msg, _tag in batch)
+
+        widget = self.txt_details
+        widget.config(state="normal")
+        # If the batch alone exceeds the cap, only its tail can ever show.
+        if len(batch) > DETAIL_MAX_LINES:
+            batch = batch[-DETAIL_MAX_LINES:]
+            self._detail_trimmed = True
+        for msg, tag in batch:
             if tag:
-                self.txt_details.insert("end", msg + "\n", tag)
+                widget.insert("end", msg + "\n", tag)
             else:
-                self.txt_details.insert("end", msg + "\n")
-        self.txt_details.see("end")
-        self.txt_details.config(state="disabled")
-        self._detail_batch.clear()
+                widget.insert("end", msg + "\n")
+        lines_shown = int(widget.index("end-1c").split(".")[0])
+        if lines_shown > DETAIL_MAX_LINES:
+            widget.delete("1.0", "%d.0" % (lines_shown - DETAIL_MAX_LINES + 1))
+            self._detail_trimmed = True
+        widget.see("end")
+        widget.config(state="disabled")
+        self._update_detail_count()
+
+    def _update_detail_count(self):
+        n = len(self._detail_lines)
+        if not n:
+            self.detail_count_var.set("")
+        elif self._detail_trimmed:
+            self.detail_count_var.set(
+                "%s lines (showing the last %s - Save Log keeps them all)"
+                % ("{:,}".format(n), "{:,}".format(DETAIL_MAX_LINES)))
+        else:
+            self.detail_count_var.set("%s line%s" % ("{:,}".format(n), "" if n == 1 else "s"))
+
+    def _save_detail_log(self):
+        """Write every Database Update Status line of the current or last run."""
+        self._flush_detail_batch()
+        if not self._detail_lines:
+            messagebox.showinfo("Save Log", "There is nothing to save yet.")
+            return
+        work_dir = self.work_dir_var.get().strip()
+        path = filedialog.asksaveasfilename(
+            title="Save Database Update Status",
+            defaultextension=".txt",
+            filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
+            initialdir=work_dir if work_dir and os.path.isdir(work_dir) else None,
+            initialfile="update_status_%s.txt" % datetime.now().strftime("%Y%m%d_%H%M"))
+        if not path:
+            return
+        try:
+            with open(path, "w", encoding="utf-8") as f:
+                f.write("\n".join(self._detail_lines) + "\n")
+        except OSError as e:
+            messagebox.showerror("Save Log", str(e))
+            return
+        self._log_status("  Saved %s lines to %s" % ("{:,}".format(len(self._detail_lines)), path))
 
     def _append_colored(self, widget, msg, tag=""):
         """Append a colored line to a text widget."""
@@ -871,9 +941,22 @@ class VRSUpdaterApp:
         if not hasattr(self, "btn_apply_rules"):
             return
         work_dir = self.work_dir_var.get().strip()
-        rules_found = bool(work_dir) and os.path.isdir(work_dir)             and os.path.exists(self._rules_paths()[0])
-        self.btn_apply_rules.config(
-            state="normal" if rules_found and not self.running else "disabled")
+        rules_path = self._rules_paths()[0]
+        rules_found = bool(work_dir) and os.path.isdir(work_dir) and os.path.exists(rules_path)
+        enabled = rules_found and not self.running
+        self.btn_apply_rules.config(state="normal" if enabled else "disabled",
+                                    bg="#1565C0" if enabled else "#999999")
+
+        if hasattr(self, "lbl_rules_status"):
+            if rules_found:
+                try:
+                    n = len(load_rules(rules_path, quiet=True))
+                    self.lbl_rules_status.config(
+                        text="\u2713 %d rule%s" % (n, "" if n == 1 else "s"), fg="#2E7D32")
+                except Exception:
+                    self.lbl_rules_status.config(text="\u2717 Unreadable", fg="#C62828")
+            else:
+                self.lbl_rules_status.config(text="\u2717 No Rules.csv", fg="#888888")
 
     def _refresh_db_status(self):
         """Update the date/age label next to each Auto-Download checkbox.
@@ -1217,7 +1300,7 @@ class VRSUpdaterApp:
                 "Streaming CSV parsing (low memory footprint)",
             ]),
             ("Performance Optimizations", [
-                "Memoized silhouette lookups (repeat model/manufacturer pairs resolved once)",
+                "Indexed, memoized silhouette lookups (the FAA merge takes seconds, not minutes)",
                 "Pre-loaded VRS database dict for O(1) ICAO lookups",
                 "Parameterized SQL queries (no string concatenation)",
                 "Batched transactions (10,000 records per commit)",
@@ -1234,6 +1317,8 @@ class VRSUpdaterApp:
                 "ETA display in h:mm:ss format",
                 "Cancel button to stop processing mid-stream",
                 "Phase indicator showing current processing step",
+                "Run summary at the end of every update: per-source counts, PII, warnings and errors",
+                "Database Update Status keeps the last 5,000 lines on screen; Save Log writes them all",
                 "Batched detail log updates (500ms flush) for UI performance",
                 "Built-in user manual (Help menu), searchable and exportable",
                 "Search VRS database by ICAO, registration, operator, etc.",
@@ -1258,7 +1343,7 @@ class VRSUpdaterApp:
                 "JSON-based settings persistence (window size, position, all options)",
                 "Configurable download URLs for all five registers",
                 "Configurable download age limits (0-30 days) per database",
-                "Skip Processing: skip any register, or the Rules pass, per run",
+                "Process toggles leave any register, or the Rules pass, out of a run",
                 "Configurable database priority order decides which source wins",
                 "Remembers working directory and VRS directory paths",
                 "Saves/restores all checkboxes and options between sessions",
@@ -1640,7 +1725,7 @@ class VRSUpdaterApp:
         self._cancelled.clear()
         self.btn_start.config(state="disabled", bg="#999999")
         self.btn_cancel.config(state="normal")
-        self.btn_apply_rules.config(state="disabled")
+        self.btn_apply_rules.config(state="disabled", bg="#999999")
         self._clear_logs()
 
         # Start disk throughput polling
@@ -1688,7 +1773,7 @@ class VRSUpdaterApp:
         self._cancelled.clear()
         self.btn_start.config(state="disabled", bg="#999999")
         self.btn_cancel.config(state="normal")
-        self.btn_apply_rules.config(state="disabled")
+        self.btn_apply_rules.config(state="disabled", bg="#999999")
         self._clear_logs()
         self._start_disk_poll()
 
@@ -1722,11 +1807,11 @@ class VRSUpdaterApp:
             self._log_error(str(e))
 
         elapsed = time.time() - start_time
+        self._log_run_summary(f"{elapsed:.1f} seconds")
         self._log_status("")
         self._log_status("=" * 50)
         self._log_status(f"Done! Started: {time_started}  "
                          f"Ended: {datetime.now().strftime('%H:%M')}")
-        self._log_status(f"Total time: {elapsed:.1f} seconds")
         self._log_status("=" * 50)
         self._log_detail("Done.")
         self._close_error_log()
@@ -1740,6 +1825,65 @@ class VRSUpdaterApp:
             w.config(state="normal")
             w.delete("1.0", "end")
             w.config(state="disabled")
+        self._detail_batch = []
+        self._detail_lines = []
+        self._detail_trimmed = False
+        self._warning_count = 0
+        self._error_count = 0
+        self.detail_count_var.set("")
+
+    def _log_run_summary(self, elapsed_str: str):
+        """Print the end-of-run block: what each source did, PII handling,
+        what was written, and how many warnings and errors scrolled past.
+
+        Reads vrs_merge.run_summary, which the merge fills in as it goes, so
+        the numbers are the ones the merge itself counted.
+        """
+        from . import vrs_merge
+        rs = vrs_merge.run_summary
+        fmt = "{:,}".format
+
+        self._log_status("")
+        self._log_status("Run summary", "step")
+        self._log_status("-" * 40, "separator")
+
+        for name, counts in rs.get("sources", {}).items():
+            parts = ["%10s processed" % fmt(counts.get("processed", 0))]
+            if "updated" in counts:
+                parts.append("%9s updated" % fmt(counts["updated"]))
+            if "new" in counts:
+                parts.append("%7s new" % fmt(counts["new"]))
+            if "unmatched" in counts:
+                parts.append("%7s unmatched" % fmt(counts["unmatched"]))
+            self._log_status("  %-8s %s" % (name, "  ".join(parts)), "info")
+
+        if rs.get("rules_applied") is not None:
+            self._log_status("  %-8s %10s applied" % ("Rules", fmt(rs["rules_applied"])), "info")
+
+        pii = rs.get("pii")
+        if pii and pii.get("total"):
+            self._log_status("  %-8s %10s redacted owners: %s kept from VRS, %s from old FAA, "
+                             "%s kit manufacturers, %s with no information"
+                             % ("PII", fmt(pii["total"]), fmt(pii["old_pii"]),
+                                fmt(pii["old_faa"]), fmt(pii["kit"]), fmt(pii["removed"])),
+                             "info")
+
+        for name in rs.get("stale", []):
+            self._log_status("  %-8s merged from a STALE local copy" % name, "warning",
+                             count=False)
+
+        written = rs.get("written")
+        if written:
+            self._log_status("  %-8s %10s updates, %s inserts in %.1f s"
+                             % ("Written", fmt(written["updates"]), fmt(written["inserts"]),
+                                written["seconds"]), "info")
+        elif rs:
+            self._log_status("  %-8s nothing - no record was touched" % "Written", "info")
+
+        counts_tag = "error" if self._error_count else ("warning" if self._warning_count else "success")
+        self._log_status("  Warnings: %d   Errors: %d   Time: %s"
+                         % (self._warning_count, self._error_count, elapsed_str), counts_tag,
+                         count=False)
 
     # ------------------------------------------------------------------
     # Main processing (runs in background thread)
@@ -2031,10 +2175,10 @@ class VRSUpdaterApp:
         else:
             elapsed_str = f"{elapsed:.1f} seconds"
 
+        self._log_run_summary(elapsed_str)
         self._log_status("")
         self._log_status("=" * 50)
         self._log_status(f"Done! Started: {time_started}  Ended: {datetime.now().strftime('%H:%M')}")
-        self._log_status(f"Total time: {elapsed_str}")
         self._log_status("=" * 50)
         self._log_detail("Done.")
         self._close_error_log()
