@@ -24,11 +24,63 @@ The program includes a full user manual under **Help → User Manual**, covering
 
 The download address for each register is set in **File → Settings**.  If a register moves its file in the future, you can update the address there.  The program also keeps count of consecutive failed downloads for each register, and tells you when one has failed often enough that its address is likely wrong.
 
-I don't know if this program will run within mono.  If you run Virtual Radar Server on a Linux box, you can copy your "AircraftOnlineLookupCache.sqb" file to a Windows box and run this program on that Windows box.  After the program is done processing the database, you can copy the database file back to your Linux box.
+The program also runs on Linux, alongside a copy of Virtual Radar Server running under Mono.  You run it from the Python source; neither Mono nor the Windows .exe is needed.  See **Running on Linux** below.
 
 Finally, there's no reason to run the program more than once-a-week in my experience.  Even though I live within sight of one of the busiest airports in the world, the number of new aircraft that enter my VRS's database each week is relatively low.  If you need to run the program frequently, perhaps use the option not to download the FAA database each time so as not to unnecessarily burden the FAA's server.
 
 Version 2.0 and later is a Python port of the original hand-written VB.NET program, with added capabilities and a number of optimizations.  It does everything the original did and uses the same [Rules.csv](Rules.csv) and [Sils.csv](Sils.csv) file formats, so those files carry over unchanged.  On top of that it adds the New Zealand CAA and Australian CASA registers, automatic CCAR downloading, built-in editors for both CSV files, a searchable user manual, and a database search tool.  Internally it downloads the registers concurrently, parses them in parallel, keeps the working database in memory instead of querying it once per aircraft, and writes every change in a single transaction at the end of the run — which also means a canceled run leaves your database untouched.
+
+<ins>**Running on Linux**</ins>
+
+The Windows download is an .exe, but you don't need it, or Mono, to run this program on Linux.  The program is written in Python, so on Linux you run it straight from the source code with your distribution's Python.  It works the same as on Windows, including the Rules and Silhouette editors and the command-line mode used for scheduled runs.
+
+1. Install Python 3.8 or newer, Tkinter (for the window) and the requests library.  Pick the line for your distribution:
+
+   Debian, Ubuntu, Raspberry Pi OS:
+   ```bash
+   sudo apt install python3 python3-tk python3-requests git
+   ```
+   Fedora:
+   ```bash
+   sudo dnf install python3 python3-tkinter python3-requests git
+   ```
+   Arch:
+   ```bash
+   sudo pacman -S python tk python-requests git
+   ```
+   openSUSE:
+   ```bash
+   sudo zypper install python3 python3-tk python3-requests git
+   ```
+   On a headless machine that will only use the command-line mode (step 4), you can leave out the Tkinter package.
+
+2. Get the source code:
+   ```bash
+   git clone https://github.com/egite/E-s-VRS-Database-Updater.git ~/vrs-updater
+   ```
+   To update to a newer version later, run `git pull` in that folder.  If you'd rather not use git, use **Code → Download ZIP** on the GitHub page and unzip it to `~/vrs-updater`.
+
+3. Start the program:
+   ```bash
+   python3 ~/vrs-updater/run.py
+   ```
+   Under Mono, VRS keeps its database in `~/.local/share/VirtualRadar` (or `$XDG_DATA_HOME/VirtualRadar` if you have set `XDG_DATA_HOME`), not in `AppData\Local\VirtualRadar` as on Windows.  The program looks there and fills in the **VRS Folder** on its own.  If VRS runs as a different user, such as a service account, or you have moved its data folder, browse to the folder that holds `AircraftOnlineLookupCache.sqb` instead, and make sure you have permission to write to it.  Running this program as the same user as VRS is simplest.
+
+   Choose a **Working Folder** that is different from the VRS folder, for example `~/vrs-updater-data`.  Your settings are saved in `settings.json` next to `run.py`.
+
+4. For scheduled runs, use the command-line mode rather than the window, so nothing needs a display:
+   ```bash
+   python3 ~/vrs-updater/run.py --no-gui --work-dir ~/vrs-updater-data --vrs-dir ~/.local/share/VirtualRadar
+   ```
+   The command-line mode does not read `settings.json`.  It downloads every register and backs up your VRS database unless you tell it otherwise; run `python3 ~/vrs-updater/run.py --help` to see the options.  To run it every Sunday at 3 AM, add this line with `crontab -e`:
+   ```
+   0 3 * * 0 python3 $HOME/vrs-updater/run.py --no-gui --work-dir $HOME/vrs-updater-data --vrs-dir $HOME/.local/share/VirtualRadar >> $HOME/vrs-updater.log 2>&1
+   ```
+   As on Windows, VRS should be stopped while the updated database is copied back.  If VRS runs as a systemd service, stop the service before the update and start it again afterwards.
+
+A few differences from Windows:
+- Linux file names are case-sensitive, so the rules and silhouette files must be named exactly `Rules.csv` and `Sils.csv`.
+- The window uses your system's own fonts, so it will look a little different from the screenshot.
 
 <ins>**Rules.csv file format explanation**</ins>
 

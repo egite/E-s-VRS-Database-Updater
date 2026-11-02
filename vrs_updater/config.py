@@ -25,6 +25,24 @@ def _resolve_data_file(work_dir: str, filename: str) -> str:
     return work_path  # Return work_dir path even if missing, so caller gets a clear error
 
 
+def default_vrs_dir() -> str:
+    """Return the folder VRS keeps its database in on this OS, or "" if absent.
+
+    VRS stores it under .NET's LocalApplicationData folder. On Windows that is
+    %LOCALAPPDATA%\\VirtualRadar. Under Mono on Linux the same folder maps to
+    $XDG_DATA_HOME/VirtualRadar, which is ~/.local/share/VirtualRadar unless
+    XDG_DATA_HOME is set.
+    """
+    if sys.platform == "win32":
+        base = (os.environ.get("LOCALAPPDATA")
+                or os.path.join(os.path.expanduser("~"), "AppData", "Local"))
+    else:
+        base = (os.environ.get("XDG_DATA_HOME")
+                or os.path.join(os.path.expanduser("~"), ".local", "share"))
+    path = os.path.join(base, "VirtualRadar")
+    return path if os.path.isdir(path) else ""
+
+
 # Default download URLs
 DEFAULT_FAA_URL = "https://registry.faa.gov/database/ReleasableAircraft.zip"
 DEFAULT_OPENSKY_URL = "https://s3.opensky-network.org/data-samples/metadata/aircraftDatabase.zip"

@@ -6,6 +6,7 @@ to each other.
 """
 
 import os
+import sys
 import tkinter as tk
 from tkinter import ttk
 
@@ -24,6 +25,16 @@ CYAN = "#4FC3F7"
 ORANGE = "#FFB74D"
 RED = "#EF5350"
 GREEN = "#81C784"
+
+# Font families. Segoe UI and Consolas ship only with Windows. Elsewhere use
+# the generic names Tk itself uses on X11, which fontconfig resolves to the
+# system's own fonts, so the log and editor tables stay monospaced.
+if sys.platform == "win32":
+    UI_FONT, MONO_FONT = "Segoe UI", "Consolas"
+elif sys.platform == "darwin":
+    UI_FONT, MONO_FONT = "Helvetica Neue", "Menlo"
+else:
+    UI_FONT, MONO_FONT = "sans-serif", "monospace"
 
 DB_COLUMNS = ("Icao", "Registration", "Country", "Manufacturer", "Model",
               "ModelIcao", "Operator", "OperatorIcao")
@@ -51,7 +62,7 @@ def dark_button(master, text, command, primary=False, width=None):
     return tk.Button(
         master, text="  %s  " % text, command=command,
         bg=ACCENT if primary else BTN, fg="white",
-        font=("Segoe UI", 10, "bold" if primary else "normal"),
+        font=(UI_FONT, 10, "bold" if primary else "normal"),
         activebackground=ACCENT_HOVER if primary else BTN_HOVER,
         activeforeground="white", relief="flat", width=width,
         disabledforeground="#777777")
@@ -59,11 +70,11 @@ def dark_button(master, text, command, primary=False, width=None):
 
 def dark_entry(master, textvariable, width=24):
     return tk.Entry(master, textvariable=textvariable, width=width,
-                    font=("Consolas", 10), bg=ENTRY, fg="#FFFFFF",
+                    font=(MONO_FONT, 10), bg=ENTRY, fg="#FFFFFF",
                     insertbackground="#FFFFFF", relief="flat")
 
 
-def dark_label(master, text, bg=BG, fg=LABEL, font=("Segoe UI", 9), **kwargs):
+def dark_label(master, text, bg=BG, fg=LABEL, font=(UI_FONT, 9), **kwargs):
     return tk.Label(master, text=text, bg=bg, fg=fg, font=font, **kwargs)
 
 
@@ -72,10 +83,10 @@ def style_tree(prefix):
     style = ttk.Style()
     style.configure("%s.Treeview" % prefix,
                     background=BG, foreground=TEXT, fieldbackground=BG,
-                    font=("Consolas", 9), rowheight=20)
+                    font=(MONO_FONT, 9), rowheight=20)
     style.configure("%s.Treeview.Heading" % prefix,
                     background=ENTRY, foreground=LABEL,
-                    font=("Segoe UI", 9, "bold"))
+                    font=(UI_FONT, 9, "bold"))
     style.map("%s.Treeview" % prefix,
               background=[("selected", "#264F78")],
               foreground=[("selected", "#FFFFFF")])

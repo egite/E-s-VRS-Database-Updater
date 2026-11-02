@@ -17,6 +17,7 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 
 from .ui_common import (BG, PANEL, ENTRY, CYAN, ORANGE, GREEN, LABEL, TEXT,
+                        UI_FONT, MONO_FONT,
                         dark_window, dark_button, dark_entry, dark_label,
                         center_on)
 
@@ -384,14 +385,14 @@ class ManualWindow:
         head = tk.Frame(self.win, bg=PANEL, padx=10, pady=6)
         head.pack(fill="x")
         dark_label(head, "User Manual", bg=PANEL, fg=CYAN,
-                   font=("Segoe UI", 12, "bold")).pack(side="left")
+                   font=(UI_FONT, 12, "bold")).pack(side="left")
         dark_label(head, "Search:", bg=PANEL).pack(side="left", padx=(20, 4))
         self.search_var = tk.StringVar()
         dark_entry(head, self.search_var, width=26).pack(side="left")
         self.search_var.trace_add("write", self._on_search)
         self.hits_var = tk.StringVar(value="")
         tk.Label(head, textvariable=self.hits_var, bg=PANEL, fg=ORANGE,
-                 font=("Segoe UI", 9)).pack(side="left", padx=(8, 0))
+                 font=(UI_FONT, 9)).pack(side="left", padx=(8, 0))
 
         body = tk.Frame(self.win, bg=BG)
         body.pack(fill="both", expand=True, padx=4, pady=4)
@@ -400,7 +401,7 @@ class ManualWindow:
         left = tk.Frame(body, bg=BG)
         left.pack(side="left", fill="y")
         self.toc = tk.Listbox(left, width=26, bg=BG, fg=TEXT,
-                              font=("Segoe UI", 10), relief="flat",
+                              font=(UI_FONT, 10), relief="flat",
                               selectbackground="#264F78", selectforeground="#FFFFFF",
                               highlightthickness=0, activestyle="none")
         self.toc.pack(side="left", fill="y", expand=True)
@@ -413,7 +414,7 @@ class ManualWindow:
         right = tk.Frame(body, bg=BG)
         right.pack(side="left", fill="both", expand=True, padx=(8, 0))
         self.text = tk.Text(right, wrap="word", bg=BG, fg=TEXT,
-                            font=("Segoe UI", 10), bd=0, padx=16, pady=12,
+                            font=(UI_FONT, 10), bd=0, padx=16, pady=12,
                             highlightthickness=0, cursor="arrow", spacing1=2,
                             spacing3=6)
         self.text.pack(side="left", fill="both", expand=True)
@@ -422,18 +423,18 @@ class ManualWindow:
         sb.pack(side="left", fill="y")
 
         self.text.tag_configure("title", foreground=CYAN,
-                                font=("Segoe UI", 15, "bold"), spacing3=10)
+                                font=(UI_FONT, 15, "bold"), spacing3=10)
         self.text.tag_configure("h", foreground=GREEN,
-                                font=("Segoe UI", 11, "bold"),
+                                font=(UI_FONT, 11, "bold"),
                                 spacing1=12, spacing3=4)
         self.text.tag_configure("p", foreground=TEXT, spacing3=8)
         self.text.tag_configure("b", foreground=TEXT, lmargin1=18, lmargin2=32,
                                 spacing3=3)
-        self.text.tag_configure("m", foreground="#CE9178", font=("Consolas", 9),
+        self.text.tag_configure("m", foreground="#CE9178", font=(MONO_FONT, 9),
                                 lmargin1=18, lmargin2=18, spacing1=4, spacing3=8)
         self.text.tag_configure("note", foreground=ORANGE, lmargin1=14,
                                 lmargin2=14, spacing1=8, spacing3=8,
-                                font=("Segoe UI", 10, "italic"))
+                                font=(UI_FONT, 10, "italic"))
         self.text.tag_configure("hit", background="#5A4500", foreground="#FFFFFF")
 
         btns = tk.Frame(self.win, bg=BG, padx=8, pady=8)

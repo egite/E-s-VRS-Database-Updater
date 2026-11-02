@@ -75,6 +75,10 @@ Examples:
                         help='Override CASA register download URL')
     parser.add_argument('--settings', default=None,
                         help='Load settings from VB.NET settings.sqb file')
+    # Checked by run.py and __main__.py to pick this mode over the GUI; it is
+    # declared here only so argparse accepts it.
+    parser.add_argument('--no-gui', action='store_true',
+                        help='Run from the command line without opening the window')
 
     args = parser.parse_args()
 

@@ -16,7 +16,7 @@ from tkinter import ttk, messagebox
 from .sils import (SilEntry, load_sils, save_sils,
                    validate_entry, validate_all)
 from .ui_common import (BG, PANEL, ENTRY, CYAN, ORANGE, RED, GREEN, LABEL,
-                        TEXT,
+                        TEXT, UI_FONT, MONO_FONT,
                         dark_window, dark_button, dark_entry, dark_label,
                         style_tree, center_on)
 
@@ -25,7 +25,7 @@ SEVERITY_ORDER = {"error": 0, "warning": 1, "info": 2}
 
 def _alias_box(master, values, height=8):
     """A dark multi-line box holding one alias per line."""
-    txt = tk.Text(master, height=height, width=30, font=("Consolas", 10),
+    txt = tk.Text(master, height=height, width=30, font=(MONO_FONT, 10),
                   bg=ENTRY, fg="#FFFFFF", insertbackground="#FFFFFF",
                   relief="flat", wrap="none", undo=True)
     txt.insert("1.0", "\n".join(values))
@@ -75,7 +75,7 @@ class SilRowDialog:
         body.rowconfigure(0, weight=1)
 
         mfr_frame = tk.LabelFrame(body, text=" Manufacturer aliases ", bg=BG,
-                                  fg=CYAN, font=("Segoe UI", 10, "bold"),
+                                  fg=CYAN, font=(UI_FONT, 10, "bold"),
                                   padx=8, pady=6, relief="groove", bd=1)
         mfr_frame.grid(row=0, column=0, sticky="nsew", padx=(0, 5))
         dark_label(mfr_frame,
@@ -86,7 +86,7 @@ class SilRowDialog:
         self.mfr_box.pack(fill="both", expand=True, pady=(4, 0))
 
         mdl_frame = tk.LabelFrame(body, text=" Model aliases ", bg=BG,
-                                  fg=GREEN, font=("Segoe UI", 10, "bold"),
+                                  fg=GREEN, font=(UI_FONT, 10, "bold"),
                                   padx=8, pady=6, relief="groove", bd=1)
         mdl_frame.grid(row=0, column=1, sticky="nsew", padx=(5, 0))
         dark_label(mdl_frame,
@@ -109,7 +109,7 @@ class SilRowDialog:
 
         self.issue_var = tk.StringVar(value="")
         self.issue_label = tk.Label(self.win, textvariable=self.issue_var, bg=BG,
-                                    fg=ORANGE, font=("Segoe UI", 9), anchor="w",
+                                    fg=ORANGE, font=(UI_FONT, 9), anchor="w",
                                     justify="left", wraplength=780)
         self.issue_label.pack(fill="x", padx=12, pady=(8, 0))
 
@@ -183,7 +183,7 @@ class TestLookupDialog:
         head = tk.Frame(win, bg=PANEL, padx=10, pady=8)
         head.pack(fill="x")
         dark_label(head, "Resolve a manufacturer and model the way the merge does.",
-                   bg=PANEL, font=("Segoe UI", 10, "bold"), fg=CYAN).pack(anchor="w")
+                   bg=PANEL, font=(UI_FONT, 10, "bold"), fg=CYAN).pack(anchor="w")
         dark_label(head, "Sils.csv is layered over the program's built-in table: "
                          "your rows win, and anything you do not cover still "
                          "resolves from the built-in mappings.",
@@ -206,12 +206,12 @@ class TestLookupDialog:
 
         self.result_var = tk.StringVar(value="")
         tk.Label(win, textvariable=self.result_var, bg=BG, fg=TEXT,
-                 font=("Consolas", 11), anchor="w", justify="left",
+                 font=(MONO_FONT, 11), anchor="w", justify="left",
                  wraplength=720).pack(fill="x", padx=12)
 
         self.detail_var = tk.StringVar(value="")
         tk.Label(win, textvariable=self.detail_var, bg=BG, fg=LABEL,
-                 font=("Segoe UI", 9), anchor="w", justify="left",
+                 font=(UI_FONT, 9), anchor="w", justify="left",
                  wraplength=720).pack(fill="x", padx=12, pady=(6, 0))
 
         btns = tk.Frame(win, bg=BG, pady=10)
@@ -300,12 +300,12 @@ class SilCheckDialog:
         warns = sum(1 for _, s, _ in issues if s == "warning")
         if not issues:
             dark_label(head, "%d rows checked - nothing to report." % usable,
-                       bg=PANEL, fg=GREEN, font=("Segoe UI", 11, "bold")).pack(anchor="w")
+                       bg=PANEL, fg=GREEN, font=(UI_FONT, 11, "bold")).pack(anchor="w")
         else:
             dark_label(head, "%d rows checked:  %d errors, %d warnings"
                        % (usable, errors, warns), bg=PANEL,
                        fg=RED if errors else ORANGE,
-                       font=("Segoe UI", 11, "bold")).pack(anchor="w")
+                       font=(UI_FONT, 11, "bold")).pack(anchor="w")
         dark_label(head, "%d unused rows (no manufacturer or no model) are kept in "
                          "the file but never match." % unused,
                    bg=PANEL, fg=CYAN).pack(anchor="w", pady=(4, 0))
@@ -399,7 +399,7 @@ class SilsEditor:
     def _build_ui(self):
         head = tk.Frame(self.win, bg=PANEL, padx=10, pady=6)
         head.pack(fill="x")
-        dark_label(head, "Search:", bg=PANEL, font=("Segoe UI", 10)).pack(side="left")
+        dark_label(head, "Search:", bg=PANEL, font=(UI_FONT, 10)).pack(side="left")
 
         self.search_var = tk.StringVar()
         search = dark_entry(head, self.search_var, width=28)
@@ -414,7 +414,7 @@ class SilsEditor:
         combo.bind("<<ComboboxSelected>>", lambda _e: self._refresh(keep_selection=True))
 
         dark_label(head, self.save_path, bg=PANEL, fg=CYAN,
-                   font=("Consolas", 8)).pack(side="right")
+                   font=(MONO_FONT, 8)).pack(side="right")
 
         info = tk.Frame(self.win, bg=BG, padx=10, pady=3)
         info.pack(fill="x")
@@ -457,7 +457,7 @@ class SilsEditor:
 
         self.status_var = tk.StringVar(value="")
         self.status_label = tk.Label(self.win, textvariable=self.status_var, bg=BG,
-                                     fg=ORANGE, font=("Segoe UI", 9), anchor="w",
+                                     fg=ORANGE, font=(UI_FONT, 9), anchor="w",
                                      wraplength=1020, justify="left")
         self.status_label.pack(fill="x", padx=12)
 
@@ -478,7 +478,7 @@ class SilsEditor:
 
         self.count_var = tk.StringVar(value="")
         tk.Label(btns, textvariable=self.count_var, bg=BG, fg=CYAN,
-                 font=("Segoe UI", 9)).pack(side="right", padx=(0, 14))
+                 font=(UI_FONT, 9)).pack(side="right", padx=(0, 14))
 
     # -- state -------------------------------------------------------------
     def _schedule_filter(self, *_args):

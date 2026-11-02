@@ -17,7 +17,7 @@ from tkinter import ttk, messagebox
 from .rules import (Rule, FIELD_NAMES, MSG_FIELD_CHOICES, RULE_TO_DB,
                     load_rules, save_rules, validate_rule, validate_all)
 from .ui_common import (BG, PANEL, ENTRY, ACCENT, BTN, TEXT, LABEL, CYAN,
-                        DB_COLUMNS,
+                        DB_COLUMNS, UI_FONT, MONO_FONT,
                         ORANGE, RED, GREEN, dark_window, dark_button,
                         dark_entry, dark_label, style_tree, center_on)
 
@@ -99,7 +99,7 @@ class RuleDialog:
             bar.pack(fill="x")
             dark_label(bar, "From aircraft:", bg=PANEL).pack(side="left")
             dark_label(bar, info, bg=PANEL, fg=CYAN,
-                   font=("Consolas", 10)).pack(side="left", padx=(8, 0))
+                   font=(MONO_FONT, 10)).pack(side="left", padx=(8, 0))
 
         body = tk.Frame(self.win, bg=BG, padx=10, pady=10)
         body.pack(fill="both", expand=True)
@@ -109,7 +109,7 @@ class RuleDialog:
 
         # --- When (match) -------------------------------------------------
         when = tk.LabelFrame(body, text=" When the record matches ", bg=BG,
-                             fg=CYAN, font=("Segoe UI", 10, "bold"),
+                             fg=CYAN, font=(UI_FONT, 10, "bold"),
                              padx=8, pady=8, relief="groove", bd=1)
         when.grid(row=0, column=0, sticky="nsew", padx=(0, 5))
         when.columnconfigure(1, weight=1)
@@ -135,7 +135,7 @@ class RuleDialog:
 
         # --- Then (set) ---------------------------------------------------
         then = tk.LabelFrame(body, text=" Set these values ", bg=BG,
-                             fg=GREEN, font=("Segoe UI", 10, "bold"),
+                             fg=GREEN, font=(UI_FONT, 10, "bold"),
                              padx=8, pady=8, relief="groove", bd=1)
         then.grid(row=0, column=1, sticky="nsew", padx=(5, 0))
         then.columnconfigure(1, weight=1)
@@ -164,7 +164,7 @@ class RuleDialog:
         # --- Validation feedback -----------------------------------------
         self.issue_var = tk.StringVar(value="")
         self.issue_label = tk.Label(self.win, textvariable=self.issue_var, bg=BG,
-                                    fg=ORANGE, font=("Segoe UI", 9), anchor="w",
+                                    fg=ORANGE, font=(UI_FONT, 9), anchor="w",
                                     justify="left", wraplength=820)
         self.issue_label.pack(fill="x", padx=12, pady=(8, 0))
 
@@ -253,11 +253,11 @@ class TestResultDialog:
         else:
             summary, color = "No aircraft match this rule", ORANGE
         dark_label(head, summary, bg=PANEL, fg=color,
-               font=("Segoe UI", 11, "bold")).pack(anchor="w")
+               font=(UI_FONT, 11, "bold")).pack(anchor="w")
         dark_label(head, "When:  %s" % (rule.describe_match() or "(nothing)"),
-               bg=PANEL, font=("Consolas", 9)).pack(anchor="w", pady=(4, 0))
+               bg=PANEL, font=(MONO_FONT, 9)).pack(anchor="w", pady=(4, 0))
         dark_label(head, "Set:   %s" % (rule.describe_change() or "(nothing)"),
-               bg=PANEL, font=("Consolas", 9)).pack(anchor="w")
+               bg=PANEL, font=(MONO_FONT, 9)).pack(anchor="w")
         if count > len(rows):
             dark_label(head, "Showing the first %d." % len(rows), bg=PANEL,
                    fg=CYAN).pack(anchor="w", pady=(4, 0))
@@ -338,11 +338,11 @@ class CheckReportDialog:
             color = RED if errors else ORANGE
         self.summary_var = tk.StringVar(value=summary)
         tk.Label(head, textvariable=self.summary_var, bg=PANEL, fg=color,
-                 font=("Segoe UI", 11, "bold")).pack(anchor="w")
+                 font=(UI_FONT, 11, "bold")).pack(anchor="w")
 
         self.status_var = tk.StringVar(value="")
         tk.Label(head, textvariable=self.status_var, bg=PANEL, fg=CYAN,
-                 font=("Segoe UI", 9)).pack(anchor="w", pady=(4, 0))
+                 font=(UI_FONT, 9)).pack(anchor="w", pady=(4, 0))
 
         frame = tk.Frame(win, bg=BG)
         frame.pack(fill="both", expand=True, padx=4, pady=4)
@@ -486,9 +486,9 @@ class RulesEditor:
         head = tk.Frame(self.win, bg=PANEL, padx=10, pady=6)
         head.pack(fill="x")
         dark_label(head, "Rules are applied in order and the first match wins.",
-               bg=PANEL, font=("Segoe UI", 9)).pack(side="left")
+               bg=PANEL, font=(UI_FONT, 9)).pack(side="left")
         dark_label(head, self.save_path, bg=PANEL, fg=CYAN,
-               font=("Consolas", 8)).pack(side="right")
+               font=(MONO_FONT, 8)).pack(side="right")
 
         frame = tk.Frame(self.win, bg=BG)
         frame.pack(fill="both", expand=True, padx=4, pady=4)
@@ -522,7 +522,7 @@ class RulesEditor:
         # Status line - shows issues for the selected rule
         self.status_var = tk.StringVar(value="")
         self.status_label = tk.Label(self.win, textvariable=self.status_var, bg=BG,
-                                     fg=ORANGE, font=("Segoe UI", 9), anchor="w",
+                                     fg=ORANGE, font=(UI_FONT, 9), anchor="w",
                                      wraplength=1000, justify="left")
         self.status_label.pack(fill="x", padx=12)
 
@@ -547,7 +547,7 @@ class RulesEditor:
 
         self.count_var = tk.StringVar(value="")
         tk.Label(btns, textvariable=self.count_var, bg=BG, fg=CYAN,
-                 font=("Segoe UI", 9)).pack(side="right", padx=(0, 14))
+                 font=(UI_FONT, 9)).pack(side="right", padx=(0, 14))
 
     # -- state -------------------------------------------------------------
     def _refresh(self, select_index=None):

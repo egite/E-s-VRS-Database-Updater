@@ -13,7 +13,7 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox, scrolledtext
 from datetime import datetime
 
-from .config import Settings, load_settings
+from .config import Settings, load_settings, default_vrs_dir
 from .faa import download_faa, parse_faa
 from .ccar import parse_ccar
 from .nz_caa import download_nz_caa, parse_nz_caa
@@ -25,6 +25,7 @@ from .rules import load_rules
 from .rules_editor import open_rules_editor
 from .sils_editor import open_sils_editor
 from .manual import open_manual
+from .ui_common import UI_FONT, MONO_FONT
 from . import display_version
 
 # When frozen (PyInstaller), bundled data files are in sys._MEIPASS; settings persist next to the exe
@@ -176,7 +177,7 @@ class VRSUpdaterApp:
 
         # Centered title text (centered across full banner width, ignoring icons)
         tk.Label(banner, text="E's VRS Database Updater",
-                 font=("Segoe UI", 18, "bold"), fg="white",
+                 font=(UI_FONT, 18, "bold"), fg="white",
                  bg="#1565C0", pady=8).place(relx=0.5, rely=0.5, anchor="center")
 
         # --- Top frame: paths ---
@@ -222,7 +223,7 @@ class VRSUpdaterApp:
         self.chk_skip_opensky_var = tk.BooleanVar()
         self.chk_skip_rules_var = tk.BooleanVar()
 
-        hdr_font = ("Segoe UI", 8)
+        hdr_font = (UI_FONT, 8)
         for c, text in enumerate(("Source", "Download", "Process", "Local copy")):
             tk.Label(src_frame, text=text, fg="#666666", font=hdr_font,
                      anchor="w").grid(row=0, column=c, sticky="w",
@@ -243,7 +244,7 @@ class VRSUpdaterApp:
             ttk.Checkbutton(src_frame, variable=skip_var,
                             onvalue=False, offvalue=True).grid(row=r, column=2, pady=1)
             lbl = tk.Label(src_frame, text="\u2014", fg="#888888",
-                           font=("Segoe UI", 9), anchor="w")
+                           font=(UI_FONT, 9), anchor="w")
             lbl.grid(row=r, column=3, sticky="w", pady=1)
             self._db_status_labels[name] = (lbl, filename, age_attr)
 
@@ -253,7 +254,7 @@ class VRSUpdaterApp:
         ttk.Checkbutton(src_frame, variable=self.chk_skip_rules_var,
                         onvalue=False, offvalue=True).grid(row=rules_row, column=2, pady=1)
         self.lbl_rules_status = tk.Label(src_frame, text="\u2014", fg="#888888",
-                                         font=("Segoe UI", 9), anchor="w")
+                                         font=(UI_FONT, 9), anchor="w")
         self.lbl_rules_status.grid(row=rules_row, column=3, sticky="w", pady=1)
         src_frame.columnconfigure(3, weight=1)
 
@@ -277,16 +278,16 @@ class VRSUpdaterApp:
         prog_frame.pack(side="bottom", fill="x", pady=(4, 0))
 
         tk.Label(prog_frame, text="Progress:", bg="#263238", fg="#B0BEC5",
-                 font=("Segoe UI", 9)).grid(row=0, column=0, sticky="w")
+                 font=(UI_FONT, 9)).grid(row=0, column=0, sticky="w")
         self.percent_var = tk.StringVar(value=" - %")
         tk.Label(prog_frame, textvariable=self.percent_var, width=10, anchor="center",
-                 font=("Segoe UI", 11, "bold"), bg="#263238", fg="#4CAF50").grid(row=0, column=1, padx=8)
+                 font=(UI_FONT, 11, "bold"), bg="#263238", fg="#4CAF50").grid(row=0, column=1, padx=8)
 
         tk.Label(prog_frame, text="ETA:", bg="#263238", fg="#B0BEC5",
-                 font=("Segoe UI", 9)).grid(row=0, column=2, sticky="w")
+                 font=(UI_FONT, 9)).grid(row=0, column=2, sticky="w")
         self.eta_var = tk.StringVar(value=" - ")
         tk.Label(prog_frame, textvariable=self.eta_var, width=12, anchor="center",
-                 font=("Segoe UI", 11, "bold"), bg="#263238", fg="#FFD54F").grid(row=0, column=3, padx=4)
+                 font=(UI_FONT, 11, "bold"), bg="#263238", fg="#FFD54F").grid(row=0, column=3, padx=4)
 
         # Progress bar (custom green style)
         style = ttk.Style()
@@ -302,19 +303,19 @@ class VRSUpdaterApp:
         btn_frame.pack(fill="x", padx=8, pady=4)
 
         self.btn_start = tk.Button(btn_frame, text="  Start  ", command=self._on_start,
-                                   bg="#4CAF50", fg="white", font=("Segoe UI", 11, "bold"),
+                                   bg="#4CAF50", fg="white", font=(UI_FONT, 11, "bold"),
                                    activebackground="#45a049", relief="raised", bd=2)
         self.btn_start.pack(side="left")
 
         self.btn_cancel = tk.Button(btn_frame, text="  Cancel  ", command=self._on_cancel,
-                                    bg="#f44336", fg="white", font=("Segoe UI", 11, "bold"),
+                                    bg="#f44336", fg="white", font=(UI_FONT, 11, "bold"),
                                     activebackground="#d32f2f", relief="raised", bd=2,
                                     state="disabled")
         self.btn_cancel.pack(side="left", padx=(8, 0))
 
         self.btn_apply_rules = tk.Button(btn_frame, text="  Apply Rules  ",
                                          command=self._on_apply_rules,
-                                         bg="#1565C0", fg="white", font=("Segoe UI", 11, "bold"),
+                                         bg="#1565C0", fg="white", font=(UI_FONT, 11, "bold"),
                                          activebackground="#1976D2", relief="raised", bd=2,
                                          disabledforeground="#DDDDDD")
         self.btn_apply_rules.pack(side="left", padx=(8, 0))
@@ -322,14 +323,14 @@ class VRSUpdaterApp:
         # Phase indicator (right side)
         self.phase_var = tk.StringVar(value="Idle")
         tk.Label(btn_frame, textvariable=self.phase_var,
-                 font=("Segoe UI", 11, "bold"), fg="#FF9800").pack(side="right", padx=(0, 4))
+                 font=(UI_FONT, 11, "bold"), fg="#FF9800").pack(side="right", padx=(0, 4))
         tk.Label(btn_frame, text="Phase:",
-                 font=("Segoe UI", 10), fg="#666666").pack(side="right", padx=(0, 4))
+                 font=(UI_FONT, 10), fg="#666666").pack(side="right", padx=(0, 4))
 
         # Throughput indicator (teal)
         self.throughput_var = tk.StringVar(value="")
         tk.Label(btn_frame, textvariable=self.throughput_var,
-                 font=("Consolas", 10, "bold"), fg="#00BCD4").pack(side="left", padx=(16, 0))
+                 font=(MONO_FONT, 10, "bold"), fg="#00BCD4").pack(side="left", padx=(16, 0))
 
         # --- Resizable split: Program Progress (top) + Database Update Status (bottom)
         # User can drag the sash; ratio is preserved across window resizes and runs.
@@ -339,7 +340,7 @@ class VRSUpdaterApp:
         status_frame = ttk.LabelFrame(self.paned, text="Program Progress", padding=4)
         self.txt_status = scrolledtext.ScrolledText(
             status_frame, height=10, wrap="word",
-            font=("Consolas", 9), state="disabled",
+            font=(MONO_FONT, 9), state="disabled",
             bg="#1E1E1E", fg="#D4D4D4", insertbackground="#D4D4D4",
             selectbackground="#264F78", selectforeground="#FFFFFF")
         self.txt_status.pack(fill="both", expand=True)
@@ -355,7 +356,7 @@ class VRSUpdaterApp:
         self.txt_status.tag_configure("error", foreground="#EF5350")      # red
         self.txt_status.tag_configure("success", foreground="#66BB6A")    # green
         self.txt_status.tag_configure("info", foreground="#B0BEC5")       # light gray
-        self.txt_status.tag_configure("done", foreground="#66BB6A", font=("Consolas", 9, "bold"))
+        self.txt_status.tag_configure("done", foreground="#66BB6A", font=(MONO_FONT, 9, "bold"))
 
         # --- Detail log (Database Update Status) - dark terminal ---
         detail_frame = ttk.LabelFrame(self.paned, text="Database Update Status", padding=4)
@@ -364,14 +365,14 @@ class VRSUpdaterApp:
         detail_hdr.pack(fill="x", pady=(0, 2))
         self.detail_count_var = tk.StringVar(value="")
         tk.Label(detail_hdr, textvariable=self.detail_count_var, fg="#666666",
-                 font=("Segoe UI", 8), anchor="w").pack(side="left")
+                 font=(UI_FONT, 8), anchor="w").pack(side="left")
         self.btn_save_log = ttk.Button(detail_hdr, text="Save Log...",
                                        command=self._save_detail_log)
         self.btn_save_log.pack(side="right")
 
         self.txt_details = scrolledtext.ScrolledText(
             detail_frame, height=20, wrap="word",
-            font=("Consolas", 9), state="disabled",
+            font=(MONO_FONT, 9), state="disabled",
             bg="#1E1E1E", fg="#D4D4D4", insertbackground="#D4D4D4",
             selectbackground="#264F78", selectforeground="#FFFFFF")
         self.txt_details.pack(fill="both", expand=True)
@@ -408,12 +409,31 @@ class VRSUpdaterApp:
                 pass
         return {}
 
+    # Windows and macOS expose maximize as the "zoomed" window state; X11
+    # (Linux) has no such state and uses the -zoomed attribute instead.
+    def _is_zoomed(self) -> bool:
+        try:
+            if self.root.tk.call("tk", "windowingsystem") == "x11":
+                return bool(self.root.attributes("-zoomed"))
+            return self.root.state() == "zoomed"
+        except tk.TclError:
+            return False
+
+    def _set_zoomed(self):
+        try:
+            if self.root.tk.call("tk", "windowingsystem") == "x11":
+                self.root.attributes("-zoomed", True)
+            else:
+                self.root.state("zoomed")
+        except tk.TclError:
+            pass
+
     def _save_settings_json(self):
         """Save all options and window geometry to JSON."""
         # When the window is maximized, winfo_* reports the zoomed (full-screen)
         # geometry, not the un-zoomed restore size. Preserve the previous restore
         # geometry instead so un-maximizing on next launch lands somewhere sane.
-        is_zoomed = (self.root.state() == "zoomed")
+        is_zoomed = self._is_zoomed()
         if is_zoomed:
             prev = self._load_settings_json()
             win_x = prev.get("window_x", self.root.winfo_x())
@@ -494,7 +514,7 @@ class VRSUpdaterApp:
             self.root.geometry(f"{w}x{h}+{x}+{y}")
         if data.get("window_zoomed"):
             # Re-maximize after the geometry call has been processed.
-            self.root.after(0, lambda: self.root.state("zoomed"))
+            self.root.after(0, self._set_zoomed)
 
         # Restore saved pane split ratio (status_height / total_height)
         ratio = data.get("pane_ratio")
@@ -632,11 +652,6 @@ class VRSUpdaterApp:
                 self.settings.work_dir = os.getcwd()
             self.work_dir_var.set(self.settings.work_dir)
 
-            if not self.settings.vrs_dir:
-                username = os.environ.get("USERNAME", os.environ.get("USER", ""))
-                default_vrs = os.path.join("C:\\Users", username, "AppData", "Local", "VirtualRadar")
-                if os.path.exists(default_vrs):
-                    self.settings.vrs_dir = default_vrs
             self.vrs_dir_var.set(self.settings.vrs_dir)
 
             self.chk_faa_download_var.set(self.settings.download_faa)
@@ -645,12 +660,9 @@ class VRSUpdaterApp:
             self.chk_backup_var.set(self.settings.backup_vrs_db)
             self.chk_complete_var.set(self.settings.build_complete)
 
-        # Default VRS dir if still empty
+        # Default VRS dir if still empty (Windows or Mono location, per OS)
         if not self.vrs_dir_var.get():
-            username = os.environ.get("USERNAME", os.environ.get("USER", ""))
-            default_vrs = os.path.join("C:\\Users", username, "AppData", "Local", "VirtualRadar")
-            if os.path.exists(default_vrs):
-                self.vrs_dir_var.set(default_vrs)
+            self.vrs_dir_var.set(default_vrs_dir())
 
     def _build_settings(self) -> Settings:
         """Build Settings from current UI state."""
@@ -1068,7 +1080,7 @@ class VRSUpdaterApp:
         order_frame.grid(row=13, column=0, sticky="w", pady=(0, 12))
 
         order_listbox = tk.Listbox(order_frame, height=6, width=25,
-                                   font=("Segoe UI", 10), selectmode="single")
+                                   font=(UI_FONT, 10), selectmode="single")
         order_listbox.pack(side="left", padx=(0, 8))
         for item in self.settings.merge_order:
             order_listbox.insert("end", item)
@@ -1132,7 +1144,7 @@ class VRSUpdaterApp:
         frame = ttk.Frame(win, padding=16)
         frame.pack(fill="both", expand=True)
 
-        ttk.Label(frame, text="Logging", font=("Segoe UI", 10, "bold")).grid(
+        ttk.Label(frame, text="Logging", font=(UI_FONT, 10, "bold")).grid(
             row=0, column=0, sticky="w", pady=(0, 4))
 
         log_var = tk.BooleanVar(value=self.chk_log_errors_var.get())
@@ -1144,7 +1156,7 @@ class VRSUpdaterApp:
             row=2, column=0, sticky="w", padx=(8, 0))
 
         ttk.Label(frame, text="Log files are saved to the working folder",
-                  font=("Segoe UI", 8)).grid(row=3, column=0, sticky="w", padx=(24, 0), pady=(0, 12))
+                  font=(UI_FONT, 8)).grid(row=3, column=0, sticky="w", padx=(24, 0), pady=(0, 12))
 
         def save_and_close():
             self.chk_log_errors_var.set(log_var.get())
@@ -1269,16 +1281,16 @@ class VRSUpdaterApp:
             pass
 
         header = tk.Label(win, text="E's VRS Database Updater — Features",
-                          font=("Segoe UI", 12, "bold"), bg="#1565C0", fg="white",
+                          font=(UI_FONT, 12, "bold"), bg="#1565C0", fg="white",
                           pady=8)
         header.pack(fill="x")
 
         txt = tk.Text(win, wrap="word", bg="#1E1E1E", fg="#D4D4D4",
-                      font=("Consolas", 10), bd=0, padx=12, pady=8,
+                      font=(MONO_FONT, 10), bd=0, padx=12, pady=8,
                       highlightthickness=0, cursor="arrow")
         txt.pack(fill="both", expand=True)
 
-        txt.tag_configure("cat", foreground="#4FC3F7", font=("Consolas", 10, "bold"))
+        txt.tag_configure("cat", foreground="#4FC3F7", font=(MONO_FONT, 10, "bold"))
         txt.tag_configure("item", foreground="#D4D4D4")
 
         features = [
@@ -1346,6 +1358,7 @@ class VRSUpdaterApp:
                 "Process toggles leave any register, or the Rules pass, out of a run",
                 "Configurable database priority order decides which source wins",
                 "Remembers working directory and VRS directory paths",
+                "Finds the VRS folder on Windows, and under Mono on Linux",
                 "Saves/restores all checkboxes and options between sessions",
                 "Optional error log file (DDMMYYYY-HHMM timestamped, saved to working folder)",
                 "Optional activity log file (captures download and build steps)",
@@ -1369,7 +1382,7 @@ class VRSUpdaterApp:
 
         btn = tk.Button(win, text="Close", command=win.destroy,
                         bg="#333333", fg="white", activebackground="#555555",
-                        activeforeground="white", font=("Segoe UI", 10),
+                        activeforeground="white", font=(UI_FONT, 10),
                         relief="flat", padx=20, pady=4)
         btn.pack(pady=10)
 
@@ -1458,11 +1471,11 @@ class VRSUpdaterApp:
         search_frame.pack(fill="x")
 
         tk.Label(search_frame, text="Search:", bg="#263238", fg="#B0BEC5",
-                 font=("Segoe UI", 10)).pack(side="left")
+                 font=(UI_FONT, 10)).pack(side="left")
 
         search_var = tk.StringVar()
         search_entry = tk.Entry(search_frame, textvariable=search_var, width=30,
-                                font=("Consolas", 11), bg="#37474F", fg="#FFFFFF",
+                                font=(MONO_FONT, 11), bg="#37474F", fg="#FFFFFF",
                                 insertbackground="#FFFFFF", relief="flat")
         search_entry.pack(side="left", padx=(8, 4), fill="x", expand=True)
 
@@ -1475,7 +1488,7 @@ class VRSUpdaterApp:
 
         result_count_var = tk.StringVar(value="")
         count_label = tk.Label(search_frame, textvariable=result_count_var,
-                               bg="#263238", fg="#4FC3F7", font=("Segoe UI", 9))
+                               bg="#263238", fg="#4FC3F7", font=(UI_FONT, 9))
         count_label.pack(side="right", padx=(8, 0))
 
         # --- Results treeview ---
@@ -1493,11 +1506,11 @@ class VRSUpdaterApp:
         style = ttk.Style()
         style.configure("Search.Treeview",
                          background="#1E1E1E", foreground="#D4D4D4",
-                         fieldbackground="#1E1E1E", font=("Consolas", 9),
+                         fieldbackground="#1E1E1E", font=(MONO_FONT, 9),
                          rowheight=20)
         style.configure("Search.Treeview.Heading",
                          background="#37474F", foreground="#B0BEC5",
-                         font=("Segoe UI", 9, "bold"))
+                         font=(UI_FONT, 9, "bold"))
         style.map("Search.Treeview",
                    background=[("selected", "#264F78")],
                    foreground=[("selected", "#FFFFFF")])
@@ -1546,12 +1559,12 @@ class VRSUpdaterApp:
         btn_frame.pack(fill="x", padx=8)
 
         export_btn = tk.Button(btn_frame, text="  Export CSV  ", command=lambda: self._export_results(tree, columns),
-                               bg="#1565C0", fg="white", font=("Segoe UI", 10, "bold"),
+                               bg="#1565C0", fg="white", font=(UI_FONT, 10, "bold"),
                                activebackground="#1976D2", relief="flat")
         export_btn.pack(side="left")
 
         tk.Button(btn_frame, text="  Close  ", command=win.destroy,
-                  bg="#333333", fg="white", font=("Segoe UI", 10),
+                  bg="#333333", fg="white", font=(UI_FONT, 10),
                   activebackground="#555555", relief="flat").pack(side="right")
 
         # --- Search logic ---
