@@ -1,5 +1,5 @@
 # E's VRS Database Updater - Python Port
-__version__ = "2.2.0"
+__version__ = "2.3.0"
 
 
 def display_version() -> str:
