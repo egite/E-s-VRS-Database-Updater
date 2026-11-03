@@ -282,6 +282,10 @@ def _publish_vrs_db(settings: Settings) -> None:
                 os.remove(vrs_dest + suffix)
             except FileNotFoundError:
                 pass
+            except OSError as e:
+                # Windows will not delete a file VRS still has open
+                print(f"  WARNING: Could not remove {os.path.basename(vrs_dest)}{suffix} "
+                      f"({e.strerror}). Close VRS before the next run so it can be removed.")
 
         print("  Copying updated database back to VRS location...")
         shutil.copy2(settings.vrs_db_path, vrs_dest)
