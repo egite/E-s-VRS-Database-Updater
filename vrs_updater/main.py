@@ -25,6 +25,7 @@ from .nz_caa import download_nz_caa, parse_nz_caa
 from .casa import download_casa, parse_casa
 from .opensky import download_opensky, parse_opensky
 from .vrs_merge import update_vrs
+from .vrs_config_check import check_vrs_config, format_problems
 from . import display_version
 
 
@@ -126,6 +127,24 @@ Examples:
     if settings.vrs_dir and settings.vrs_dir == settings.work_dir:
         print("ERROR: Working directory and VRS directory cannot be the same.")
         sys.exit(1)
+
+    config_problems = check_vrs_config(settings)
+    if config_problems:
+        print("VRS CONFIGURATION ERROR - VRS cannot read the lookup cache, or this")
+        print("program's update will not reach it:")
+        print()
+        print(format_problems(config_problems))
+        print()
+        if not sys.stdin.isatty():
+            print("Stopping: nobody is at the console to acknowledge this.")
+            print("Fix the problem above, or run from a console to acknowledge it and continue.")
+            sys.exit(2)
+        try:
+            input("Press Enter to acknowledge and continue, or Ctrl+C to stop... ")
+        except (EOFError, KeyboardInterrupt):
+            print()
+            sys.exit(2)
+        print()
 
     os.makedirs(settings.work_dir, exist_ok=True)
     start_time = time.time()

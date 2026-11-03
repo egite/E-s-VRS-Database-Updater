@@ -266,8 +266,31 @@ def _publish_vrs_db(settings: Settings) -> None:
         return
     vrs_dest = os.path.join(settings.vrs_dir, "AircraftOnlineLookupCache.sqb")
     if os.path.exists(os.path.dirname(vrs_dest)):
+        # The merge works in WAL mode, which is stored in the file. Hand VRS a
+        # rollback-journal file, the mode VRS itself uses, so VRS never has to
+        # open it in WAL mode or create -wal/-shm files beside it.
+        conn = sqlite3.connect(settings.vrs_db_path)
+        try:
+            conn.execute("PRAGMA journal_mode=DELETE")
+        finally:
+            conn.close()
+
+        # A -wal left next to the old file would be replayed into the new one
+        # the next time SQLite opens it. VRS's own -journal is left alone.
+        for suffix in ("-wal", "-shm"):
+            try:
+                os.remove(vrs_dest + suffix)
+            except FileNotFoundError:
+                pass
+
         print("  Copying updated database back to VRS location...")
         shutil.copy2(settings.vrs_db_path, vrs_dest)
+
+        # Run as root (e.g. sudo), a newly created file would belong to root
+        # and VRS could no longer add lookups to it. Give it to the folder's owner.
+        if hasattr(os, "geteuid") and os.geteuid() == 0:
+            st = os.stat(settings.vrs_dir)
+            os.chown(vrs_dest, st.st_uid, st.st_gid)
 
 
 def apply_rules_only(settings: Settings) -> int:

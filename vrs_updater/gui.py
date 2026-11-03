@@ -8,9 +8,11 @@ import json
 import os
 import sqlite3
 import sys
+import textwrap
 import threading
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox, scrolledtext
+from tkinter import font as tkfont
 from datetime import datetime
 
 from .config import Settings, load_settings, default_vrs_dir
@@ -20,12 +22,14 @@ from .nz_caa import download_nz_caa, parse_nz_caa
 from .casa import download_casa, parse_casa
 from .opensky import download_opensky, parse_opensky
 from .vrs_merge import update_vrs, apply_rules_only
+from .vrs_config_check import check_vrs_config
 from .config import _resolve_data_file
 from .rules import load_rules
 from .rules_editor import open_rules_editor
 from .sils_editor import open_sils_editor
 from .manual import open_manual
-from .ui_common import UI_FONT, MONO_FONT
+from .ui_common import (UI_FONT, MONO_FONT, BG, TEXT, LABEL, ORANGE, GREEN, RED,
+                        dark_window, dark_button)
 from . import display_version
 
 # When frozen (PyInstaller), bundled data files are in sys._MEIPASS; settings persist next to the exe
@@ -1731,6 +1735,8 @@ class VRSUpdaterApp:
                                  "Fix this and run again.")
             return
 
+        config_problems = self._acknowledge_vrs_config(settings)
+
         os.makedirs(settings.work_dir, exist_ok=True)
 
         # Disable controls during run
@@ -1740,6 +1746,7 @@ class VRSUpdaterApp:
         self.btn_cancel.config(state="normal")
         self.btn_apply_rules.config(state="disabled", bg="#999999")
         self._clear_logs()
+        self._log_config_problems(config_problems)
 
         # Start disk throughput polling
         self._start_disk_poll()
@@ -1747,6 +1754,99 @@ class VRSUpdaterApp:
         # Run in background thread
         thread = threading.Thread(target=self._run_updater, args=(settings,), daemon=True)
         thread.start()
+
+    def _acknowledge_vrs_config(self, settings: Settings) -> list:
+        """Report VRS configuration problems and wait for the user to click OK.
+
+        Shown even on a Run on Start run: these problems stop VRS seeing the
+        update, so the run waits for someone to read how to fix them.
+        """
+        problems = check_vrs_config(settings)
+        if not problems:
+            return problems
+
+        # A Text box rather than messagebox: on X11 the stock box wraps to a
+        # narrow column and cuts off anything past the screen height.
+        win = tk.Toplevel(self.root)
+        dark_window(win, self.root, "VRS Configuration Problem", "720x520", _DATA_DIR)
+        win.minsize(480, 300)
+
+        tk.Label(win, text="VRS Configuration Problem" + ("s" if len(problems) > 1 else ""),
+                 font=(UI_FONT, 12, "bold"), bg=RED, fg="white", pady=8).pack(fill="x")
+
+        bottom = tk.Frame(win, bg=BG)
+        bottom.pack(side="bottom", fill="x", pady=10)
+        ok_btn = dark_button(bottom, "OK - Continue", win.destroy, primary=True)
+        ok_btn.pack()
+
+        body = tk.Frame(win, bg=BG)
+        body.pack(fill="both", expand=True)
+        body.rowconfigure(0, weight=1)
+        body.columnconfigure(0, weight=1)
+        vscroll = ttk.Scrollbar(body, orient="vertical")
+        hscroll = ttk.Scrollbar(body, orient="horizontal")
+        # wrap="none": the text is wrapped below at spaces only, so a long path
+        # stays on one line and the horizontal scrollbar reaches the end of it.
+        txt = tk.Text(body, wrap="none", bg=BG, fg=TEXT, font=(UI_FONT, 10),
+                      bd=0, padx=14, pady=10, highlightthickness=0, cursor="arrow",
+                      yscrollcommand=vscroll.set, xscrollcommand=hscroll.set)
+        txt.grid(row=0, column=0, sticky="nsew")
+        vscroll.grid(row=0, column=1, sticky="ns")
+        hscroll.grid(row=1, column=0, sticky="ew")
+        vscroll.config(command=txt.yview)
+        hscroll.config(command=txt.xview)
+
+        # Bullet lines sit under the title; their wrapped lines hang level with
+        # the text after the bullet.
+        bullet = "•  "
+        indent = 20
+        hang = indent + tkfont.Font(font=(UI_FONT, 10)).measure(bullet)
+        txt.tag_configure("intro", foreground=LABEL)
+        txt.tag_configure("title", foreground=ORANGE, font=(UI_FONT, 11, "bold"),
+                          spacing1=12, spacing3=2)
+        txt.tag_configure("bullet", lmargin1=indent, spacing1=3)
+        txt.tag_configure("hang", lmargin1=hang)
+        txt.tag_configure("label", font=(UI_FONT, 10, "bold"))
+        txt.tag_configure("fix", foreground=GREEN)
+
+        def add_bullet(label, text, colour_tag=()):
+            lines = textwrap.wrap(f"{label} {text}", width=84,
+                                  break_long_words=False, break_on_hyphens=False)
+            first = lines[0][len(label):]
+            txt.insert("end", bullet, ("bullet",) + colour_tag)
+            txt.insert("end", label, ("bullet", "label") + colour_tag)
+            txt.insert("end", first + "\n", ("bullet",) + colour_tag)
+            for line in lines[1:]:
+                txt.insert("end", line + "\n", ("hang",) + colour_tag)
+
+        txt.insert("end", ("This stops VRS reading the lookup cache, or stops this "
+                           "program's update reaching it."
+                           if len(problems) == 1 else
+                           "These stop VRS reading the lookup cache, or stop this "
+                           "program's update reaching it.") + "\n", "intro")
+        for i, p in enumerate(problems, 1):
+            txt.insert("end", f"{i}. {p.title}\n", "title")
+            add_bullet("Problem:", p.detail)
+            add_bullet("Fix:", p.fix, ("fix",))
+        txt.insert("end", "\nClick OK to continue with the update. "
+                          "These problems are also listed in the run log.", "intro")
+        txt.config(state="disabled")
+
+        # Closing the window counts as OK; either way the run waits until then.
+        win.protocol("WM_DELETE_WINDOW", win.destroy)
+        win.grab_set()
+        ok_btn.focus_set()
+        win.bind("<Return>", lambda _e: win.destroy())
+        self.root.wait_window(win)
+        return problems
+
+    def _log_config_problems(self, problems: list):
+        """Keep the acknowledged problems in the run log as a record."""
+        for p in problems:
+            self._log_status(f"  VRS CONFIGURATION ERROR: {p.title}", "error")
+            self._log_status(f"    How to fix: {p.fix}", "error", count=False)
+        if problems:
+            self._log_status("")
 
     def _on_apply_rules(self):
         """Apply Rules.csv to the VRS database without downloading or merging."""
@@ -1780,6 +1880,8 @@ class VRSUpdaterApp:
                 % (rule_count, rules_path)):
             return
 
+        config_problems = self._acknowledge_vrs_config(settings)
+
         os.makedirs(settings.work_dir, exist_ok=True)
 
         self.running = True
@@ -1788,6 +1890,7 @@ class VRSUpdaterApp:
         self.btn_cancel.config(state="normal")
         self.btn_apply_rules.config(state="disabled", bg="#999999")
         self._clear_logs()
+        self._log_config_problems(config_problems)
         self._start_disk_poll()
 
         thread = threading.Thread(target=self._run_apply_rules,
