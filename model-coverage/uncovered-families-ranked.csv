@@ -1,0 +1,1359 @@
+rank,family,aircraft,stand_in_mesh,type_codes
+1,Glider / sailplane (generic),21225,,GLID:14829 VENT:885 DISC:564 G102:428 AS25:405 DUOD:358 DG80:351 NIMB:329 SG37:326 AS29:302 ARCP:211 AS26:207 DG40:204 AS20:174 AS31:165 DG1T:160 LS8:153 L13M:137 PK20:133 G103:132 DG50:96 AS24:89 AS21:84 AS22:63 DG60:61 AS28:51 IS28:46 PITA:38 LAE1:34 TS1J:34 LK17:33 AS16:31 JANU:14 L13:11 SZ45:11 QINT:10 AS14:9 LK19:8 PK15:8 SA37:7 ARCE:6 LS10:5 AS30:3 JS3J:3 LS9:2 PK11:2 PK18:2 PK21:2 PK23:2 RAZM:2 DLH2:1 LK7E:1 PK19:1 PK25:1 S32M:1
+2,Drone / UAV (generic),18893,,(no code):10262 DRONE:7352 DRON:1170 GP3:65 Q9:44
+3,Hot-air balloon,11699,,BALL:11699
+4,Ultralight / microlight (generic),10220,,ULAC:8905 ULTRALIGHT:1315
+5,"Classic high-wing taildraggers (Taylorcraft / Aeronca Chief / Piper J-2, J-4, J-5, PA-15, PA-17 / Interstate / Auster)",5310,j3cub,TAYB:1758 AR11:986 AR6T:558 J5:323 TAYD:282 PA15:258 J4:237 AR15:208 PA17:131 S1:126 TF19:95 J1:94 TAYA:88 J2:66 AUS5:58 AUS6:42
+6,High-wing LSA (CTSW / C42 / Eurofox / A22 / P92 / P2008 / Skyranger / Remos / FK9 / Jabiru),4699,cessna152,FDCT:897 C42:720 ECHO:429 EFOX:406 SKRA:375 P208:349 JAB4:293 AP22:288 G3:210 FK9:189 AP32:151 TL30:97 GX:89 JABI:60 JAB2:50 XAIR:49 BRAV:45 EV55:2
+7,Powered parachute / paraglider,3472,,PARA:2453 PARAGLIDER:1019
+8,Low-wing LSA (Bristell / WT9 / VL3 / Eurostar / Sting / Pioneer / Alpha / Aquila / Breezer),3409,vansrv12,WT9:542 NG5:409 EV97:388 VL3:229 A210:225 EVSS:205 TL20:194 PIAE:187 PNR3:179 MCR1:168 BREZ:148 PNR2:90 FK14:83 GOLF:79 MCR4:79 SKAR:63 PIAT:53 ASTO:48 BR23:40
+9,"Robin / Jodel cranked-wing family (DR400, DR300, DR1050, D112, D140, DR220, DR250)",2945,,DR40:1653 D11:402 DR10:276 DR30:226 D140:133 DR22:92 D250:70 D253:54 D150:39
+10,Sport biplanes (Pitts / Christen Eagle / Skybolt / Starduster / Acro Sport / Hatz / Miniplane),2927,,PTS1:722 PTS2:601 BOLT:312 SA30:306 EAGL:254 DSA1:231 CB1:123 ACR2:106 BIPL:70 BLKS:67 PTMS:46 ACRO:45 SA10:44
+11,Air Tractor AT-300/400/500/600/800,2422,,AT8T:949 AT5T:715 AT6T:272 AT3T:262 AT3P:220 AT5P:4
+12,Gyroplane (autogyro),1986,,GYRO:625 MT:300 CDUS:228 CLON:208 RAF2:188 MM24:144 SPHA:138 MM16:95 CMDE:60
+13,Touring motor glider (Falke / Dimona / Stemme),1917,,SF25:736 DIMO:418 G109:229 S10S:181 RF5:101 RF4:72 TFUN:71 RF10:68 SF28:41
+14,Ercoupe / Alon / Mooney M10,1854,,ERCO:1808 M10:46
+15,ATR 42 / 72,1693,q400,AT76:738 AT75:425 AT45:157 AT43:139 AT72:114 AT46:67 AT73:49 AT44:4
+16,Zenith STOL CH 701 / 750 / 801 / Savannah,1598,,CH70:700 CH75:557 SVNH:267 CH80:74
+17,Bell 47 / Hiller UH-12,1495,,B47G:997 UH12:444 B47J:54
+18,Socata Rallye,1263,,RALL:1263
+19,Open-cockpit biplanes (Waco UPF-7 / N3N / Travel Air / Stampe / Jungmann / Moth),1254,stearman,WACF:483 BU31:234 SV4:228 N3N:142 TVL4:61 BU33:59 DH60:47
+20,Sonex / Waiex / Onex,1066,,SONX:532 WAIX:440 ONEX:94
+21,Bellanca 14 Cruisair / 17 Viking,1053,,BL17:693 B14A:360
+22,Beechjet 400 / Mitsubishi Diamond / T-1 Jayhawk,1004,,BE40:959 MU30:45
+23,Piper PA-25 Pawnee / PA-36 Brave,957,,PA25:797 PA36:160
+24,Piper PA-38 Tomahawk / Beech 77 Skipper,951,,PA38:798 BE77:153
+25,Glastar / Sportsman,927,,GLST:927
+26,Antonov An-2,919,,AN2:919
+27,Cub clones (XCub / Savage / Bearhawk / Just SuperSTOL / Kitfox / Avid),916,pa18,AVID:303 BEAR:126 CC19:118 SAVG:77 SSTL:68 ESCP:66 VIX:63 BPAT:48 MAGN:47
+28,Aerobatic monoplanes (Extra 300 / NG / Edge 540 / CAP 231 / GameBird),876,,E300:585 GB1:122 EXNG:66 EDGE:49 CP23:41 E200:13
+29,Yak-52 / Yak-18T / Nanchang CJ-6,851,,YK52:372 CJ6:323 Y18T:156
+30,Pusher ultralights (Rans S-12 / Air Cam / Challenger / Chinook / Titan Tornado),836,,RS12:237 ACAM:219 CHIN:198 TRDO:182
+31,Mil Mi-8 / Mi-17,831,,MI8:824 MI17:7
+32,Commander 112 / 114,809,pa28,AC11:809
+33,Turboprop tandem trainers (PC-21/PC-7/PC-9/Tucano/Super Tucano/Epsilon/T-34C),791,texan2,PC21:218 PC7:152 TUCA:136 PC9:90 E314:81 TB30:69 T34T:45
+34,Rotorway Exec / Brantly / kit helicopters,743,r22,EXEC:559 BRB2:80 BABY:65 CH7:39
+35,DHC-2 Beaver,722,,DHC2:722
+36,Thrush / Ayres S-2R,718,,SS2T:363 SS2P:355
+37,Rans S-7 Courier / S-20 / S-21,715,pa18,CRER:432 RS18:283
+38,Rans S-6 Coyote II,696,cessna152,COY2:696
+39,Lancair 320/360 / Legacy,675,,LNC2:472 LEG2:203
+40,Boeing CH-47 Chinook / CH-46,668,,H47:621 H46:47
+41,Fairchild PT-19 / PT-26,655,,FA62:655
+42,Globe / Temco Swift,643,,GC1:643
+43,Twin turboprop tactical transports (C-160 / C-295 / CN-235 / C-27J),637,,C160:232 C295:170 CN35:149 C27J:86
+44,Sikorsky S-76,634,,S76:634
+45,Islander / Do 228 / L-410 (high-wing commuter twins),630,twinotter,BN2P:224 L410:204 D228:153 BN2T:49
+46,Airbus Dauphin / EC155 / H155,581,,AS65:430 EC55:151
+47,Airbus Super Puma / EC225 / Puma,575,,EC25:227 AS32:198 PUMA:94 AS3B:56
+48,Glasair I / II / III,569,,GLAS:569
+49,Boeing AH-64 Apache,569,,H64:569
+50,Eurocopter EC120 Colibri,513,ec130,EC20:513
+51,Lake LA-4 / Renegade,499,,LA4:421 LA25:78
+52,Lancair IV / Propjet / Evolution,491,,LNC4:298 EVOT:141 LNP4:52
+53,Cessna 188 AgWagon / AgTruck,483,,C188:483
+54,Pipistrel Virus / Sinus,468,,PIVI:317 PISI:151
+55,Stinson Reliant / L-5 / 10A,468,,RELI:192 L5:142 S10:134
+56,Progressive Aerodyne SeaRey,458,,SREY:458
+57,Saab 340 / 2000,439,emb120,SF34:367 SB20:72
+58,Ilyushin Il-76 / Xian Y-20,437,c17,IL76:388 Y20:49
+59,Gulfstream G200/G450/G550/G650/Global 6000 (non-ICAO codes),429,gulfstream,G200:118 G550:108 G450:81 G650:62 GL6T:60
+60,Cessna 305 / O-1 Bird Dog,399,cessna170,O1:399
+61,Sikorsky S-92,396,uh60,S92:396
+62,Antonov An-24 / An-26 / An-32,396,,AN26:180 AN32:115 AN24:101
+63,Murphy Rebel / Renegade / Moose,394,,RBEL:331 MR35:63
+64,Agusta A119 Koala,393,aw139,A119:393
+65,Europa,382,,EUPA:382
+66,Grob G 115 / G 120,382,,G115:239 G120:103 G12T:40
+67,Pietenpol Air Camper,380,j3cub,CAMP:380
+68,North American T-28,377,,T28:377
+69,Eurofighter Typhoon,376,,EUFI:376
+70,Zlin Trener / Z-43 / Z-142,367,,Z26:260 Z43:107
+71,Eclipse 500,347,,EA50:345 EA55:2
+72,Robin HR200 / R2000 / R3000 / HR100,345,,HR20:137 R200:82 HR10:77 R300:49
+73,DHC-1 Chipmunk,344,,DHC1:344
+74,Waco cabin biplanes,343,,WACO:175 WACC:168
+75,General Dynamics F-16,333,,F16:333
+76,Beech Duke,331,aerostar,BE60:331
+77,Piper PA-16 Clipper,328,pa22,PA16:328
+78,MBB Bo 105,300,ec135,B105:300
+79,Spectrum Beaver ultralight,296,,BEVR:296
+80,Aero Commander 100 / Darter,296,cessna172,VO10:296
+81,Partenavia P68,295,,P68:295
+82,Fairchild 24,293,cessna170,FA24:293
+83,BAe 146 / Avro RJ,291,,RJ1H:96 RJ85:71 B462:65 B463:42 B461:9 RJ70:8
+84,Panavia Tornado,284,,TOR:284
+85,Douglas DC-3 / C-47,282,,DC3:270 DC3T:12
+86,Alouette II / III / Lama,272,,ALO2:116 LAMA:81 ALO3:75
+87,Boeing F/A-18 Hornet / Super Hornet / EA-18G,270,,F18H:101 F18S:92 F18:77
+88,Cessna T210 / P210 variants,268,cessna182,T210:152 P210:76 C10T:40
+89,NH90,267,uh60,NH90:267
+90,Cessna T206 / T207 turbo variants,262,cessna182,T206:187 C07T:75
+91,Mitsubishi MU-2,258,,MU2:258
+92,GippsAero GA8 Airvan / PAC 750XL,258,,GA8:163 P750:95
+93,Piper PA-28RT / turbo Arrow variants,252,pa28,P28U:172 P28S:80
+94,Fairchild A-10,251,,A10:251
+95,PZL M-18 Dromader / Z-37 Cmelak,245,,Z37P:134 M18:111
+96,Aerospatiale Gazelle,235,ec130,GAZL:235
+97,Pilatus PC-6 Porter,233,,PC6T:231 PC6P:2
+98,Beech 19 Musketeer Sport,228,pa28,BE19:228
+99,Socata TB9 Tampico,225,pa28,TAMP:225
+100,Sukhoi Superjet 100,224,boeing737,SU95:224
+101,Rear-engine T-tail jets (Tu-134 / ARJ21),224,boeing717,AJ27:134 T134:90
+102,SRAI: Monnett Sonerai IILS,223,,SRAI:223
+103,KR2: Rand Robinson KR-2,222,,KR2:222
+104,Fokker 70 / 100,221,boeing717,F100:157 F70:64
+105,Grumman Goose / Widgeon / Albatross,221,,G44:119 G21:51 U16:51
+106,Icon A5,219,,A5:219
+107,CASA C-212 / Short Skyvan / SD3-60,218,,SH36:70 C212:65 SC7:50 SH33:33
+108,Beech Staggerwing,217,,BE17:217
+109,Boeing P-8 Poseidon (737-800),216,boeing737,P8:216
+110,Aermacchi MB-339 / Fouga Magister / Jet Provost,216,l39,FOUG:103 JPRO:74 M339:39
+111,Bolkow Junior / Monsun,212,,JUNR:140 B209:72
+112,Vultee BT-13,211,t6texan,VALI:211
+113,Scottish Aviation Bulldog / Beagle Pup,210,,BDOG:139 PUP:71
+114,Bombardier Challenger 601/604/605,205,challenger,CL65:81 CL64:80 CL61:44
+115,TAIL: Whittman Tailwind W-8,202,,TAIL:202
+116,Republic Seabee,199,,RC3:199
+117,Mil Mi-2,198,,MI2:198
+118,PULS: Aero Designs Pulsar XP,197,,PULS:197
+119,Trijets (Tu-154 / Yak-42 / Yak-40),195,boeing727,YK40:79 YK42:59 T154:57
+120,Sikorsky S-61 / Sea King,190,,S61:190
+121,Aero L-29 / L-159,182,l39,L29:139 L159:43
+122,BAe Jetstream 31 / 32 / 41,177,emb120,JS32:70 JS41:59 JS31:48
+123,Lockheed P-3 Orion,176,,P3:176
+124,Sikorsky CH-53,173,,H53:173
+125,Piper PA-14 Family Cruiser,170,pa18,PA14:170
+126,CP10: Mudry CAP-10 B,169,,CP10:169
+127,Tecnam P2010,167,cessna172,TWEN:167
+128,BAe Hawk,160,,HAWK:160
+129,Stearman variants (A75N1 / D75N1 / PT-17),160,stearman,BA7N:82 BPT7:40 BD7N:38
+130,Columbia / Cessna 350 (LC42 / LC40),158,sr22,COL3:158
+131,Eurocopter Tiger,156,,TIGR:156
+132,Dassault/Dornier Alpha Jet,153,,AJET:153
+133,Helio Courier,152,,COUR:152
+134,Beech Twin Bonanza,150,,BE50:150
+135,DHC-2 Turbo Beaver / Mk III,149,,BDH8:88 DH2T:61
+136,FB1A: Bowers Fly Baby 1A,146,,FB1A:146
+137,Learjet 24 / 25,143,challenger,LJ25:89 LJ24:54
+138,CP30: Piel Emeraude CP.301A,143,,CP30:143
+139,Antonov An-12,138,c130,AN12:138
+140,MUS2: Mustang Aeronautics MUSTANG II,138,,MUS2:138
+141,SIAI-Marchetti SF.260,137,,F260:137
+142,RF6: Fournier RF-6B 100,137,,RF6:137
+143,Leonardo AW101 Merlin,133,,EH10:133
+144,Cessna 190 / Airmaster,133,cessna170,C190:84 CMAS:49
+145,MOR2: Varga Aircraft Corp. 2150A,131,,MOR2:131
+146,Cessna T303 Crusader,129,cessna310,C303:129
+147,FNKB: Funk B85C,124,,FNKB:124
+148,Airbus A400M,123,c130,A400:123
+149,Westland Lynx / Wildcat,121,,LYNX:121
+150,Bell 222 / 427,120,bell430,B427:61 B222:59
+151,DFLY: Bailey N Moyes DRAGONFLY,120,,DFLY:120
+152,PELI: Ultravia Pelican PL,120,,PELI:120
+153,PZ04: Pzl-okecie Wilga PZL-104 35A,119,,PZ04:119
+154,MD 900 Explorer,115,ec135,EXPL:115
+155,Supermarine Spitfire,113,,SPIT:113
+156,MIMU: Mustang Aeronautics MIDGET MUSTANG,113,,MIMU:113
+157,AERK: Aeronca C-3,109,,AERK:109
+158,GY80: Gardan GY-80 180 Horizon,109,,GY80:109
+159,Fokker 50,107,q400,F50:107
+160,Maule M-6,106,cessna170,M6:106
+161,Sling 4 / TSi,104,vansrv,SLG4:104
+162,DG15: Howard Aircraft DGA-15P,104,,DG15:104
+163,MD 520N / 600N (NOTAR),101,md500,MD52:52 MD60:49
+164,BD4: Bede BD-4,100,,BD4:100
+165,ALIG: Arion Aircraft LLC LIGHTNING,96,,ALIG:96
+166,MITE: Mooney M-18C,96,,MITE:96
+167,RLU1: Roloff Breezy RLU-1,96,,RLU1:96
+168,SUBA: Fuji FA-200 160 Aero Subaru,96,,SUBA:96
+169,SBR1: Rockwell International Corp NA-265-65,95,,SBR1:95
+170,F8L: Aeromere F.8L Falco III,94,,F8L:94
+171,SKYR: Commonwealth 185,94,,SKYR:94
+172,VP2: Evans Volksplane VP-1 UL,93,,VP2:93
+173,RENE: Murphy Aircraft Mfg Ltd RENEGADE SPIRIT,92,,RENE:92
+174,Zenith Zodiac CH 650,88,vansrv12,CH64:88
+175,Quest Kodiak (K100 code),87,caravan,K100:87
+176,AN72: Antonov An-72,87,,AN72:87
+177,T33: Canadair T-33,84,,T33:84
+178,Bell-Boeing V-22 Osprey,83,,V22:83
+179,AAT3: Aero AT-3 R100,83,,AAT3:83
+180,CL2T: Bombardier Inc. CL-215-6B11 (Series CL-415),83,,CL2T:83
+181,P149: Focke-wulf/piaggio P.149 D,82,,P149:82
+182,Airship,80,,SHIP:80
+183,CUCA: Culver LFA,79,,CUCA:79
+184,DO27: Dornier Do 27 A-4,79,,DO27:79
+185,YK50: Yakovlev YAK-50,78,,YK50:78
+186,M200: Aero Commander 200D,77,,M200:77
+187,QIC2: Quickie Aircraft Corp Q200,77,,QIC2:77
+188,T51: Titan Aircraft T-51 MUSTANG,77,,T51:77
+189,Cessna P337 pressurized Skymaster,76,skymaster,P337:76
+190,CASS: Smith CASSUTT IIIM,76,,CASS:76
+191,WA50: Wassmer Europa WA.52,76,,WA50:76
+192,D31: Druine Turbulent D.31,75,,D31:75
+193,Cessna 408 SkyCourier,74,,C408:74
+194,AVTR: Aero Adventure Inc AVENTURA II,74,,AVTR:74
+195,Beech A36TC turbo Bonanza,73,bonanza,BT36:73
+196,T50: Cessna T-50,73,,T50:73
+197,MRF1: Dassault Aviation MIRAGE F1 CR,72,,MRF1:72
+198,Kamov Ka-32,71,,KA32:71
+199,A748: Hal HAL.748 2M LFD,68,,A748:68
+200,VTRA: Rans Designs Inc S-19,68,,VTRA:68
+201,XL2: Liberty Aerospace Incorporated LIBERTY XL-2,68,,XL2:68
+202,Airbus EC175,67,,EC75:67
+203,ATL: Robin ATL,67,,ATL:67
+204,SAKO: Rans Sakota S-10,66,,SAKO:66
+205,North American B-25,65,,B25:65
+206,CAD2: Le Club Aeronautique Delisle Inc. C.A.D.I.,65,,CAD2:65
+207,Tecnam P2012 Traveller,64,,P212:64
+208,HUNT: Hawker Aircraft Ltd HAWKER HUNTER MK.58,64,,HUNT:64
+209,F15: McDonnell Douglas F-15D,63,,F15:63
+210,F5: Northrop F-5E,62,,F5:62
+211,A4: Douglas Aircraft Co Inc A4D-2N,61,,A4:61
+212,MAME: Macair Industries Inc. MERLIN SPORT 65,61,,MAME:61
+213,PETR: Scoda Aeronautica Ltda SUPER PETREL LS,61,,PETR:61
+214,SHRK: Shark Aero Shark,61,,SHRK:61
+215,BROU: Max Holste Broussard MH 1521M,60,,BROU:60
+216,PP3: Pilatus P3-05,60,,PP3:60
+217,SB91: Saab Safir S-91D,60,,SB91:60
+218,SD4: Tomark SD-4 Viper,60,,SD4:60
+219,TEXA: Fly Synthesis Texan,60,,TEXA:60
+220,YK55: Yakovlev YAK-55M,60,,YK55:60
+221,B26: Douglas A-26B,59,,B26:59
+222,B52: ?,59,,B52:59
+223,CHR1: Allen Raymond E CHRISTAVIA MK1,59,,CHR1:59
+224,CORS: Goodyear FG1D,59,,CORS:59
+225,S05R: Siai-Marchetti S.205/22R,59,,S05R:59
+226,Curtiss P-40,58,p51,P40:58
+227,TBM: Grumman TBM-3E,58,,TBM:58
+228,ZEPH: Atec Zephyr 2000,58,,ZEPH:58
+229,Tupolev Tu-204,56,boeing757,T204:56
+230,CT4: Pacific Aerospace Corporation Ltd CT/4B,55,,CT4:55
+231,DR1: Fokker Triplane Replica Scout,55,,DR1:55
+232,MA5: Barnett Harvey D MARQUART MA-5,54,,MA5:54
+233,NIPR: Slingsby Aircraft Co Ltd NIPPER T.66 RA45 SERIES 3 Nipper,53,,NIPR:53
+234,VJ22: Albrecht Robert J VOLMER VJ-22,53,,VJ22:53
+235,CH2T: Aircraft Mfg & Development Co CH 2000,52,,CH2T:52
+236,CH30: Zenair Ltd CH-300,52,,CH30:52
+237,E110: Embraer EMB-110P1,52,,E110:52
+238,FBA2: Found Acft Canada Inc FBA-2C1,52,,FBA2:52
+239,BD5: Bede Aircraft Inc BD-5B,51,,BD5:51
+240,F406: Reims-cessna F406 Caravan II,51,,F406:51
+241,SA3: Stits Playboy SA3A,51,,SA3:51
+242,BX2: Brandli BX-2 Cherry,49,,BX2:49
+243,KL07: Bolkow Bo.207,49,,KL07:49
+244,Kaman K-MAX,48,,KMAX:48
+245,FU24: New Zealand Aerospace Industries Limited FU24-954,48,,FU24:48
+246,SYMP: Omf OMF-100-160,48,,SYMP:48
+247,V10: North American OV-10A,47,,V10:47
+248,S2P: Grumman S2F-1,46,,S2P:46
+249,S58P: Sikorsky S-58JT,46,,S58P:46
+250,TOUR: Victa Ltd AIRTOURER 100,46,,TOUR:46
+251,Beech 56TC Turbo Baron,45,pa30,BE56:45
+252,ATP: British Aerospace ATP,45,,ATP:45
+253,NDAC: Aviation Normand Dube Inc. AEROCRUISER,44,,NDAC:44
+254,QUIC: Albert F. Jolliffe Q-1 QUICKIE,44,,QUIC:44
+255,SEAW: Sna Inc SEAWIND 3000,44,,SEAW:44
+256,WA40: Wassmer Super IV WA.40,44,,WA40:44
+257,CH20: Amateur-Built Zenair Zenith CH-200,43,,CH20:43
+258,NPOR: Airdrome Aeroplanes NIEUPORT 17,43,,NPOR:43
+259,R100: Robin R.1180 TD Aiglon II,43,,R100:43
+260,VAMP: De Havilland Australia Vampire T.35,42,,VAMP:42
+261,CVLP: Convair 340,41,,CVLP:41
+262,EXPR: Wheeler Acft Co WHEELER EXPRESS,41,,EXPR:41
+263,FAET: Atec Faeta 321,41,,FAET:41
+264,IL18: Ilyushin IL-18 D,41,,IL18:41
+265,L200: Let Morava L-200A,41,,L200:41
+266,MG15: Mikoyan Gurevich MIG 15UTI,41,,MG15:41
+267,S55P: Sikorsky S-55B,41,,S55P:41
+268,CL2P: Canadair Limited CL215 1A10,40,,CL2P:40
+269,SC01: Gyroflug Speed Canard SC-01B-160,40,,SC01:40
+270,A148: Antonov An-148 100E,39,,A148:39
+271,ALSL: Airlony Skylane,39,,ALSL:39
+272,GY20: Gardan GY-20 Minicab U/L,39,,GY20:39
+273,IR23: Iar Sa Brasov IAR 823,39,,IR23:39
+274,N320: Nord 3202,39,,N320:39
+275,OSCR: Vulcanair S P A VULCANAIR V1.0,39,,OSCR:39
+276,A9: Aero Commander CALLAIR A-9B,38,,A9:38
+277,CRES: Pacific Aerospace Corporation Limited Cresco 08-600,38,,CRES:38
+278,UF13: Distar Cz A S DF 13/15 SUNDANCER,38,,UF13:38
+279,AN28: Antonov An-28,37,,AN28:37
+280,BUSH: Rainbow Sky Reach (Pty) Ltd BUSHCAT,37,,BUSH:37
+281,G104: Grob G 104 Speed Astir IIB,37,,G104:37
+282,HUCO: Bell AH-1F,37,,HUCO:37
+283,L11: Luscombe 11A,37,,L11:37
+284,MC10: Colomban Cri-Cri MC-15,37,,MC10:37
+285,MONI: Alexander Donald E MONI,37,,MONI:37
+286,SBOY: Interplane SKYBOY,37,,SBOY:37
+287,SNS7: Atkinson HIPERBIPE SNS-7,37,,SNS7:37
+288,A124: Antonov An-124 100,36,,A124:36
+289,F2EX: Dassault Falcon 2000EX EASy,36,,F2EX:36
+290,F86: Canadair F-86E MK.6,36,,F86:36
+291,SM19: Siai-Marchetti SM 1019,36,,SM19:36
+292,SU29: Sukhoi SU-29,36,,SU29:36
+293,C2: Grumman C-2A Greyhound,35,,C2:35
+294,CRBN: Curtiss Wright ROBIN,35,,CRBN:35
+295,F28: Fokker Bv F.28 MK1000,35,,F28:35
+296,H900: Hawker Beechcraft Corp Hawker 900XP,35,,H900:35
+297,KP2: Kappa 77 Sova KP-2UR,35,,KP2:35
+298,KP5: Jihlavan Airplanes Sro KP5,35,,KP5:35
+299,SB05: Saab 105 Sk-60A,35,,SB05:35
+300,T211: Indus Aviation Inc T-211 THORPEDO,35,,T211:35
+301,U2: Lockheed U-2S,35,,U2:35
+302,YK11: Let Yak-11 C-11,35,,YK11:35
+303,AURA: ?,34,,AURA:34
+304,CAT: Consolidated Vultee PBY-5A,34,,CAT:34
+305,CJ1: Corby CJ 1 Starlet U/L,34,,CJ1:34
+306,D6CR: Rollason Aircraft And Engines Ltd DRUINE D.62B CONDOR Condor,34,,D6CR:34
+307,DUCE: Allen Arnold R BAKENG DUCE,34,,DUCE:34
+308,DV1: Dova DV-1 Skylark,34,,DV1:34
+309,PZ06: Pzl-okecie Kruk PZL-106 BR,34,,PZ06:34
+310,RF3: Alpavia RF-3,34,,RF3:34
+311,SA75: Alpert Gary R ACRODUSTER II,34,,SA75:34
+312,SMAX: Seamax Aircraft Ltda SEAMAX M-22,34,,SMAX:34
+313,TRAL: Batters A GROPPO TRAIL,34,,TRAL:34
+314,BPT3: Boeing PT-13D,33,,BPT3:33
+315,D7: Airdrome Aeroplanes FOKKER D VII,33,,D7:33
+316,E121: Embraer 121 Xingu AA,33,,E121:33
+317,FLE2: Fleet 2,33,,FLE2:33
+318,MI26: Mil Mi-26 T,33,,MI26:33
+319,SU26: Sukhoi SU-26,33,,SU26:33
+320,TS11: Wsk-Pzl-Mielec TS-11 ISKRA,33,,TS11:33
+321,YK18: Nanchang China YAK-18A,33,,YK18:33
+322,ALGR: Fantasy Air Sro ALLEGRO 2000,32,,ALGR:32
+323,CVLT: Convair 580,32,,CVLT:32
+324,DC6: Douglas DC-6B,32,,DC6:32
+325,DW1: Eagle Aircraft Co EAGLE DW-1,32,,DW1:32
+326,F156: Morane-saulnier Criquet MS.505,32,,F156:32
+327,F2LX: Dassault Falcon 2000LX,32,,F2LX:32
+328,FK12: B & F Funk FK-12 Comet,32,,FK12:32
+329,TTWO: Cal Parker Teenie Two,32,,TTWO:32
+330,AS02: Ffa AS.202 Bravo 18A-4,31,,AS02:31
+331,CNUK: Fleet Aircraft Ltd. 80,31,,CNUK:31
+332,E2: Grumman E-2C Hawkeye,31,,E2:31
+333,F9EX: Dassault Falcon 900EX EASy,31,,F9EX:31
+334,FINC: Fleet FLEET 16B,31,,FINC:31
+335,KA26: Kamov Ka-26,31,,KA26:31
+336,SATA: Hispano Aviacion HA-200 SAETA,31,,SATA:31
+337,SB39: Saab Gripen JAS-39 C,31,,SB39:31
+338,SX30: Swearingen SX300,31,,SX30:31
+339,TVLB: Travel Air Mfg Co 2000,31,,TVLB:31
+340,VP1: Evans VP-1 Volksplane,31,,VP1:31
+341,XA42: Xtremeair Sbach XA-42,31,,XA42:31
+342,A600: Rotorway Talon A600,30,,A600:30
+343,CA25: Commonwealth Aircraft Corp CA-25,30,,CA25:30
+344,D18: Amateur Built Jodel D.18,30,,D18:30
+345,JACE: Fuchs JUNIOR ACE E,30,,JACE:30
+346,P1: Kawasaki P-1,30,,P1:30
+347,STRM: Sg Aviation Storm 300,30,,STRM:30
+348,TF21: Taylorcraft F21B,30,,TF21:30
+349,UF10: Urban Air S.r.o. SAMBA XXL,30,,UF10:30
+350,WA41: Wassmer Baladou WA.41,30,,WA41:30
+351,AMX: Aeritalia AMX ACOL,29,,AMX:29
+352,BUCA: Advanced Aviation Advanced Aviation Buccaneer,29,,BUCA:29
+353,DEFI: Rutan Defiant,29,,DEFI:29
+354,F26T: Siai-Marchetti SF260,29,,F26T:29
+355,FALC: American Aircraft Inc. FALCON,29,,FALC:29
+356,HIGH: Just Aircraft LLC SUPERSTOL,29,,HIGH:29
+357,MC45: Meyers MAC-145,29,,MC45:29
+358,MG17: Poland MIG 17 (LIM-5),29,,MG17:29
+359,NDIC: Norman Aviation NORDIC VI,29,,NDIC:29
+360,PT22: Ryan Aeronautical ST3KR,29,,PT22:29
+361,XNOS: Sonex Aircraft LLC XENOS,29,,XNOS:29
+362,L188: Lockheed Aircraft Corporation 188A,28,,L188:28
+363,L40: Orlican Meta-Sokol L-40,28,,L40:28
+364,ME09: Hispano Buchon HA-1112 M1L,28,,ME09:28
+365,MG21: Mikoyan Gurevich MIG 21,28,,MG21:28
+366,PNR4: Alpi Aviation Pioneer 400,28,,PNR4:28
+367,SASP: Supermarine Aircraft (Australia) Spitfire Mk 26 Replica,28,,SASP:28
+368,SE5A: Reproduction S.E.5A Replica,28,,SE5A:28
+369,AV68: Nitsche Samburo AVo-68R 115 Turbo,27,,AV68:27
+370,B47D: Bell OH-13E Sioux,27,,B47D:27
+371,HN70: Nicollier Menestrel II HN 700,27,,HN70:27
+372,JT1: Taylor JT-1 Monoplane,27,,JT1:27
+373,KA27: Kamov Company Russia KA-32A11BC,27,,KA27:27
+374,MRAI: Monnett Monnett Monerai S,27,,MRAI:27
+375,RODS: Amateur Built Aircraft DR-107 ONE DESIGN,27,,RODS:27
+376,SA02: Amateur-Built Cavalier SA.102.5,27,,SA02:27
+377,SCOR: Rotorway Scorpion Executive,27,,SCOR:27
+378,AR65: Aeronca S-65-C,26,,AR65:26
+379,CE43: Cerva CE.43 Guepard,26,,CE43:26
+380,DC4: Douglas Aircraft Co C54G-DC,26,,DC4:26
+381,M101: Myasishev M-101T,26,,M101:26
+382,NORS: Noorduyn UC-64A,26,,NORS:26
+383,ST10: Socata ST10 Diplomate,26,,ST10:26
+384,STCH: Fly Synthesis Storch,26,,STCH:26
+385,ALTO: Direct Fly S R O ALTO,25,,ALTO:25
+386,CH65: Aircraft Mfg & Design LLC ZODIAC CH650LS,25,,CH65:25
+387,DHC7: Dehavilland DHC-7-102,25,,DHC7:25
+388,F27: Fairchild Hiller FH-1100,25,,F27:25
+389,L37: Lockheed PV-2,25,,L37:25
+390,SIDE: Amateur-Built Smyth Model S Sidewinder,25,,SIDE:25
+391,E2CB: Piper E-2,24,,E2CB:24
+392,FW44: Focke-wulf Stieglitz FW 44J,24,,FW44:24
+393,FW90: Focke Wulf FW 190 F8/R1,24,,FW90:24
+394,KR1: Agricola KR-1,24,,KR1:24
+395,M28: Pzl M-28 BTDII Bryza,24,,M28:24
+396,PIPA: Pipistrel D O O PANTHERA X152,24,,PIPA:24
+397,S211: Siai Marchetti S-211,24,,S211:24
+398,STRK: British Aircraft Corp BAC 167 STRIKEMASTER,24,,STRK:24
+399,TAGO: Team Tango TANGO 2,24,,TAGO:24
+400,XNON: Celier Aviation XENON RST,24,,XNON:24
+401,YAK3: Yakovlev YAK-3M,24,,YAK3:24
+402,Z50: Moravan Zlin Z-50 LS,24,,Z50:24
+403,A6: Grumman EA-6B Prowler,23,,A6:23
+404,ATLA: Breguet Atlantique ATL 2,23,,ATLA:23
+405,CH25: A. Gaunt ZENITH CH 250,23,,CH25:23
+406,EXEJ: Rotorway Jetexec,23,,EXEJ:23
+407,FH11: Fairchild-hiller FH-1100,23,,FH11:23
+408,FLE7: Fleet 7,23,,FLE7:23
+409,HRNT: Higher Class Aviation HORNET,23,,HRNT:23
+410,MA60: Xian MA60,23,,MA60:23
+411,R90R: Ruschmeyer R90 230RG,23,,R90R:23
+412,S2T: Marsh Aviation S-2F3AT,23,,S2T:23
+413,SASY: Adams Burton L PROTECH PT2,23,,SASY:23
+414,CP13: Societe Scintex SCINTEX CP1310-C3 Super Emeraude,22,,CP13:22
+415,E400: Extra EA.400,22,,E400:22
+416,ELST: Putzer Elster B,22,,ELST:22
+417,G202: Akro Tech Aviation Inc GILES G-202,22,,G202:22
+418,GNAT: Folland Aircraft Co Ltd GNAT T 1,22,,GNAT:22
+419,KTOO: Norman Aviation J6 'KARATOO',22,,KTOO:22
+420,KZ7: S.a.i. KZ-VII Laerke U-4,22,,KZ7:22
+421,L12: Lockheed 12A,22,,L12:22
+422,ME08: Nord 1002 Pingouin,22,,ME08:22
+423,N120: Nord 1203 Norecrin,22,,N120:22
+424,NC85: Nord NC.858 S,22,,NC85:22
+425,PL2: Amateur Built Aircraft PL-2,22,,PL2:22
+426,SE5R: Biggs D REPLICA SE5A,22,,SE5R:22
+427,ARV1: Arv Aviation Ltd ARV1 SUPER 2,21,,ARV1:21
+428,B230: Bell 230,21,,B230:21
+429,CUB2: Magal Holdings Ltd. CUBY II,21,,CUB2:21
+430,FURY: Hawker MK 11 SEA FURY,21,,FURY:21
+431,GSIS: Slipstream Industires Inc REVELATION,21,,GSIS:21
+432,IFUR: Isaacs Fury II U/L,21,,IFUR:21
+433,MM22: Magni Gyro Srl MAGNI M-22,21,,MM22:21
+434,Q4: Northrop Grumman Corp YRQ-4A GLOBAL HAWK,21,,Q4:21
+435,WCAT: Grumman FM-2,21,,WCAT:21
+436,APM2: Issoire Aviation APM-20 Lionceau,20,,APM2:20
+437,BKUT: Experimental Aviation Inc BERKUT,20,,BKUT:20
+438,F9LX: Dassault Falcon 900LX,20,,F9LX:20
+439,HUML: Andrew Hopper HUMMELBIRD,20,,HUML:20
+440,KZ3: S.a.i. KZ-III U-2,20,,KZ3:20
+441,P38: Lockheed P-38L,20,,P38:20
+442,S6: Stemme S6,20,,S6:20
+443,SA6: Stits SA6B,20,,SA6:20
+444,TNDR: Back Forty Developments Ltd. 'TUNDRA',20,,TNDR:20
+445,TTRS: Humbert Tetras,20,,TTRS:20
+446,UAV: Israel Aircraft Industries Ranger ADS.95,20,,UAV:20
+447,UT75: Utva UTVA-75,20,,UT75:20
+448,W3: Pzl-swidnik Sokol W-3AM,20,,W3:20
+449,A37: Cessna A-37A Dragonfly,19,,A37:19
+450,CTAH: Rainbow Aircraft BushCat,19,,CTAH:19
+451,D9: Lizenz Jodel D.9 Bebe,19,,D9:19
+452,DA50: Diamond Aircraft Ind Gmbh DA 50 C,19,,DA50:19
+453,DAL4: ?,19,,DAL4:19
+454,DOVE: De Havilland Aircraft Co Ltd DH104 DOVE 8 Dove,19,,DOVE:19
+455,IL96: Ilyushin IL-96 300PU,19,,IL96:19
+456,IMPU: Impulse Aircraft Impulse 100 TD,19,,IMPU:19
+457,M22: Mooney M22,19,,M22:19
+458,M346: ?,19,,M346:19
+459,MIR2: ?,19,,MIR2:19
+460,MS31: Morane-saulnier MS.317,19,,MS31:19
+461,MS73: Morane-saulnier Alcyon MS.733,19,,MS73:19
+462,PEGZ: Carol Levesque PEGAZAIR-100,19,,PEGZ:19
+463,PZ3T: Pzl-okecie Turbo Orlik 130 TC-II,19,,PZ3T:19
+464,S52: Amateur Built Aircraft VERTICAL AV HUMMINGBIRD 260L,19,,S52:19
+465,S900: Societe Industrielle Pour L'aeronautique SIPA 903,19,,S900:19
+466,SNGY: ?,19,,SNGY:19
+467,VTUR: Questair Inc VENTURE,19,,VTUR:19
+468,YALE: North American NA-64,19,,YALE:19
+469,A1: Douglas AD-4,18,,A1:18
+470,AUS9: Auster Aircraft Ltd AUSTER AOP.9,18,,AUS9:18
+471,B17: Boeing B-17G,18,,B17:18
+472,B18T: Beech C18S,18,,B18T:18
+473,F5EX: Dassault Falcon 50EX,18,,F5EX:18
+474,FFLO: Aai Corp. RQ-7B Shadow,18,,FFLO:18
+475,JSX: Sonex Aircraft LLC SUBSONEX JSX-2,18,,JSX:18
+476,NNJA: Amateur Built Aircraft BEST OFF AIRCRAFT NYNJA,18,,NNJA:18
+477,P47: Republic P-47D,18,,P47:18
+478,PL4: Bryant PAZMANY PL-4A,18,,PL4:18
+479,PP2: Pilatus P-2 05,18,,PP2:18
+480,UT66: Utva UTVA-66,18,,UT66:18
+481,"A660: Thrush Aircraft, Inc. S2R-T660",17,,A660:17
+482,BCAT: Grumman F8F-2,17,,BCAT:17
+483,HCAT: Grumman F6F-3,17,,HCAT:17
+484,I103: Ilyushin IL-103,17,,I103:17
+485,IL62: Ilyushin IL-62 M,17,,IL62:17
+486,L13S: Aerotechnik Vivat L-13SL,17,,L13S:17
+487,L60: Aero Brigadyr L-60 S,17,,L60:17
+488,N3: Nostalgair Inc. N3 PUP,17,,N3:17
+489,P2: Lockheed P-2H Neptune,17,,P2:17
+490,SA7: Stits Skycoupe SA7D,17,,SA7:17
+491,UM18: Air & Space 18A Gyroplane,17,,UM18:17
+492,CLBR: Fisher Flying Products CELEBRITY,16,,CLBR:16
+493,COUG: Becker Lawrence D BECKER COUGAR,16,,COUG:16
+494,CP32: Piel Super Emeraude CP.320,16,,CP32:16
+495,D5: Beagle Aircraft Ltd BEAGLE AUSTER D5 SERIES 180 Husky,16,,D5:16
+496,H207: Hb Flugtechnik HB-207 V-RG Alfa,16,,H207:16
+497,MC90: Monocoupe 90,16,,MC90:16
+498,MI24: Mil Helicopters MI-24D,16,,MI24:16
+499,MSQ2: Backcountry Super Cubs LLC SQ2,16,,MSQ2:16
+500,PZ4M: P Z L -Warszawa-Cnpsl PZL-104 WILGA 35A,16,,PZ4M:16
+501,S330: Schweizer 330,16,,S330:16
+502,SA11: Stits Playmate SA-11A,16,,SA11:16
+503,SF2: Sisler SF-2A Cygnet UL,16,,SF2:16
+504,STOR: Slepcev Aircraft Industries Storch U/L,16,,STOR:16
+505,SU31: Sukhoi SU-31,16,,SU31:16
+506,ACAR: Auster Aircraft Ltd AUSTER J5G Cirrus Autocar,15,,ACAR:15
+507,APM3: Issoire Aviation APM-30 Lion,15,,APM3:15
+508,AR5T: Aeronca 50-C,15,,AR5T:15
+509,BER2: Beriev Ber-200 ChS,15,,BER2:15
+510,E737: Boeing E-7A Wedgetail,15,,E737:15
+511,FA5X: Dassault Falcon 50EX,15,,FA5X:15
+512,KC2: ?,15,,KC2:15
+513,M110: Monocoupe 110,15,,M110:15
+514,NG4: Roko Aero NG-4 UL,15,,NG4:15
+515,SPUP: Airdrome Aeroplanes SOPWITH PUP,15,,SPUP:15
+516,TEAL: Thurston TSC-1A,15,,TEAL:15
+517,V1: Grumman OV-1D,15,,V1:15
+518,VELT: Velocity Inc V-TWIN,15,,VELT:15
+519,WA42: Wassmer Prestige WA.421-250,15,,WA42:15
+520,AIGT: Auster Aircraft Ltd AUSTER J5F Aiglet Trainer,14,,AIGT:14
+521,AIRD: Beagle Aircraft Ltd BEAGLE A.109 Airedale,14,,AIRD:14
+522,AVAM: Avid Aircraft AVID AMPHIBIAN,14,,AVAM:14
+523,CORO: Corvus Phantom CA-21,14,,CORO:14
+524,CP65: Porterfield LP-65,14,,CP65:14
+525,D25: New Standard D-25,14,,D25:14
+526,DO28: Dornier DO28 A-1,14,,DO28:14
+527,ELA7: Ela Aviacion ELA 07 Gyrocopter R115,14,,ELA7:14
+528,F35: ?,14,,F35:14
+529,H750: Hawker Beechcraft Corp Hawker 750,14,,H750:14
+530,JK05: Ekolot JK-05 Junior,14,,JK05:14
+531,JT2: Adams Wf TAYLOR TITCH,14,,JT2:14
+532,L18: Lockheed 18-56,14,,L18:14
+533,L29B: Lockheed 1329-25 JETSTAR II,14,,L29B:14
+534,M171: Mil Mi-171 C,14,,M171:14
+535,N110: Nord 1101 Noralpha,14,,N110:14
+536,PPRO: Percival Aircraft Co Ltd P56 PROVOST T1 Provost,14,,PPRO:14
+537,S11: Fokker Instructor S.11,14,,S11:14
+538,BIB5: Boeing IB75A,13,,BIB5:13
+539,CA4: Aerocomp Inc COMP AIR 6,13,,CA4:13
+540,CHR4: Allington Jeremy W CHRISTAVIA MK4,13,,CHR4:13
+541,CL85: Bombardier Challenger 850,13,,CL85:13
+542,DA2: Amateur Built Aircraft DAVIS DA-2A,13,,DA2:13
+543,DEAG: Adams Paul DOUBLE EAGLE,13,,DEAG:13
+544,F104: Lockheed CF104D,13,,F104:13
+545,G73: Grumman G-73,13,,G73:13
+546,GA20: Gippsland Aeronautics Pty Limited GA200C,13,,GA20:13
+547,GUEP: Aero Services Guepard 912,13,,GUEP:13
+548,JB15: Oberlerchner Job 15-150,13,,JB15:13
+549,MJ5: Amateur-Built Jurca M.J.5 Sirocco,13,,MJ5:13
+550,MX2: Mxr Technologies Inc MX2,13,,MX2:13
+551,P66P: Piaggio P.166 S,13,,P66P:13
+552,RC70: Rockwell International 700,13,,RC70:13
+553,S58T: Sikorsky S-58ET,13,,S58T:13
+554,SA50: Barrett Bruce M STOLP STARLET SA500,13,,SA50:13
+555,SCOU: Westland Helicopters Ltd WESTLAND SCOUT AH1 Scout,13,,SCOU:13
+556,VFHC: Innovaero Pty. Ltd. 5D03X-0001-1001,13,,VFHC:13
+557,VINT: Slingsby Aircraft Co Ltd RUMPLER MK C5,13,,VINT:13
+558,CDW1: Chilton Aircraft CHILTON DW1,12,,CDW1:12
+559,CMA3: Tag Aviation Pty Ltd TITANIUM EXPLORER,12,,CMA3:12
+560,DAKH: Fisher Flying Products DAKOTA HAWK,12,,DAKH:12
+561,DC87: Douglas DC-8-72,12,,DC87:12
+562,DHC4: Dehavilland CARIBOU DHC-4A,12,,DHC4:12
+563,EAGX: Eagle Aircraft EAGLE 150B,12,,EAGX:12
+564,FUSI: Magnus Aircraft Inc FUSION 212,12,,FUSI:12
+565,G159: Grumman G-159,12,,G159:12
+566,MF17: Saab MFI-15 Safari 200A,12,,MF17:12
+567,PL1: Brown Gordon W E PAZMANY PL 1,12,,PL1:12
+568,PRIM: BS110 Prime,12,,PRIM:12
+569,PT80: Pottier P.180 S,12,,PT80:12
+570,ST30: Staudacher Aircraft Inc S600 F,12,,ST30:12
+571,TBEE: Stol UC-1,12,,TBEE:12
+572,TF22: Taylorcraft Corp F-21A,12,,TF22:12
+573,TRF1: Amateur Built Aircraft F1 ROCKET,12,,TRF1:12
+574,TWST: Wells Pm SILENCE TWISTER Twister,12,,TWST:12
+575,V500: Revolution Helicopter Corp MINI-500,12,,V500:12
+576,VVIG: Rutan VARIVIGGEN 50-160,12,,VVIG:12
+577,"W201: Weatherly Aviation Company, Inc. 620B",12,,W201:12
+578,YAK9: Yakovlev YAK-9U-M,12,,YAK9:12
+579,AN3: Antonov An-3 T,11,,AN3:11
+580,BC15: Boeing Co C-135FR,11,,BC15:11
+581,BU81: Heliopolis Gomhouria Mk.6,11,,BU81:11
+582,C135: Boeing C-135FR,11,,C135:11
+583,C46: Curtiss Wright C-46F,11,,C46:11
+584,CULV: Culver V,11,,CULV:11
+585,DC3S: Douglas SUPER R4D-8,11,,DC3S:11
+586,DRIF: Maxair Aircraft Corporation Drifter XP503,11,,DRIF:11
+587,FEST: S C Aerostar S .A. FESTIVAL R40S,11,,FEST:11
+588,G1: ?,11,,G1:11
+589,G2GL: Soko G-2 Galeb A,11,,G2GL:11
+590,G70: Groppo G70,11,,G70:11
+591,IA46: DINFIA DINFIA IA.46 Ranquel,11,,IA46:11
+592,KR21: Fairchild KR-21,11,,KR21:11
+593,KR30: ?,11,,KR30:11
+594,LEGD: Performance Aircraft LEGEND,11,,LEGD:11
+595,MS76: Morane-saulnier MS.760 Paris,11,,MS76:11
+596,MXS: Mxr Technologies Inc MXS,11,,MXS:11
+597,PIVE: ?,11,,PIVE:11
+598,S208: Siai-marchetti S.208,11,,S208:11
+599,S450: ?,11,,S450:11
+600,SHEK: Rans Inc S-16 SHEKARI,11,,SHEK:11
+601,TOOT: Elmer V Noddin GRAMPY NODDINS LITTLE TOOT,11,,TOOT:11
+602,"W62T: Weatherly Aviation Company, Inc. 620B",11,,W62T:11
+603,WA80: Wassmer Piranha WA.81,11,,WA80:11
+604,Y12: Harbin Y-12 E,11,,Y12:11
+605,AAT4: Aero Sp Z O O AT-4 LSA,10,,AAT4:10
+606,AE45: Let Aero 145 Super,10,,AE45:10
+607,AN30: Antonov An-30,10,,AN30:10
+608,C119: Fairchild C-119,10,,C119:10
+609,CAML: Day-Sopwith F.1 CAMEL,10,,CAML:10
+610,COOT: Albert C Pellerin COOT A,10,,COOT:10
+611,HURI: Canada Car and Foundry Ltd. HAWKER HURRICANE XII,10,,HURI:10
+612,KIS2: Tri-R Technologies TR-1,10,,KIS2:10
+613,KL35: Klemm Kl.35 D,10,,KL35:10
+614,KR34: Fairchild KR-34C,10,,KR34:10
+615,KT1: ?,10,,KT1:10
+616,NSTR: Alan King NORTH STAR,10,,NSTR:10
+617,P220: Pottier Koala P.220 S,10,,P220:10
+618,PITE: Pipistrel Italia S R L TAURUS ELECTRO G2,10,,PITE:10
+619,PZ01: Pzl-okecie Gawron PZL-101A,10,,PZ01:10
+620,S223: Siat Flamingo 223A-1,10,,S223:10
+621,SCAM: Aerosport Scamp U/L,10,,SCAM:10
+622,SOKL: Benes-mraz Sokol M.1C,10,,SOKL:10
+623,TLEG: 717Gt LLC TURBINE LEGEND,10,,TLEG:10
+624,TRIS: Fairey Britten-norman Ltd BN2A MK.III-2 TRISLANDER Trislander,10,,TRIS:10
+625,WHIL: Dubois S C/Dubois K M WHITE LIGHTNING,10,,WHIL:10
+626,Z37T: Moravan Zlin Agro-Turbo Z-137T,10,,Z37T:10
+627,A140: Antonov An-140 100,9,,A140:9
+628,AB18: Aero Boero Aero Boero AB.180 RVR,9,,AB18:9
+629,AFOX: Apollo Aircraft Inc FOX,9,,AFOX:9
+630,ANST: Kazan Helicopters Ansat,9,,ANST:9
+631,B1: Rockwell Rockwell B-1B Lancer,9,,B1:9
+632,BN23: Boeing N2S-3,9,,BN23:9
+633,C123: Fairchild C-123K,9,,C123:9
+634,CONI: Lockheed 1049H-82,9,,CONI:9
+635,DH3T: De Havilland Canada DHC-3 Otter (Turbo),9,,DH3T:9
+636,FLAM: Dassault Flamant MD.312,9,,FLAM:9
+637,H53S: Sikorsky CH-53E,9,,H53S:9
+638,HORZ: Fisher Aero Corp Horizon II,9,,HORZ:9
+639,KR31: Fairchild KR-31,9,,KR31:9
+640,M7T: Maule M-7-420AC,9,,M7T:9
+641,MD3R: Flyitalia MD-3 Rider,9,,MD3R:9
+642,MG29: Mikoyan-Gurivich Design Bureau MIG-29UB,9,,MG29:9
+643,PANT: Rotec Engineering Inc. PANTHER 2 PLUS,9,,PANT:9
+644,PTSS: Aviat Aircraft Inc S-1-11B,9,,PTSS:9
+645,S12: Bell 206B Jet Ranger II,9,,S12:9
+646,SJ30: Sino Swearingen Acft Corp SJ30-2,9,,SJ30:9
+647,SURN: Korea Aerospace Industries KUH-1P(CHAMSURI),9,,SURN:9
+648,SWAK: Amateur Built Aircraft SPACEWALKER II,9,,SWAK:9
+649,TA15: Taylorcraft 15A,9,,TA15:9
+650,TCAT: Grumman F7F-3,9,,TCAT:9
+651,VNTR: Icp Ventura,9,,VNTR:9
+652,WFOC: War Fw 190 Scale Replica,9,,WFOC:9
+653,AN22: Antonov An-22 A,8,,AN22:8
+654,AP20: Aeroprakt A-20 Sky Cruiser,8,,AP20:8
+655,B58T: Beech 58TC,8,,B58T:8
+656,BOEINGCV2: Boeing Co BOEING CV2,8,,BOEINGCV2:8
+657,C919: ?,8,,C919:8
+658,CH40: Champion 402,8,,CH40:8
+659,D8: Fokker D.VIII Replica,8,,D8:8
+660,DC86: Douglas DC-8 63CF,8,,DC86:8
+661,E230: Extra EA.230,8,,E230:8
+662,E500: Extra EA.500,8,,E500:8
+663,FLIZ: Amateur Built Aircraft Z21A FLITZER,8,,FLIZ:8
+664,GP4: Aurand Paul F OSPREY GP4,8,,GP4:8
+665,H160: ?,8,,H160:8
+666,JU52: Casa CASA 352L,8,,JU52:8
+667,KIS4: Kis (Kit Sport Aircraft) KIS TR-1,8,,KIS4:8
+668,LJ23: Learjet Inc 23,8,,LJ23:8
+669,M326: Aermacchi IMPALA MB-326M,8,,M326:8
+670,MOSQ: Dehavilland MK-35,8,,MOSQ:8
+671,PAT4: Piper PA-31T3 Cheyenne T-1040,8,,PAT4:8
+672,PINO: General Avia Pinguino F.22C,8,,PINO:8
+673,S61R: Sikorsky S-61R,8,,S61R:8
+674,STRA: Striplin Aircraft Corporation SKY RANGER,8,,STRA:8
+675,TRIM: Ford 4-AT-E,8,,TRIM:8
+676,UL10: Baldwin L D ULTIMATE 10-200,8,,UL10:8
+677,WACA: Waco PLA,8,,WACA:8
+678,A149: Agustawestland AW.149,7,,A149:7
+679,A158: Antonov An-158,7,,A158:7
+680,ACED: Douglas Millson ACEY DEUCY,7,,ACED:7
+681,ALBU: Almquist Rex B BUSHMASTER II,7,,ALBU:7
+682,AUJ2: Auster Aircraft Ltd AUSTER 5J2 Arrow,7,,AUJ2:7
+683,AUJ4: Auster Aircraft Ltd AUSTER 5J4 Archer,7,,AUJ4:7
+684,BL11: Reproduction Bleriot XI Replica,7,,BL11:7
+685,BLMP: American Blimp Corp A-1-70,7,,BLMP:7
+686,BR61: Beechcraft Corporation C90GTi,7,,BR61:7
+687,BTX1: Boeing Co The BTX-1,7,,BTX1:7
+688,CH10: C.J. Powell ZENITH (MONO),7,,CH10:7
+689,CP21: Mudry CAP-21,7,,CP21:7
+690,DH94: De Havilland Aircraft Co Ltd DH94 MOTH MINOR Moth Minor,7,,DH94:7
+691,E390: ?,7,,E390:7
+692,FDMC: Flight Design MC,7,,FDMC:7
+693,G96: Grumman Aircraft Eng Corp C-1A,7,,G96:7
+694,GEMI: Miles Aircraft Ltd MILES M65 GEMINI 1A Gemini,7,,GEMI:7
+695,IL78: Ilyushin IL-78,7,,IL78:7
+696,IR46: ?,7,,IR46:7
+697,JFOX: Arnet Pereyra Corp JET FOX,7,,JFOX:7
+698,LA60: Aermacchi AL-60 B-2 Santa Maria,7,,LA60:7
+699,M108: Lambert Aircraft Engineering Bvba MISSION M108,7,,M108:7
+700,M345: ?,7,,M345:7
+701,MAGC: Ibis Magic GS 700,7,,MAGC:7
+702,MJ2: Jurca MJ-2 Tempete,7,,MJ2:7
+703,PACE: Bellanca CH300 PACEMAKER,7,,PACE:7
+704,PICO: Procaer Picchio F.15A,7,,PICO:7
+705,SF24: Scheibe SF-24A Motorspatz,7,,SF24:7
+706,SKIM: Colonial C-2,7,,SKIM:7
+707,SP7: Spartan 7W,7,,SP7:7
+708,SPST: Commonwealth REARWIN 9000-L,7,,SPST:7
+709,STAR: Beech 2000,7,,STAR:7
+710,STST: Cfm Metal-Fax Limited Shadow Series B-D,7,,STST:7
+711,TARR: ?,7,,TARR:7
+712,TFK2: Ams Flight D O O CARAT A,7,,TFK2:7
+713,TNAV: Camair 480,7,,TNAV:7
+714,V322: Msw Aviation Ag VOTEC 322,7,,V322:7
+715,VNOM: Federal Aircraft Factory DH112 VENOM FB1 Venom,7,,VNOM:7
+716,WICH: Agusta S.P.A. Cascina Costa Di Samarate (Va) A119,7,,WICH:7
+717,YK12: Wsk Warszawa-Okecie JAK-12M,7,,YK12:7
+718,YK54: Yakovlev Yak-54,7,,YK54:7
+719,-GND: Ground Vehicle,6,,-GND:6
+720,A500: Adam Aircraft Industries Inc A500,6,,A500:6
+721,AGSH: Aero Composites SEA HAWKER,6,,AGSH:6
+722,ALPI: Auster Aircraft Ltd AUSTER J5Q Alpine,6,,ALPI:6
+723,B14C: Bellanca Aircraft Corporation 14-19-3,6,,B14C:6
+724,BAH4: Boeing AH-64,6,,BAH4:6
+725,BCH7: Boeing CH-47(JAX),6,,BCH7:6
+726,BE70: Beech 70,6,,BE70:6
+727,BKC7: Boeing KC-97L,6,,BKC7:6
+728,CAW: Cessna AW,6,,CAW:6
+729,D1: Wing D-1,6,,D1:6
+730,D28D: Dornier Do 28 D-2 Skyservant,6,,D28D:6
+731,DUCK: Grumman J2F6,6,,DUCK:6
+732,EZFL: Blue Yonder Aviation 1991 Inc. E-Z FLYER,6,,EZFL:6
+733,F2TS: Dassault Falcon 2000S,6,,F2TS:6
+734,FA02: Flaming Air FA-02 Smaragd Smaragd VLA,6,,FA02:6
+735,G73T: Grumman Aircraft Engineering Corp. G-73AT,6,,G73T:6
+736,I114: ?,6,,I114:6
+737,JD2: Amateur Built Amateur Built Dyke Delta JD-2,6,,JD2:6
+738,KFIR: Israel Aircraft Industries KFIR-C2,6,,KFIR:6
+739,L90: Valmet L-90,6,,L90:6
+740,LJ28: Gates Lear Jet 28,6,,LJ28:6
+741,M308: Macchi MB.308,6,,M308:6
+742,MC23: ?,6,,MC23:6
+743,MOSP: Linder Mong Sport MS-1,6,,MOSP:6
+744,MP02: Aero-kros MP-02 Czajka,6,,MP02:6
+745,MR25: Murphy Aircraft Mfg Ltd SR 2500,6,,MR25:6
+746,NOMA: Government Aircraft Factories N24A,6,,NOMA:6
+747,P63: Bell P-63C,6,,P63:6
+748,P68T: Partenavia C.A. S.P.A. AP68TP SERIES 300,6,,P68T:6
+749,PO2: Polikarpov Po-2 CSS-13,6,,PO2:6
+750,PREN: Percival Aircraft Co Ltd P40 PRENTICE 1 Prentice,6,,PREN:6
+751,RW26: Gardner Murray R RAGWING SPECIAL,6,,RW26:6
+752,SG92: Technoavia SMG-92 Turbo Finist,6,,SG92:6
+753,STRI: J.F. Johnson SOPWITH TRIPE.,6,,STRI:6
+754,T35: Temco T-35A,6,,T35:6
+755,TERR: Foxcon Aviation Terrier 200,6,,TERR:6
+756,TMOT: Fisher Flying Products R80 Tiger Moth,6,,TMOT:6
+757,WAC9: Waco 9,6,,WAC9:6
+758,WACE: Waco SRE,6,,WACE:6
+759,WIRR: Commonwealth Aircraft Corp CA-16 MK 3,6,,WIRR:6
+760,XA41: Xtremeair Sbach XA-41,6,,XA41:6
+761,ZERO: Mitsubishi A6M3ZERO,6,,ZERO:6
+762,ADVE: Auster Aircraft Ltd J5,5,,ADVE:5
+763,B103: Beriev Ber-103,5,,B103:5
+764,B60: Boisavia Mercurey B.601L,5,,B60:5
+765,B609: Agustawestland Philadelphia AW609,5,,B609:5
+766,BD5J: Bd Micro Technologies Inc BD-5,5,,BD5J:5
+767,BE4W: ?,5,,BE4W:5
+768,BN25: Boeing N2S-5,5,,BN25:5
+769,C365: Eidg. Flugzeugwerk (f+w) Emmen C-3605,5,,C365:5
+770,CA65: Amateur-Built Cvjetkovic CA-65,5,,CA65:5
+771,CAR: Aerocar ONE,5,,CAR:5
+772,CP60: Jean-Claude Meunier C.P. 605 DIAMANT,5,,CP60:5
+773,CP75: Bond BERYL,5,,CP75:5
+774,DC7: Douglas DC-7,5,,DC7:5
+775,EGRT: Burkhart Grob Flugzeugbau EGRETT 1,5,,EGRT:5
+776,EL10: ?,5,,EL10:5
+777,ELTO: Continental Copters El Tomcat,5,,ELTO:5
+778,F9DX: Dassault Falcon 900DX,5,,F9DX:5
+779,F9F: Grumman F9F,5,,F9F:5
+780,FFLY: Fairey Firefly AS.6,5,,FFLY:5
+781,FM25: ?,5,,FM25:5
+782,G100: Gulfstream Aerospace G100,5,,G100:5
+783,G46: Fiat FIAT G-46-B,5,,G46:5
+784,H2: Kaman Aircraft SH-2G Super Seasprite,5,,H2:5
+785,IL86: Ilyushin IL-86 VKP,5,,IL86:5
+786,ISPT: Betton Jh ISAACS SPITFIRE,5,,ISPT:5
+787,J300: ?,5,,J300:5
+788,JUN1: Geiser N W/Woodward F A JUNGSTER 220,5,,JUN1:5
+789,KEHA: 739489 Ont. Ltd. KESTREL HAWK,5,,KEHA:5
+790,KL25: British Aircraft Corporation SWALLOW 2,5,,KL25:5
+791,KZ2: S.a.i. KZ-II Traener,5,,KZ2:5
+792,LGND: ?,5,,LGND:5
+793,LM1: Fuji LM-2 Nikko,5,,LM1:5
+794,LYSA: F.V. Machardy LYSANDER REPLICA,5,,LYSA:5
+795,M26: Pzl-Mielec M2601,5,,M26:5
+796,M74: Texas Helicopter M74 Wasp,5,,M74:5
+797,MI34: Mil Mi-34 S,5,,MI34:5
+798,NULL: Dassault Aviation MIRAGE F-1EJ,5,,NULL:5
+799,OPCA: Fls Aerospace (lovaux) Ltd OA7 OPTICA SERIES 301 Optica,5,,OPCA:5
+800,P39: Bell P39,5,,P39:5
+801,"PKAN: Walter Uetz, Flugzeugbau PELIKAN U4M",5,,PKAN:5
+802,PROC: Percival Aircraft Co Ltd PROCTOR 5 Proctor,5,,PROC:5
+803,PULR: P And M Aviation Ltd PULSR,5,,PULR:5
+804,PUSH: Easter William Craig PRESCOTT PUSHER,5,,PUSH:5
+805,SACE: De Ruelle Gene H SUPER ACE (Corben),5,,SACE:5
+806,SAH1: Fls Aerospace (lovaux) Ltd SPRINT 160 Sprint,5,,SAH1:5
+807,SBD: Douglas A-24,5,,SBD:5
+808,SF23: Scheibe SF-23A Sperling,5,,SF23:5
+809,SGRA: Prestige Aircraft Co LLC STORM RALLY LSA,5,,SGRA:5
+810,SM60: Stinson SM-6000-B,5,,SM60:5
+811,SSAB: North American F-100F,5,,SSAB:5
+812,T40: Cones Robert A TURNER T40A,5,,T40:5
+813,TRIN: Socata SOCATA TB20 Trinidad,5,,TRIN:5
+814,TS14: Test TST-14 Bonus M,5,,TS14:5
+815,VTOR: Aeritalia-partenavia AP.68TP 600 Viator,5,,VTOR:5
+816,WACM: Waco JYM,5,,WACM:5
+817,WACN: Waco AVN-8,5,,WACN:5
+818,AB95: Aero Boero Aero Boero AB.95,4,,AB95:4
+819,AC10: F.d. Composites Arrow Copter AC10,4,,AC10:4
+820,AC4: Light Wing Ag LIGHTWING AC4,4,,AC4:4
+821,AKRO: Amateur Built Stephens Akro Sport II,4,,AKRO:4
+822,AN38: Antonov An-38,4,,AN38:4
+823,AN74: Antonov An-74,4,,AN74:4
+824,ARC3: Aeronautical Corporation Of America AERONCA C3,4,,ARC3:4
+825,ARVA: Israel Aircraft Industries Arava 102,4,,ARVA:4
+826,AUS3: Taylorcraft Aeroplanes (england) Ltd AUSTER 3,4,,AUS3:4
+827,AUS4: Taylorcraft Aeroplanes (england) Ltd AUSTER 4,4,,AUS4:4
+828,B23: Douglas B-23,4,,B23:4
+829,B525: Bell Helicopter Textron Inc 525,4,,B525:4
+830,BFIT: Amateur Built Aircraft BRISTOL F2B,4,,BFIT:4
+831,BKC3: Boeing KC-135R,4,,BKC3:4
+832,C270: Caudron Luciole C.275,4,,C270:4
+833,CNBR: Avro Aircraft Ltd CANBERRA B6 Canberra,4,,CNBR:4
+834,CP20: Mudry CAP-20LS 200,4,,CP20:4
+835,CPUP: Reproduction Pup Replica,4,,CPUP:4
+836,CX5: Burton J Biermann THATCHER CX5,4,,CX5:4
+837,DJIN: Sud-ouest SO.1221 Djinn S,4,,DJIN:4
+838,E530_SCORPION: Textron Aviation Inc 530,4,,E530_SCORPION:4
+839,E8: Boeing E-8C Joint STARS,4,,E8:4
+840,F3F: Grumman F3F-2,4,,F3F:4
+841,FANT: Rhein-flugzeugbau Fantrainer 600,4,,FANT:4
+842,G222: ?,4,,G222:4
+843,GLSP: Amateur Built Aircraft SPORTSMAN 2+2,4,,GLSP:4
+844,H43B: Kaman HH-43 B/F,4,,H43B:4
+845,I16: Polikarpov I-16 TYPE 24,4,,I16:4
+846,K209: Fama' Helicopters Srl KISS 209M,4,,K209:4
+847,KOLL: Begley Kg LASER Z200 Lazer,4,,KOLL:4
+848,L10: Lockheed ELECTRA 10-A,4,,L10:4
+849,LXR: ?,4,,LXR:4
+850,M106: Lambert Mission M106,4,,M106:4
+851,M8: Maule M-8-235,4,,M8:4
+852,ME62: Classic Fighter Industries Inc ME 262 REPRODUCTION,4,,ME62:4
+853,MG23: Mikoyan Gurevich MIG-23UB,4,,MG23:4
+854,MX1T: ?,4,,MX1T:4
+855,O3: Lockheed YO-3A,4,,O3:4
+856,ONE: Gogetair G750-Turbo,4,,ONE:4
+857,PL12: Transavia PL-12 Airtruck T300,4,,PL12:4
+858,RA14: Gerard Talbot MARANDA AMF S-14D,4,,RA14:4
+859,RJ03: Junqua Ibis RJ-03,4,,RJ03:4
+860,RS20: Bow Casper RANS S-20 RAVEN,4,,RS20:4
+861,RYST: Robinson R44 Astro,4,,RYST:4
+862,S55T: Westland Whirlwind HAR.10,4,,S55T:4
+863,SAPH: Aikman Iwl PIEL CP1320,4,,SAPH:4
+864,SB35: Saab Draken Sk-35C,4,,SB35:4
+865,SL1: Aero Designs Star-Lite SL-1,4,,SL1:4
+866,SM92: Technoavia SM-92 Finist,4,,SM92:4
+867,SNS2: Kenneth E. Legere SORRELL GUPPY SNS-2,4,,SNS2:4
+868,TMUS: Papa 51 Ltd Co THUNDER MUSTANG,4,,TMUS:4
+869,W11: Gronow Pjd WOLF WII BOREDOM FIGHTER,4,,W11:4
+870,XA85: Raj Hamsa X' Air X'AIR HAWK,4,,XA85:4
+871,YUN8: Shaanxi Y-8 F-100,4,,YUN8:4
+872,-TWR: Tower,3,,-TWR:3
+873,A20: Douglas A-20G,3,,A20:3
+874,AB11: ?,3,,AB11:3
+875,"ANSN: A.V. Roe and Company, Limited AVRO 652A ANSON MK. I",3,,ANSN:3
+876,APUP: Amateur Built Aircraft AEROPUP,3,,APUP:3
+877,B24: Consolidated Aircraft/Hill B-24J,3,,B24:3
+878,B29: Boeing B-29,3,,B29:3
+879,B47B: Bell 47B-3,3,,B47B:3
+880,BISC: Bilsam Aviation Industries Sp. Z O.O. Sky Cruiser,3,,BISC:3
+881,BW60: ?,3,,BW60:3
+882,BYL5: Boeing YL-15,3,,BYL5:3
+883,CA19: Cac Boomerang CA-12,3,,CA19:3
+884,CA41: Corvus Racer 312,3,,CA41:3
+885,CA61: Cvjetkovic Cvjetkovic CA-61 Mini Ace,3,,CA61:3
+886,CC11: Amateur Built Aircraft CARBON CUB EX CCK-1865,3,,CC11:3
+887,CN12: Beach Albert NIEUPORT X1,3,,CN12:3
+888,CR10: ?,3,,CR10:3
+889,D4: Auster Aircraft Ltd AUSTER D4-108,3,,D4:3
+890,D5TU: ?,3,,D5TU:3
+891,D6: Auster Aircraft Ltd AUSTER D6 SERIES 180,3,,D6:3
+892,DUR5: B.R. Rashbrook DURAND MARK V,3,,DUR5:3
+893,DWD2: K+w Thun D 26,3,,DWD2:3
+894,DYH2: Amateur Built Aircraft DYNALI H2S,3,,DYH2:3
+895,ELSP: ?,3,,ELSP:3
+896,EM11: Marganski Orka EM-11C,3,,EM11:3
+897,ES11: ?,3,,ES11:3
+898,FA01: Flaming Air FA-01 Smaragd,3,,FA01:3
+899,FA04: Flaming Air FA-04 Peregrine SL,3,,FA04:3
+900,FB5: ?,3,,FB5:3
+901,FLSS: New Kolb Aircraft Co LLC KOLB FLYER SS,3,,FLSS:3
+902,FREL: ?,3,,FREL:3
+903,G300: Gulfstream Aerospace Gulfstream Aerospace G300,3,,G300:3
+904,G400: Amazon.Com Services LLC MK30,3,,G400:3
+905,G64T: Schweizer Aircraft Corp G-164B-20T,3,,G64T:3
+906,GRIF: D.J. Marsden/S.J. Marsden ARV 2000 GRIFFIN,3,,GRIF:3
+907,HB23: Hb-Aircraft Industries Ag HB 23/2400-SP,3,,HB23:3
+908,HI27: Hirth Akrostar Hi-27,3,,HI27:3
+909,IL11: Ilyushin IL-114,3,,IL11:3
+910,J400: ?,3,,J400:3
+911,J600: ?,3,,J600:3
+912,JCOM: Aero Commander 1121,3,,JCOM:3
+913,KFIS: Amateur-Built Anderson EA-1 Kingfisher,3,,KFIS:3
+914,KLBR: New Kolb Aircraft KOLBRA,3,,KLBR:3
+915,LA8: Aerovolga LA-8 L,3,,LA8:3
+916,LANC: Av Roe And Co Ltd AVRO LANCASTER B MK7 Lancaster,3,,LANC:3
+917,LARK: Aero Commander Division North American Rockwell 100-180X,3,,LARK:3
+918,M2HK: Phillips And Powis Aircraft Ltd MILES M2 HAWK Hawk,3,,M2HK:3
+919,M9: Maule M-9-230,3,,M9:3
+920,MCOY: Diehl William A S-4,3,,MCOY:3
+921,MI38: Mil Mi-38 1,3,,MI38:3
+922,MI6: Mil Mi-6,3,,MI6:3
+923,N340: Nord 3400,3,,N340:3
+924,P230: Pottier P.230S Panda,3,,P230:3
+925,P66T: Piaggio P.166 DP-1-VMA,3,,P66T:3
+926,PAUL: Neiva CAP-4 Paulistinha 56C-1,3,,PAUL:3
+927,PSW4: Pzl-swidnik SW-4,3,,PSW4:3
+928,R109: Dodge Douglas C DR 109,3,,R109:3
+929,RF47: Fournier-euravial RF-47,3,,RF47:3
+930,RF9: Fournier RF-9,3,,RF9:3
+931,RS21: Amateur Built Aircraft RANS S-21 OUTBOUND,3,,RS21:3
+932,S05F: Siai-marchetti S.205 18/F,3,,S05F:3
+933,S39: Sikorsky S-39-C,3,,S39:3
+934,SA2: Bob Pearce SKYBABY II (Pearce),3,,SA2:3
+935,SA70: Barr STOLP SA-700,3,,SA70:3
+936,SB7: Seabird Aviation Australia P/L SB7L-360A2,3,,SB7:3
+937,SBR2: Rockwell Rockwell Sabreliner 75 A,3,,SBR2:3
+938,SCTR: Evernden Dw FLAGLOR SCOOTER Sky Scooter,3,,SCTR:3
+939,SHAW: Armstrong Whitworth Sea Hawk FGA.6,3,,SHAW:3
+940,SNS9: Kechter David L SOREL HYPERLIGHT SN9,3,,SNS9:3
+941,SOLI: Abrams Herbert C SOLITAIRE,3,,SOLI:3
+942,SP91: Technoavia SP-91,3,,SP91:3
+943,SPRT: Castle Gb PRACTAVIA SPRITE SERIES 2 Sprite,3,,SPRT:3
+944,STAL: Aircraft Designs Inc STALLION,3,,STAL:3
+945,STLN: Helio HST-550A,3,,STLN:3
+946,SWOR: Fairey Swordfish II,3,,SWOR:3
+947,SYNC: ?,3,,SYNC:3
+948,T2: North American Rockwell Group T-2C,3,,T2:3
+949,T214: Tupolev Tu-214,3,,T214:3
+950,T37: Cessna T-37C,3,,T37:3
+951,TERM: Siverts Marwood TERMITE,3,,TERM:3
+952,U15: Phoenix Air S.r.o. U15,3,,U15:3
+953,U22: Beech 1079,3,,U22:3
+954,VIMA: Valtion Viima II,3,,VIMA:3
+955,VUT1: Evektor Cobra Super,3,,VUT1:3
+956,VWIT: Freebairn WITT'S V,3,,VWIT:3
+957,WB57: General Dynamics WB-57F,3,,WB57:3
+958,WH1: Boland Brian J TRAVELER,3,,WH1:3
+959,WH4: Hester Walker WH4 HARPOON,3,,WH4:3
+960,WIND: Crusenberry Gary D WINDWAGON,3,,WIND:3
+961,WW23: Israel Aircraft Industries 1123 Westwind,3,,WW23:3
+962,Y112: Yakovlev Yak-112,3,,Y112:3
+963,A21: Aeroprakt A-21 M Solo,2,,A21:2
+964,A890: Aviatika AVIATIKA 890-912,2,,A890:2
+965,ASO4: ?,2,,ASO4:2
+966,B10: Boeing 100,2,,B10:2
+967,B20: Boeing 204,2,,B20:2
+968,B305: Brantly 305,2,,B305:2
+969,B723: Boeing 727-31,2,,B723:2
+970,BA11: ?,2,,BA11:2
+971,BA7J: Boeing A75J1,2,,BA7J:2
+972,BARC: Davis James A BARRACUDA,2,,BARC:2
+973,BASS: Beagle B.206 SERIES 1,2,,BASS:2
+974,BE7(: Boeing E75(N2S-5),2,,BE7(:2
+975,BE88: Beech Queen Air 65-88,2,,BE88:2
+976,BHH6: Boeing HH-46E,2,,BHH6:2
+977,BN24: Boeing N2S-4,2,,BN24:2
+978,BSTP: Bell Helicopter Textron Division Of Textron Inc. 214ST (Bell),2,,BSTP:2
+979,BV17: Boeing Vertol V-107-II-14,2,,BV17:2
+980,C82: Fairchild C-82A,2,,C82:2
+981,CA8: Comp Air Comp Air 8,2,,CA8:2
+982,CD2: ?,2,,CD2:2
+983,CG3: Caudron Caudron G.3,2,,CG3:2
+984,CH15: Heintz Chris ZENAIR CH 150,2,,CH15:2
+985,CL41: Canadair CL-41G-5 Tebuan,2,,CL41:2
+986,CLA: Callair A-2,2,,CLA:2
+987,CLB1: Aero Commander CALLAIR B-1A,2,,CLB1:2
+988,CLDS: Rearwin 8135,2,,CLDS:2
+989,CMD1: Air Command Intl Inc 582,2,,CMD1:2
+990,CORA: Fantasy Air Cora 200 Arius F,2,,CORA:2
+991,CP80: Piel Zef CP.80,2,,CP80:2
+992,D28T: Dornier Do 28 G-92 Skyservant,2,,D28T:2
+993,DAL1: R. N. Kelly SPEZZIO SPORTS DAL-1,2,,DAL1:2
+994,DC2: Douglas DC2,2,,DC2:2
+995,DH90: De Havilland Aircraft Co Ltd DH90A DRAGONFLY Dragonfly,2,,DH90:2
+996,DHA3: De Havilland Australia DHA-3 MK 2,2,,DHA3:2
+997,DHC5: De Havilland Canada DHC-5 Buffalo A,2,,DHC5:2
+998,DJET: Diamond Aircraft Industries Inc. D-JET,2,,DJET:2
+999,EC6: ?,2,,EC6:2
+1000,EPER: Epervier Epervier,2,,EPER:2
+1001,ERAC: Bagaero E-RACER,2,,ERAC:2
+1002,EVOP: ?,2,,EVOP:2
+1003,FB1B: Bowers Fly Baby 1B,2,,FB1B:2
+1004,FE51: A.f. Hamblin F.E.W. TP-51 (Mustang),2,,FE51:2
+1005,FN33: Siai-Marchetti FN-333,2,,FN33:2
+1006,FORT: Fleet Aircraft Ltd 60K,2,,FORT:2
+1007,FOXT: Amateur Built Aircraft FOXTROT 4,2,,FOXT:2
+1008,G160: Grob Aerospace G160 Ranger,2,,G160:2
+1009,GA10: Gippsaero GA-10 Airvan,2,,GA10:2
+1010,GA4C: Gulfstream Aerospace Corp GVII-G400,2,,GA4C:2
+1011,GOOS: Quikkit Corporation GLASS GOOSE,2,,GOOS:2
+1012,GSPN: Grob Aerospace Grob 180,2,,GSPN:2
+1013,H12T: Hiller UH-12ET Raven,2,,H12T:2
+1014,H40: Hoffmann H-40,2,,H40:2
+1015,HAR: British Aerospace SEA HARRIER FA2,2,,HAR:2
+1016,HB21: ?,2,,HB21:2
+1017,HERN: De Havilland Aircraft Co Ltd DH114 SEA HERON C MK1 Sea Heron,2,,HERN:2
+1018,HRON: Hron IAI HERON DRONE,2,,HRON:2
+1019,IR28: 1Ca-Brasov 1S-28M2,2,,IR28:2
+1020,JAJ5: Janowski J-5 Marco,2,,JAJ5:2
+1021,JPM1: ?,2,,JPM1:2
+1022,K226: Kamov Ka-226,2,,K226:2
+1023,KELA: Keleher Lark JK1-B,2,,KELA:2
+1024,KERO: Rearwin 2000-C,2,,KERO:2
+1025,KFAS: Robinson R44 Raven II,2,,KFAS:2
+1026,KH4: Kawasaki Heavy Industries 47G3B-KH4,2,,KH4:2
+1027,KRAG: Soko J-20 Kraguj,2,,KRAG:2
+1028,L14: Lockheed 14-H,2,,L14:2
+1029,LAKR: Amateur Built Laser Z-200,2,,LAKR:2
+1030,LCA: ?,2,,LCA:2
+1031,M55: Myasishchev M-55,2,,M55:2
+1032,MAJR: Arthur H Goold LUTON MAJOR (Luton Major),2,,MAJR:2
+1033,MAKO: Lancair Intl LLC MAKO,2,,MAKO:2
+1034,MCDONNELL DOUGLAS: McDonnell Douglas DC-9-32F,2,,MCDONNELL DOUGLAS:2
+1035,MCOU: Dixon CRIS-TENA,2,,MCOU:2
+1036,MD3: Datwyler MD-3-160,2,,MD3:2
+1037,MESS: Miles Aircraft Limited M.38 Messenger IIA,2,,MESS:2
+1038,METR: Armstrong Whitworth Aircraft Ltd GLOSTER METEOR NF11 Meteor,2,,METR:2
+1039,MJ10: Major Ta JURCA SPITFIRE Spitfire,2,,MJ10:2
+1040,MJ77: Amateur Built Aircraft JURCA MJ77,2,,MJ77:2
+1041,MJ8: Amateur Built Jurca MJ-8 (FW 190),2,,MJ8:2
+1042,MJ90: ?,2,,MJ90:2
+1043,MRJ9: ?,2,,MRJ9:2
+1044,MS23: Morane-saulnier MS.230,2,,MS23:2
+1045,MSAI: Reproduction A1 Replica,2,,MSAI:2
+1046,MUAV: Amateur Built Micro UAV Zayika MR 14,2,,MUAV:2
+1047,MX80: ?,2,,MX80:2
+1048,MY12: Mylius My-102 Tornado,2,,MY12:2
+1049,NIBB: Aviamilano Srl AVIAMILANO F14 NIBBIO Nibbio,2,,NIBB:2
+1050,P136: Piaggio P.136-L2,2,,P136:2
+1051,P270: ?,2,,P270:2
+1052,P82: North American F82E,2,,P82:2
+1053,PEMB: Hunting Percival Aircraft Ltd PERCIVAL P66 PEMBROKE C MK1 Pembroke,2,,PEMB:2
+1054,PL9: Amateur-Built Pazmany PL-9,2,,PL9:2
+1055,PO60: Potez Sauterelle 60,2,,PO60:2
+1056,POLI: Beda C Dondi POLLIWAGEN 0-235,2,,POLI:2
+1057,QR01: ?,2,,QR01:2
+1058,RFAL: RAFALE C,2,,RFAL:2
+1059,ROND: Sai-ambrosini F.4 Rondone I,2,,ROND:2
+1060,RW3: Rhein-flugzeugbau Multoplan RW3P-75,2,,RW3:2
+1061,S12S: Stemme Ag STEMME S12,2,,S12S:2
+1062,S51D: Larner Raymond L STEWART S-51D,2,,S51D:2
+1063,S62: Sikorsky HH-52A,2,,S62:2
+1064,SB32: ?,2,,SB32:2
+1065,SB37: Saab Viggen AJS-37,2,,SB37:2
+1066,SF27: Scheibe SF 27 M,2,,SF27:2
+1067,SPR2: Mccullen Lm CARLSON SPARROW II Sparrow Ii,2,,SPR2:2
+1068,SRAS: Calloway SENIOR AEROSPORT,2,,SRAS:2
+1069,ST87: ?,2,,ST87:2
+1070,STRE: ?,2,,STRE:2
+1071,SUCO: Bell 209,2,,SUCO:2
+1072,TBR3: Edward M. Nabocik T-BIRD,2,,TBR3:2
+1073,TR1: Trident Aircraft Limited TRIGULL TR-1 (Trident),2,,TR1:2
+1074,TR55: ?,2,,TR55:2
+1075,UL45: ?,2,,UL45:2
+1076,ULTS: Amateur Built Aircraft 496,2,,ULTS:2
+1077,VF35: Lockheed-martin F-35B Lightning II,2,,VF35:2
+1078,VG3T: ?,2,,VG3T:2
+1079,VM1: ?,2,,VM1:2
+1080,VULC: Av Roe And Co Ltd AVRO VULCAN B2 Vulcan,2,,VULC:2
+1081,WDEX: Holmberg Intl Inc WINDEX 1200C,2,,WDEX:2
+1082,WESX: Westland Wessex HC.2,2,,WESX:2
+1083,WOPU: Bill Rice WOODY WAS-2,2,,WOPU:2
+1084,ZA6: Db Aerocopter LLC AK1-3M,2,,ZA6:2
+1085,172S: Cessna Company 172s,1,,172S:1
+1086,680A CITATION LATITUDE: ?,1,,680A CITATION LATITUDE:1
+1087,737: Boieng 737,1,,737:1
+1088,A178: Antonov An-178,1,,A178:1
+1089,A223: BD-500-1A11 (Series CS300) (C SERIES AIRCRAFT LIMITED PART),1,,A223:1
+1090,A225: Antonov Antonov An-225,1,,A225:1
+1091,A270: Ibis Aerospace Ae270,1,,A270:1
+1092,A3: Buller James P TA-3,1,,A3:1
+1093,A504: Grahame-White Aviation Co. Ltd. AVRO 504K,1,,A504:1
+1094,AC52: Aero Commander 520 (Aero Commander),1,,AC52:1
+1095,ADVN: Adventure Air Adventure Air Adventurer,1,,ADVN:1
+1096,AEA1: Roos AMERICAN EAGLE 129,1,,AEA1:1
+1097,AG10: ?,1,,AG10:1
+1098,AG60: ?,1,,AG60:1
+1099,AIRBUS A320-214 (SL): ?,1,,AIRBUS A320-214 (SL):1
+1100,AM3: Aermacchi AM3-C,1,,AM3:1
+1101,ANGL: The Kings Engr Fellowship 44,1,,ANGL:1
+1102,AP24: Aeroprakt A-24 VIKING,1,,AP24:1
+1103,AP25: Aeroprakt A-25 Breeze,1,,AP25:1
+1104,AP36: Aeroprakt A-36 VULCAN,1,,AP36:1
+1105,APM4: Issoire Aviation APM-40 Simba,1,,APM4:1
+1106,ARC2: Aeronautical Corporation Of America AERONCA C2 (MODIFIED),1,,ARC2:1
+1107,ARES: Scaled Composites Inc 151,1,,ARES:1
+1108,AS2T: Ffa Flugzeugwerke Altenrhein Ag AS202/32TP,1,,AS2T:1
+1109,AT2P: Air Tractor Inc AT-250,1,,AT2P:1
+1110,ATG1: Aviation Technology Group Javelin 100,1,,ATG1:1
+1111,AU11: Beagle Aircraft Ltd BEAGLE E3,1,,AU11:1
+1112,AUS7: Beagle-Auster Aircraft Ltd. BEAGLE-AUSTER A-61,1,,AUS7:1
+1113,B10A: Boeing 100A,1,,B10A:1
+1114,B10I: Boeing V-Columbia Helicopters 107-II,1,,B10I:1
+1115,B14B: Northern Aircraft Inc. 14-19-2,1,,B14B:1
+1116,B17E: Boeing B17-E,1,,B17E:1
+1117,B17F: Boeing B-17F,1,,B17F:1
+1118,B1A: Boeing 1A,1,,B1A:1
+1119,B1E: Boeing B1E,1,,B1E:1
+1120,B200: Beechcraft B200GT King Air,1,,B200:1
+1121,B24D: Boeing 247D,1,,B24D:1
+1122,B40: Boeing 40-C,1,,B40:1
+1123,B404: Boeing Airplane Co 40-B-4,1,,B404:1
+1124,B42: Boeing Vertol 42A,1,,B42:1
+1125,B44(: Boeing Airplane Company 44B (Boeing),1,,B44(:1
+1126,B47A: Bell 47,1,,B47A:1
+1127,BC9G: Boeing C-97-G,1,,BC9G:1
+1128,BCH1: Boeing-Vertol CH-21C,1,,BCH1:1
+1129,BD-100-1A10 CHALLENGER 350: ?,1,,BD-100-1A10 CHALLENGER 350:1
+1130,BD-700-1A10 GLOBAL 6000: BD-700-1A10 Global 6000,1,,BD-700-1A10 GLOBAL 6000:1
+1131,BDH7: Boeing of Canada Ltd. de Havilland Division DHC-7-102,1,,BDH7:1
+1132,BE12: Beriev Beriev Ber-12 PS,1,,BE12:1
+1133,BE7: Boeing/Hawk E-75,1,,BE7:1
+1134,BE7L: Boeing E75L300,1,,BE7L:1
+1135,BE7X: Boeing Airplane Company E75X,1,,BE7X:1
+1136,BH6: Boeing H-6,1,,BH6:1
+1137,BHP3: Boeing/Hawkins and Powers HP-B-377,1,,BHP3:1
+1138,BL1: Boeing L-15,1,,BL1:1
+1139,BL19: Bellanca Aircraft Eng. Inc. 19-25 SKYROCKET II,1,,BL19:1
+1140,BLEN: Fairchild Aircraft Ltd BOLINGBROKE MK.IV T Bolingbroke,1,,BLEN:1
+1141,BN21: Boeing N2S-1,1,,BN21:1
+1142,BN22: Boeing/Hayes N2S 2,1,,BN22:1
+1143,BOEING/JONAS1B75A: Boeing/Jonas Edwin A Jr BOEING/JONAS 1B75A,1,,BOEING/JONAS1B75A:1
+1144,BP1E: Boeing P-12E,1,,BP1E:1
+1145,BP2: Boeing P26,1,,BP2:1
+1146,BQ2: Boeing Co Q25,1,,BQ2:1
+1147,BR60: Brumby Aircraft Australia Pty Ltd R600,1,,BR60:1
+1148,BS60: Sferma Marquis 60A,1,,BS60:1
+1149,BSTA: Boeing-Brown STEARMAN E75NL,1,,BSTA:1
+1150,BT7: ?,1,,BT7:1
+1151,BU20: Bushmaster 2000,1,,BU20:1
+1152,BUC: Hawker Siddeley Aviation Ltd BUCCANEER S2B Buccaneer,1,,BUC:1
+1153,BW6T: ?,1,,BW6T:1
+1154,C101: ?,1,,C101:1
+1155,C160D: Transall,1,,C160D:1
+1156,C208B: Cessna Grand Caravan 208B,1,,C208B:1
+1157,CAPL: Seal Jerry W CAPELLA SS,1,,CAPL:1
+1158,CDC6: Cessna DC-6A,1,,CDC6:1
+1159,CH50: Michael Heintz MINI ZENITH CH50,1,,CH50:1
+1160,CHIC: ?,1,,CHIC:1
+1161,CL4G: ?,1,,CL4G:1
+1162,CL4T: Bombardier CL-415 T,1,,CL4T:1
+1163,CLD2: Rotortec Cloud Dancer II,1,,CLD2:1
+1164,CN1: Cessna 208A Caravan I,1,,CN1:1
+1165,CNJ: Cessna C56X,1,,CNJ:1
+1166,COLT: Texas Aircraft Mfg LLC COLT 100,1,,COLT:1
+1167,COMU: Richards Mark COMMUTER II,1,,COMU:1
+1168,CP22: ?,1,,CP22:1
+1169,CTLN: ?,1,,CTLN:1
+1170,CULP: ?,1,,CULP:1
+1171,CW22: Curtiss Wright A22,1,,CW22:1
+1172,D6SL: Amateur Built Aircraft THE AIRPLANE FACTORY SLING 4,1,,D6SL:1
+1173,DA20: Diamond Aircraft Industries DA-20,1,,DA20:1
+1174,DAL5: ?,1,,DAL5:1
+1175,DC92: Douglas DC-9-21,1,,DC92:1
+1176,DRAG: Dfh Dragon Fly 333,1,,DRAG:1
+1177,DRTG: Dart GK,1,,DRTG:1
+1178,DT45: ?,1,,DT45:1
+1179,DTA1: ?,1,,DTA1:1
+1180,DV2: ?,1,,DV2:1
+1181,DVJQ: ?,1,,DVJQ:1
+1182,E140: Embraer ERJ-140,1,,E140:1
+1183,E275: ?,1,,E275:1
+1184,E350: Cessna E350,1,,E350:1
+1185,E767: ?,1,,E767:1
+1186,EBOY: Petrolini Petrolini El Boyero,1,,EBOY:1
+1187,EDGT: ?,1,,EDGT:1
+1188,ELA8: Ela Avacion ELA G8,1,,ELA8:1
+1189,ELF: G Parnall And Company PARNALL ELF II Elf,1,,ELF:1
+1190,EP9: Lancashire Aircraft Company Limited Prospector Type EP.9,1,,EP9:1
+1191,ESCA: Epic Air LLC ESCAPE,1,,ESCA:1
+1192,EUF1: Eurofighter Typhoon,1,,EUF1:1
+1193,EVIC: Epic Air LLC VICTORY,1,,EVIC:1
+1194,EX5T: Aea Research Pty Ltd EXPLORER 350R,1,,EX5T:1
+1195,F2DX: Dassault Falcon 2000DX,1,,F2DX:1
+1196,F4: McDonnell Douglas F4D,1,,F4:1
+1197,F600: ?,1,,F600:1
+1198,F84: Republic F84G,1,,F84:1
+1199,FA27: Fairchild Aircraft Incorporated SA227-CC,1,,FA27:1
+1200,FALCON 8X: ?,1,,FALCON 8X:1
+1201,FANL: ?,1,,FANL:1
+1202,FIBO: Manske David FIRE BOLT,1,,FIBO:1
+1203,FLSH: ?,1,,FLSH:1
+1204,FRBD: Northrop Grumman Systems Corp H03,1,,FRBD:1
+1205,FS51: Al Wing SAL-P51,1,,FS51:1
+1206,G21T: Mckinnon G21G,1,,G21T:1
+1207,G250: ?,1,,G250:1
+1208,G500: Gulfstream Aerospace G500,1,,G500:1
+1209,G600: Gulfstream Aerospace GVII-G600,1,,G600:1
+1210,G650ER: GVI (G650ER),1,,G650ER:1
+1211,G800: ?,1,,G800:1
+1212,GABR: ?,1,,GABR:1
+1213,GAUN: Gloster Gauntlet Mk.II,1,,GAUN:1
+1214,GDUK: Ellison-Mahon Aircraft Inc GWEDUCK,1,,GDUK:1
+1215,GL8T: Bombardier Inc. BD-700-2A12,1,,GL8T:1
+1216,GP1: ?,1,,GP1:1
+1217,GPRO: ?,1,,GPRO:1
+1218,GRND: Airport Ground Vehicle,1,,GRND:1
+1219,GY10: Gardan GY-100 Baghera 135,1,,GY10:1
+1220,H125: ?,1,,H125:1
+1221,H175: ?,1,,H175:1
+1222,H21: Piasecki-vertol YH-21 Workhorse PH,1,,H21:1
+1223,H43A: Kaman H-43A,1,,H43A:1
+1224,HAHU: Canadian Car & Foundry HWKR HURRICANEMKXIIA,1,,HAHU:1
+1225,HAWKER 800XP: ?,1,,HAWKER 800XP:1
+1226,HBAL: ?,1,,HBAL:1
+1227,HEAD: Donald Heffren HEADWIND,1,,HEAD:1
+1228,HF20: MBB MBB HFB 320 Hansa Jet,1,,HF20:1
+1229,HLD4: Halberstadt D IV Replica,1,,HLD4:1
+1230,HM38: Mignet Pou-du-Ciel HM.380,1,,HM38:1
+1231,HYPR: P And M Aviation Ltd HYPER GTR,1,,HYPR:1
+1232,I153: Polikarpov I-153,1,,I153:1
+1233,I15B: Polikarpov I-15 BIS,1,,I15B:1
+1234,IL14: Ilyushin IL-14 M,1,,IL14:1
+1235,IL20: Ilyushin IL-20 RT,1,,IL20:1
+1236,IL22: Ilyushin IL-22 M-11,1,,IL22:1
+1237,IL38: Ilyushin Ilyushin IL-38,1,,IL38:1
+1238,INCQ: ?,1,,INCQ:1
+1239,IR25: Sc Iar Sa Brasov IAR 825,1,,IR25:1
+1240,J4B2: Brennan Terence BARNETT J4B-2,1,,J4B2:1
+1241,JE2: Erickson JEE-TWO JE-2,1,,JE2:1
+1242,JUN2: K & S K & S Jungster II,1,,JUN2:1
+1243,K126: Kamov Ka-126,1,,K126:1
+1244,KA62: Kamov Ka-62,1,,KA62:1
+1245,KAK1: ?,1,,KAK1:1
+1246,KAK3: ?,1,,KAK3:1
+1247,KC10: Guy Christie/Bernard Kespe KC-1,1,,KC10:1
+1248,KC39: ?,1,,KC39:1
+1249,KEST: Farnborough Aircraft F1 Kestrel C3,1,,KEST:1
+1250,KFAB: ?,1,,KFAB:1
+1251,KIWI: ?,1,,KIWI:1
+1252,KZ8: Reproduction KZ-VIII Replica,1,,KZ8:1
+1253,L29A: Lockheed Jetstar 8,1,,L29A:1
+1254,L4: ?,1,,L4:1
+1255,L410 : Aircraft Industries Let L-410 Turbolet,1,,L410 :1
+1256,L70: Valmet Vinka L-70,1,,L70:1
+1257,LEARJET 40: ?,1,,LEARJET 40:1
+1258,LJ36: The de Havilland Aircraft of Canada Limited DHC-3,1,,LJ36:1
+1259,LOVE: Earl E. Elliott LOVINGS LOVE,1,,LOVE:1
+1260,M10F: ?,1,,M10F:1
+1261,M172: Mil Mi-172,1,,M172:1
+1262,M212: Lambert Aircraft Engineering Bvba MISSION M212-100,1,,M212:1
+1263,M404: Martin 404,1,,M404:1
+1264,MARS: Glm Co. JRM 3 (Martin),1,,MARS:1
+1265,MCRR: Dyn Aero MCR-R180,1,,MCRR:1
+1266,MH90: Nhi MRH-90 Taipan,1,,MH90:1
+1267,MI35: Mil Mi-35 V,1,,MI35:1
+1268,MIRA: Avions Marcel Dassault-breguet Aviation (amd-ba) MIRAGE III DS,1,,MIRA:1
+1269,MJ7: I.J. (Jack) Baptiste REPLICA MUSTANG MJ-7-G,1,,MJ7:1
+1270,MJ80: ?,1,,MJ80:1
+1271,MM14: Magni Gyro M-14 Scout,1,,MM14:1
+1272,MNEX: Norman Aviation International Inc. NORDIC 8 MINI EXPLORER,1,,MNEX:1
+1273,MP20: ?,1,,MP20:1
+1274,MY13: Mylius My-103 Mistral,1,,MY13:1
+1275,N260: Nord 260,1,,N260:1
+1276,ND1T: Ndn Aircraft Ltd NDN-1 FIRECRACKER,1,,ND1T:1
+1277,NG6: Roko Aero NG-6,1,,NG6:1
+1278,NI28: Airdrome Aeroplanes NIEUPORT 28,1,,NI28:1
+1279,NORA: Nord Noratlas 2501F,1,,NORA:1
+1280,NXTE: ?,1,,NXTE:1
+1281,P4Y: Consolidated Vultee P4Y-2,1,,P4Y:1
+1282,P50: Pottier P.50 P,1,,P50:1
+1283,P80: Homebuilt (ch) POTTIER P-80S,1,,P80:1
+1284,PHIL: Vertol Aircraft Pty Ltd PHILLICOPTER MK I,1,,PHIL:1
+1285,PLUS: Taylorcraft Plus D,1,,PLUS:1
+1286,PNTH: Sport Performance Aviation LLC Panther,1,,PNTH:1
+1287,PREX: Sylvie Gervais Private Explorer,1,,PREX:1
+1288,PRTS: Scaled Composites LLC 281,1,,PRTS:1
+1289,PURS: Schlitter Randy RANS S-11 PURSUIT,1,,PURS:1
+1290,PZ02: Pzl-Mielec PZL-102-B,1,,PZ02:1
+1291,PZ6T: ?,1,,PZ6T:1
+1292,QQA89: ?,1,,QQA89:1
+1293,R185: Johnson ROCKET 185,1,,R185:1
+1294,R4: Sikorsky R-4B,1,,R4:1
+1295,RAV5: Eric Hansen RAVIN 500,1,,RAV5:1
+1296,RF7: Sportavia-putzer/fournier RF-7,1,,RF7:1
+1297,RISN: ?,1,,RISN:1
+1298,RNGR: ?,1,,RNGR:1
+1299,S15S: ?,1,,S15S:1
+1300,S200: ?,1,,S200:1
+1301,S3: Lockheed S3B,1,,S3:1
+1302,S355: Scaled Composites LLC 355,1,,S355:1
+1303,S38: Born Again Restorations S-38B,1,,S38:1
+1304,S51: Sikorsky H-5,1,,S51:1
+1305,S601: Aerospatiale SN-601 Corvette,1,,S601:1
+1306,S65C: Aerospatiale SA365C1 Dauphin,1,,S65C:1
+1307,S79024: ?,1,,S79024:1
+1308,S97: Sikorsky S-97 Raider,1,,S97:1
+1309,SA60L: Sunward Aircraft SA60L,1,,SA60L:1
+1310,SACR: Smith Bo ACRO ADVANCED,1,,SACR:1
+1311,SB29: Saab Tunnan J-29F,1,,SB29:1
+1312,SCII: Sport Copter SportCopter II,1,,SCII:1
+1313,SF36: ?,1,,SF36:1
+1314,SGUP: Airbus Industrie 377SGT-F,1,,SGUP:1
+1315,SH09: Kopter Group Ag SH09,1,,SH09:1
+1316,SHAC: Av Roe And Co Ltd AVRO 696 SHACKLETON MR MK2 Shackleton,1,,SHAC:1
+1317,SHER: Root Byron L SHERPA,1,,SHER:1
+1318,SHOE: Guignard A SHOESTRING K10,1,,SHOE:1
+1319,SLCH: Scaled Composites LLC 351,1,,SLCH:1
+1320,SLH4: ?,1,,SLH4:1
+1321,SM20: Technoavia SM-2000 P,1,,SM20:1
+1322,SNAD: Snobird Aircraft Inc SNOBIRD,1,,SNAD:1
+1323,SOL1: Amateur Built Solar  Impulse S10,1,,SOL1:1
+1324,SQ2T: Kls Composites (Frmly Glassic) SQ-2000,1,,SQ2T:1
+1325,SU25: Sukhoi SU-25 K,1,,SU25:1
+1326,SU27: Sukhoi Sukhoi Su-27 UB,1,,SU27:1
+1327,SU57: ?,1,,SU57:1
+1328,SYCA: ?,1,,SYCA:1
+1329,T334: ?,1,,T334:1
+1330,T411: ?,1,,T411:1
+1331,TA20: Taylorcraft Taylorcraft 20 Ranchwagon,1,,TA20:1
+1332,TC2: Amateur Built Aircraft AERO MIRAGE TC-2,1,,TC2:1
+1333,TIPB: Tipsy Trainer 1,1,,TIPB:1
+1334,TOXO: ?,1,,TOXO:1
+1335,TPIN: Scottish Aviation Ltd TWIN PIONEER 3 Twin Pioneer,1,,TPIN:1
+1336,TRMA: Stinson A,1,,TRMA:1
+1337,TSTR: ?,1,,TSTR:1
+1338,TUCR: ?,1,,TUCR:1
+1339,V221: Msw Aviation Votec 221,1,,V221:1
+1340,V252: Msw Aviation Ag VOTEC 252 T,1,,V252:1
+1341,V280: Bell Helicopter Textron Inc V-280,1,,V280:1
+1342,V351: Msw Aviation Ag VOTEC 351,1,,V351:1
+1343,V452: Msw Aviation Ag VOTEC 452,1,,V452:1
+1344,VGUL: Percival Aircraft Co Ltd PERCIVAL P10 VEGA GULL Vega Gull,1,,VGUL:1
+1345,VIPJ: Airbus A321 231,1,,VIPJ:1
+1346,WACD: Waco S3HD,1,,WACD:1
+1347,WACG: Waco CRG,1,,WACG:1
+1348,WACT: Waco RPT,1,,WACT:1
+1349,WASP: Westland Helicopters Ltd WESTLAND WASP HAS1,1,,WASP:1
+1350,WBOO: Queensland Aviation Manufacturing Pty Ltd DW 200,1,,WBOO:1
+1351,WFUR: Roger D Hauka WAR REPLICA SEA FURY,1,,WFUR:1
+1352,WHK2: Scaled Composites LLC 348,1,,WHK2:1
+1353,WINE: Windecker Windecker X.7 Eagle,1,,WINE:1
+1354,WW1: Theisen DER JAGER D-9,1,,WW1:1
+1355,WZ10: ?,1,,WZ10:1
+1356,X49: Sikorsky X-49A,1,,X49:1
+1357,Y12F: ?,1,,Y12F:1
+1358,ZZZC: ?,1,,ZZZC:1
