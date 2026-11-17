@@ -2223,8 +2223,10 @@ class VRSUpdaterApp:
             else:
                 self._log_status("  OpenSky - using existing database.")
 
+            # Each finished build has just rewritten its *Database.sqb, so
+            # show the new date in Data Sources now rather than at run end.
             for future in as_completed(parse_tasks.values()):
-                pass
+                self.root.after(0, self._refresh_db_status)
 
         self._aggregate_mode = False
         self._task_progress = {}

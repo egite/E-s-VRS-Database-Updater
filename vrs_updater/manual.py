@@ -84,7 +84,8 @@ MANUAL = [
           "Rules row has only a Process toggle, which runs the Rules.csv pass."),
     ("p", "Local copy shows the date of each register in your working folder, "
           "turning amber when it is older than the age limit, and for Rules "
-          "shows how many rules the file holds."),
+          "shows how many rules the file holds. During a run each date "
+          "updates as soon as that register has been rebuilt."),
     ("h", "Options"),
     ("b", "Run on Start - begins an update ten seconds after launch, and "
           "closes the program when it finishes. Intended for scheduled tasks."),
