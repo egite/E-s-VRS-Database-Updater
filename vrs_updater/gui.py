@@ -2487,7 +2487,7 @@ class VRSUpdaterApp:
         original_done = ProgressReporter.done
 
         def gui_update(self_pr, current, total):
-            if gui._cancelled.is_set():
+            if gui._cancelled.is_set() and getattr(self_pr, "cancellable", True):
                 raise InterruptedError("Cancelled by user")
             if total <= 0:
                 return

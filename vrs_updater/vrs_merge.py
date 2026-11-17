@@ -288,7 +288,8 @@ def _publish_vrs_db(settings: Settings) -> None:
                       f"({e.strerror}). Close VRS before the next run so it can be removed.")
 
         print("  Copying updated database back to VRS location...")
-        shutil.copy2(settings.vrs_db_path, vrs_dest)
+        phase_callback("Processing: Copying to VRS")
+        _copy_with_progress(settings.vrs_db_path, vrs_dest, "Copying to VRS")
 
         # Run as root (e.g. sudo), a newly created file would belong to root
         # and VRS could no longer add lookups to it. Give it to the folder's owner.
@@ -1107,6 +1108,38 @@ def _merge_opensky(opensky_db: str, existing: Dict[str, dict],
     print(f"  OpenSky merge complete. {count:,} records processed ({num_updates:,} updated, {num_inserts:,} new).")
 
 
+# Rows handed to each executemany() in the final write, sized so the progress
+# bar moves smoothly without the per-call overhead showing.
+_FLUSH_CHUNK = 5000
+
+# Bytes per read/write when copying the database back to VRS.
+_COPY_CHUNK = 4 * 1024 * 1024
+
+
+def _copy_with_progress(src: str, dst: str, label: str) -> None:
+    """shutil.copy2 that reports progress as it goes.
+
+    Not cancellable: stopping halfway would leave VRS a truncated database.
+    """
+    # Opening dst for writing would empty src if they are one file;
+    # shutil.copy2 refuses that case, and so must this.
+    if os.path.exists(dst) and os.path.samefile(src, dst):
+        raise shutil.SameFileError(f"{src} and {dst} are the same file")
+    total = os.path.getsize(src)
+    prog = ProgressReporter(label, cancellable=False)
+    copied = 0
+    with open(src, "rb") as fsrc, open(dst, "wb") as fdst:
+        while True:
+            buf = fsrc.read(_COPY_CHUNK)
+            if not buf:
+                break
+            fdst.write(buf)
+            copied += len(buf)
+            prog.update(copied, total)
+    shutil.copystat(src, dst)
+    prog.done()
+
+
 def _final_flush(vrs_conn: sqlite3.Connection,
                  existing: Dict[str, dict],
                  original_icaos: set,
@@ -1173,29 +1206,45 @@ def _final_flush(vrs_conn: sqlite3.Connection,
           f"to disk in a single transaction...")
     flush_start = datetime.now()
 
-    with vrs_conn:
-        if updates:
-            # Country = '' means "no source set a country, keep what's in the DB"
-            vrs_conn.executemany("""
-                UPDATE AircraftDetail SET
-                    Registration = ?, Country = CASE WHEN ?='' THEN Country ELSE ? END,
-                    Manufacturer = ?, Model = ?, ModelIcao = ?,
-                    Operator = ?, YearBuilt = ?,
-                    CreatedUtc = ?, UpdatedUtc = ?,
-                    OperatorIcao = ?
-                WHERE Icao = ?
-            """, [(u[0], u[1], u[1], u[2], u[3], u[4], u[5], u[6], u[7], u[8], u[9], u[10]) for u in updates])
+    # Country = '' means "no source set a country, keep what's in the DB"
+    update_sql = """
+        UPDATE AircraftDetail SET
+            Registration = ?, Country = CASE WHEN ?='' THEN Country ELSE ? END,
+            Manufacturer = ?, Model = ?, ModelIcao = ?,
+            Operator = ?, YearBuilt = ?,
+            CreatedUtc = ?, UpdatedUtc = ?,
+            OperatorIcao = ?
+        WHERE Icao = ?
+    """
+    insert_sql = """
+        INSERT OR IGNORE INTO AircraftDetail
+            (Icao, Registration, Country, Manufacturer, Model, ModelIcao,
+             YearBuilt, Operator, OperatorIcao, CreatedUtc, UpdatedUtc)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?)
+    """
+    total_rows = len(updates) + len(inserts)
+    prog = ProgressReporter("Writing to disk")
+    written = 0
 
-        if inserts:
-            vrs_conn.executemany("""
-                INSERT OR IGNORE INTO AircraftDetail
-                    (Icao, Registration, Country, Manufacturer, Model, ModelIcao,
-                     YearBuilt, Operator, OperatorIcao, CreatedUtc, UpdatedUtc)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?)
-            """, inserts)
+    # Still one transaction, so the write is all-or-nothing; it is only fed
+    # in chunks so the progress bar can move. A Cancel here rolls it back.
+    with vrs_conn:
+        for start in range(0, len(updates), _FLUSH_CHUNK):
+            chunk = updates[start:start + _FLUSH_CHUNK]
+            vrs_conn.executemany(update_sql, [
+                (u[0], u[1], u[1], u[2], u[3], u[4], u[5], u[6], u[7], u[8], u[9], u[10])
+                for u in chunk])
+            written += len(chunk)
+            prog.update(written, total_rows)
+
+        for start in range(0, len(inserts), _FLUSH_CHUNK):
+            chunk = inserts[start:start + _FLUSH_CHUNK]
+            vrs_conn.executemany(insert_sql, chunk)
+            written += len(chunk)
+            prog.update(written, total_rows)
+    prog.done()
 
     elapsed = (datetime.now() - flush_start).total_seconds()
-    total_rows = len(updates) + len(inserts)
     rate = total_rows / elapsed if elapsed > 0 else 0
     run_summary["written"] = {"updates": len(updates), "inserts": len(inserts), "seconds": elapsed}
     print(f"  Disk write complete: {total_rows:,} rows in {elapsed:.2f}s "

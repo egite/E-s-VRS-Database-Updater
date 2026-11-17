@@ -167,8 +167,11 @@ def sql_escape(s: str) -> str:
 class ProgressReporter:
     """Simple console progress reporter."""
 
-    def __init__(self, task_name: str = ""):
+    def __init__(self, task_name: str = "", cancellable: bool = True):
         self.task_name = task_name
+        # False for work that must not stop halfway, such as overwriting the
+        # VRS database: the GUI then shows progress but ignores Cancel.
+        self.cancellable = cancellable
         self._start_time = time.time()
         self._last_pct = -1
 
