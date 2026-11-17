@@ -149,6 +149,11 @@ MANUAL = [
     ("p", "The address each register is downloaded from. These only need "
           "changing if a register moves its file, which does happen. Leave "
           "them alone otherwise."),
+    ("p", "When a new version of the program ships a new address, it "
+          "replaces the old one by itself, and says so in Program Progress. "
+          "An address you typed in yourself is never replaced. Restore "
+          "Default Links puts all five back to the program's own addresses; "
+          "nothing is saved until you click OK."),
     ("h", "Re-download if local copy older than"),
     ("p", "An age limit in days, per register. If your copy is younger than "
           "this, the download is skipped and the existing copy is reused. Set "

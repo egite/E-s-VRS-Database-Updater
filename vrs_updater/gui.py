@@ -16,6 +16,7 @@ from tkinter import font as tkfont
 from datetime import datetime
 
 from .config import Settings, load_settings, default_vrs_dir
+from .settings_file import read_settings_file, SETTINGS_VERSION, DEFAULT_URLS
 from .faa import download_faa, parse_faa
 from .ccar import parse_ccar
 from .nz_caa import download_nz_caa, parse_nz_caa
@@ -95,6 +96,9 @@ class VRSUpdaterApp:
         self._disk_last_time = 0.0         # Time of last measurement
         self._disk_poll_id = None          # after() ID for polling
 
+        # What reading settings.json had to fix, from the first read
+        self._settings_notes = None
+
         # Must exist before _load_settings(), which restores the saved tally
         self._download_failures = {}     # source -> consecutive failed downloads
         self._download_alert_acked = set()   # sources whose alert the user dismissed
@@ -102,6 +106,7 @@ class VRSUpdaterApp:
         self._build_menu()
         self._build_ui()
         self._load_settings()
+        self._report_settings_notes()
         self._countdown_id = None  # after() ID for auto-start countdown
         self._auto_run = False     # True when launched via "Run on Start"
 
@@ -404,14 +409,21 @@ class VRSUpdaterApp:
     # Settings persistence (JSON file)
     # ------------------------------------------------------------------
     def _load_settings_json(self) -> dict:
-        """Load settings from JSON file, returns dict (empty if not found)."""
-        if os.path.exists(_SETTINGS_JSON):
-            try:
-                with open(_SETTINGS_JSON, "r") as f:
-                    return json.load(f)
-            except (json.JSONDecodeError, OSError):
-                pass
-        return {}
+        """Load settings.json brought up to date for this version.
+
+        Returns {} when there is no usable file. What had to be changed is
+        kept from the first read, which is the one at startup, for
+        _report_settings_notes() to show.
+        """
+        data, notes = read_settings_file(_SETTINGS_JSON)
+        if self._settings_notes is None:
+            self._settings_notes = notes
+        return data
+
+    def _report_settings_notes(self):
+        """Tell the user what was changed in an outdated or damaged settings.json."""
+        for note in self._settings_notes or ():
+            self._log_status(note, "warning", count=False)
 
     # Windows and macOS expose maximize as the "zoomed" window state; X11
     # (Linux) has no such state and uses the -zoomed attribute instead.
@@ -451,6 +463,10 @@ class VRSUpdaterApp:
             win_h = self.root.winfo_height()
 
         data = {
+            "settings_version": SETTINGS_VERSION,
+            # The defaults in effect now, so a later version can tell a link
+            # that was left at its default from one the user chose.
+            "default_urls": {key: url for key, (_label, url) in DEFAULT_URLS.items()},
             "work_dir": self.work_dir_var.get(),
             "vrs_dir": self.vrs_dir_var.get(),
             "download_faa": self.chk_faa_download_var.get(),
@@ -589,63 +605,36 @@ class VRSUpdaterApp:
         data = self._load_settings_json()
 
         if data:
-            # Load from JSON
-            self.work_dir_var.set(data.get("work_dir", os.getcwd()))
-            self.vrs_dir_var.set(data.get("vrs_dir", ""))
-            self.chk_faa_download_var.set(data.get("download_faa", True))
-            self.chk_ccar_download_var.set(data.get("download_ccar", True))
-            self.chk_opensky_download_var.set(data.get("download_opensky", True))
-            self.chk_nzcaa_download_var.set(data.get("download_nz_caa", True))
-            self.chk_casa_download_var.set(data.get("download_casa", True))
-            self.chk_backup_var.set(data.get("backup_vrs_db", True))
-            self.chk_complete_var.set(data.get("build_complete", False))
-            self.chk_run_on_start_var.set(data.get("run_on_start", False))
-            self.chk_skip_faa_var.set(data.get("skip_faa", False))
-            self.chk_skip_ccar_var.set(data.get("skip_ccar", False))
-            self.chk_skip_opensky_var.set(data.get("skip_opensky", False))
-            self.chk_skip_nzcaa_var.set(data.get("skip_nz_caa", False))
-            self.chk_skip_casa_var.set(data.get("skip_casa", False))
-            self.chk_skip_rules_var.set(data.get("skip_rules", False))
-            self.chk_log_errors_var.set(data.get("log_errors", True))
-            self.chk_log_activity_var.set(data.get("log_activity", False))
-            failures = data.get("download_failures", {})
-            if isinstance(failures, dict):
-                self._download_failures = {k: v for k, v in failures.items()
-                                           if isinstance(v, int) and v > 0}
-            acked = data.get("download_alert_acked", [])
-            if isinstance(acked, list):
-                self._download_alert_acked = {a for a in acked if isinstance(a, str)}
-            from .config import DEFAULT_FAA_URL, DEFAULT_CCAR_URL, DEFAULT_OPENSKY_URL, DEFAULT_NZCAA_URL, DEFAULT_CASA_URL
-            self.settings.faa_url = data.get("faa_url", DEFAULT_FAA_URL)
-            self.settings.ccar_url = data.get("ccar_url", DEFAULT_CCAR_URL)
-            self.settings.opensky_url = data.get("opensky_url", DEFAULT_OPENSKY_URL)
-            self.settings.nz_caa_url = data.get("nz_caa_url", DEFAULT_NZCAA_URL)
-            self.settings.casa_url = data.get("casa_url", DEFAULT_CASA_URL)
-            saved_order = data.get("merge_order", ["Rules.CSV (when present)", "FAA", "CCAR", "NZ CAA", "OpenSky"])
-            # Ensure Rules entry is present (added after earlier versions)
-            if not any(item.startswith("Rules") for item in saved_order):
-                saved_order.insert(0, "Rules.CSV (when present)")
-            # Ensure NZ CAA entry is present (added after earlier versions)
-            if "NZ CAA" not in saved_order:
-                # Insert before OpenSky if present, otherwise append before last
-                try:
-                    os_idx = saved_order.index("OpenSky")
-                    saved_order.insert(os_idx, "NZ CAA")
-                except ValueError:
-                    saved_order.append("NZ CAA")
-            # Ensure CASA entry is present (added after earlier versions)
-            if "CASA" not in saved_order:
-                try:
-                    os_idx = saved_order.index("OpenSky")
-                    saved_order.insert(os_idx, "CASA")
-                except ValueError:
-                    saved_order.append("CASA")
-            self.settings.merge_order = saved_order
-            self.settings.faa_max_age_days = data.get("faa_max_age_days", 0)
-            self.settings.ccar_max_age_days = data.get("ccar_max_age_days", 0)
-            self.settings.opensky_max_age_days = data.get("opensky_max_age_days", 0)
-            self.settings.nz_caa_max_age_days = data.get("nz_caa_max_age_days", 0)
-            self.settings.casa_max_age_days = data.get("casa_max_age_days", 0)
+            # read_settings_file() has already checked every value, filled in
+            # missing ones and moved retired default links to the current ones.
+            self.work_dir_var.set(data["work_dir"] or os.getcwd())
+            self.vrs_dir_var.set(data["vrs_dir"])
+            self.chk_faa_download_var.set(data["download_faa"])
+            self.chk_ccar_download_var.set(data["download_ccar"])
+            self.chk_opensky_download_var.set(data["download_opensky"])
+            self.chk_nzcaa_download_var.set(data["download_nz_caa"])
+            self.chk_casa_download_var.set(data["download_casa"])
+            self.chk_backup_var.set(data["backup_vrs_db"])
+            self.chk_complete_var.set(data["build_complete"])
+            self.chk_run_on_start_var.set(data["run_on_start"])
+            self.chk_skip_faa_var.set(data["skip_faa"])
+            self.chk_skip_ccar_var.set(data["skip_ccar"])
+            self.chk_skip_opensky_var.set(data["skip_opensky"])
+            self.chk_skip_nzcaa_var.set(data["skip_nz_caa"])
+            self.chk_skip_casa_var.set(data["skip_casa"])
+            self.chk_skip_rules_var.set(data["skip_rules"])
+            self.chk_log_errors_var.set(data["log_errors"])
+            self.chk_log_activity_var.set(data["log_activity"])
+            self._download_failures = dict(data["download_failures"])
+            self._download_alert_acked = set(data["download_alert_acked"])
+            for key in DEFAULT_URLS:
+                setattr(self.settings, key, data[key])
+            self.settings.merge_order = list(data["merge_order"])
+            self.settings.faa_max_age_days = data["faa_max_age_days"]
+            self.settings.ccar_max_age_days = data["ccar_max_age_days"]
+            self.settings.opensky_max_age_days = data["opensky_max_age_days"]
+            self.settings.nz_caa_max_age_days = data["nz_caa_max_age_days"]
+            self.settings.casa_max_age_days = data["casa_max_age_days"]
         else:
             # Fall back to settings.sqb (VB.NET migration)
             settings_path = os.path.join(os.getcwd(), "settings.sqb")
@@ -1132,8 +1121,17 @@ class VRSUpdaterApp:
             self._refresh_db_status()
             win.destroy()
 
+        def restore_default_links():
+            # Only fills the boxes; nothing is saved until OK.
+            for var, url in ((faa_var, DEFAULT_FAA_URL), (ccar_var, DEFAULT_CCAR_URL),
+                             (opensky_var, DEFAULT_OPENSKY_URL),
+                             (nzcaa_var, DEFAULT_NZCAA_URL), (casa_var, DEFAULT_CASA_URL)):
+                var.set(url)
+
         btn_frame = ttk.Frame(frame)
-        btn_frame.grid(row=14, column=0, sticky="e")
+        btn_frame.grid(row=14, column=0, sticky="ew")
+        ttk.Button(btn_frame, text="Restore Default Links",
+                   command=restore_default_links).pack(side="left")
         ttk.Button(btn_frame, text="OK", command=save_and_close).pack(side="right", padx=(4, 0))
         ttk.Button(btn_frame, text="Cancel", command=win.destroy).pack(side="right")
 
