@@ -366,6 +366,7 @@ class VRSUpdaterApp:
         self.txt_status.tag_configure("success", foreground="#66BB6A")    # green
         self.txt_status.tag_configure("info", foreground="#B0BEC5")       # light gray
         self.txt_status.tag_configure("done", foreground="#66BB6A", font=(MONO_FONT, 9, "bold"))
+        self.txt_status.tag_configure("countdown", foreground="#EF5350")  # red - exit countdown
 
         # --- Detail log (Database Update Status) - dark terminal ---
         detail_frame = ttk.LabelFrame(self.paned, text="Database Update Status", padding=4)
@@ -2329,7 +2330,7 @@ class VRSUpdaterApp:
         self.txt_status.config(state="normal")
         self.txt_status.mark_set("exit_countdown", "end-1c")
         self.txt_status.mark_gravity("exit_countdown", "left")
-        self.txt_status.insert("end", f"Exiting in {seconds}...\n", "info")
+        self.txt_status.insert("end", f"Exiting in {seconds}...\n", "countdown")
         self.txt_status.see("end")
         self.txt_status.config(state="disabled")
         self._exit_countdown_id = self.root.after(1000, self._exit_countdown_tick)
@@ -2339,15 +2340,15 @@ class VRSUpdaterApp:
         self._exit_countdown_remaining -= 1
         if self._exit_countdown_remaining <= 0:
             self.txt_status.config(state="normal")
-            self.txt_status.delete("exit_countdown", "end")
-            self.txt_status.insert("end", "Exiting now.\n", "info")
+            self.txt_status.delete("exit_countdown", "end-1c")
+            self.txt_status.insert("end", "Exiting now.\n", "countdown")
             self.txt_status.config(state="disabled")
             self._save_settings_json()
             self.root.destroy()
             return
         self.txt_status.config(state="normal")
-        self.txt_status.delete("exit_countdown", "end")
-        self.txt_status.insert("end", f"Exiting in {self._exit_countdown_remaining}...\n", "info")
+        self.txt_status.delete("exit_countdown", "end-1c")
+        self.txt_status.insert("end", f"Exiting in {self._exit_countdown_remaining}...\n", "countdown")
         self.txt_status.see("end")
         self.txt_status.config(state="disabled")
         self._exit_countdown_id = self.root.after(1000, self._exit_countdown_tick)
