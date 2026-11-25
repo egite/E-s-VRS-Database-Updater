@@ -1367,7 +1367,7 @@ class VRSUpdaterApp:
                 "Optional activity log file (captures download and build steps)",
             ]),
             ("Data Processing", [
-                "Title case normalization with abbreviation handling (LLC, LLP, etc.)",
+                "Proper case for names, with acronyms kept in capitals (LLC, PHI, UMB Bank NA)",
                 "Operator name cleaning (Mc prefix, & patterns, embedded registrations)",
                 "Non-ASCII character removal and SQL escaping",
                 "CCAR binary-to-hex ICAO address conversion",

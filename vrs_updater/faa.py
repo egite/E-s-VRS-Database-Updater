@@ -28,6 +28,7 @@ MASTER_TYPE_START = 37               # Mid$(line, 38, 7)
 MASTER_TYPE_LEN = 7
 MASTER_YEAR_START = 51               # Mid$(line, 52, 4)
 MASTER_YEAR_LEN = 4
+MASTER_TYPE_REGISTRANT_POS = 56      # Mid$(line, 57, 1); "1" = individual
 MASTER_OWNER_START = 58              # Mid$(line, 59, 50)
 MASTER_OWNER_LEN = 50
 MASTER_MANU_KIT_START = 549          # Mid$(line, 550, 30)
@@ -147,9 +148,10 @@ def parse_faa(settings: Settings) -> bool:
             # ICAO hex is near end: 6 chars starting at len-11
             icao = line[len(line.rstrip()) - 11: len(line.rstrip()) - 5]
 
-            # Owner name
+            # Owner name. People's names get no acronym detection, since
+            # short names such as "Erb" or "Jin" are not English words.
             owner = line[MASTER_OWNER_START:MASTER_OWNER_START + MASTER_OWNER_LEN].rstrip()
-            owner = title_case(owner)
+            owner = title_case(owner, person=line[MASTER_TYPE_REGISTRANT_POS] == "1")
 
             # Manufacturer Kit
             manu_kit = line[MASTER_MANU_KIT_START:MASTER_MANU_KIT_START + MASTER_MANU_KIT_LEN].rstrip()

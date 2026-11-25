@@ -4,7 +4,6 @@ Replaces the VB.NET helper functions with efficient Python equivalents.
 """
 
 import os
-import re
 import sys
 import time
 import zipfile
@@ -12,6 +11,8 @@ import shutil
 from pathlib import Path
 from urllib.request import urlretrieve
 from urllib.error import URLError
+
+from .name_case import proper_case
 
 # Try to use requests if available (better progress + error handling)
 try:
@@ -25,32 +26,14 @@ except ImportError:
 # Text cleaning  (replaces Remove_All_Caps, Remove_Trailing_Spaces, etc.)
 # ---------------------------------------------------------------------------
 
-# Pre-compiled regex patterns for performance (called 800K+ times)
-_RE_LLC = re.compile(r'\bLlc\b')
-_RE_LLP = re.compile(r'\bLlp\b')
+def title_case(s: str, person: bool = False) -> str:
+    """Convert ALL-CAPS text to proper case, keeping acronyms in capitals.
 
-
-def title_case(s: str) -> str:
-    """Convert ALL-CAPS text to Title Case, preserving common abbreviations.
-
-    This replaces the VB.NET Remove_All_Caps function but uses Python's
-    built-in str.title() with post-processing for edge cases.
+    This replaces the VB.NET Remove_All_Caps function. The acronym
+    detection lives in name_case.py; pass person=True for the name of a
+    person so short names ("Erb", "Jin") are not mistaken for acronyms.
     """
-    if not s or len(s) <= 1:
-        return s
-    result = s.lower().title()
-    # Fix common abbreviations that should stay uppercase
-    for abbr in ("Llc", "Llp", "Ii", "Iii", "Iv", "Rv7a"):
-        result = result.replace(f" {abbr} ", f" {abbr.upper()} ")
-        if result.endswith(f" {abbr}"):
-            result = result[: -len(abbr)] + abbr.upper()
-    # Fix common words that should stay lowercase
-    for word in (" Of ", " And ", " The ", " De ", " La "):
-        result = result.replace(word, word.lower())
-    # LLC/LLP at end
-    result = _RE_LLC.sub('LLC', result)
-    result = _RE_LLP.sub('LLP', result)
-    return result
+    return proper_case(s, person=person)
 
 
 def clean_operator_name(name: str, registration: str = "",
